@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,14 @@ using UnityEngine.UI;
 
 public class Bullets : MonoBehaviour
 {
-    public Text CountText;  // Žc’e”—p
-    public Text CountText1; // ƒ}ƒKƒWƒ“—p
+    /*
+     privateã¨pubuliceã®ä½¿ã„åˆ†ã‘
+     ç”°ä¸­ãã‚“ã®å¤‰æ•°ã®ç´ä»˜ã‘
+     é–¢æ•°ã‚ã‘
+     ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹ã«ç›´ã™
+     */
+    public Text CountText;  // ï¿½cï¿½eï¿½ï¿½ï¿½p
+    public Text CountText1; // ï¿½}ï¿½Kï¿½Wï¿½ï¿½ï¿½p
     [SerializeField]
     private int Count = 30;
     private float Timeleft = 0.1f;
@@ -17,7 +24,7 @@ public class Bullets : MonoBehaviour
     {
         for (int i = 180; i > 0; i -= 30) 
         {
-            //ƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½Žž‚Ìˆ—
+            //ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
             if (Input.GetMouseButton(1) && Count > 0)
             {
                 Timeleft -= Time.deltaTime;

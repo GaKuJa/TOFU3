@@ -1,22 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 //
 //?A?T???g???C?t??
 public class SHOYOUGUN : MonoBehaviour
 {
-    public GameObject BulletPrefab;
-    public float ShotSpeed;         //’e‘¬
-    public float Interval;          //˜AË‘¬“xi‚ğ•Ï‚¦‚ç‚ê‚é‚æ‚¤‚É‚µ‚½‚¾‚¯j
-    public int ShotCountNow = 20;   //Œ»İ‚Ì’e–ò”
-    public int ShotMax = 20;        //‚Pƒ}ƒKƒWƒ“‚Ì’e”
-    public int ShotBullet = 40;     //e‚Ì‘S’e”
-    public float _forcePower;       //‚«”ò‚Î‚·‹­‚³
-    public float ShotDamage = 33;        //ƒ_ƒ[ƒW
+    public static SHOYOUGUN Instance { get => _instance; }
+    static        SHOYOUGUN _instance;
+    // å¼¾ã®ãƒ—ãƒ¬ãƒãƒ–
+    [SerializeField]
+    private GameObject BulletPrefab;
+    // å¼¾é€Ÿ
+    public float ShotSpeed;
+    // é€£å°„é€Ÿåº¦
+    public float Interval;
+    // ç¾åœ¨ã®å¼¾è–¬æ•°
+    public int ShotCountNow = 20;
+    // ãƒã‚¬ã‚¸ãƒ³ã®æœ€å¤§æ•°
+    public int ShotMax = 20;
+    // ãƒªãƒ­ãƒ¼ãƒ‰ã§ãã‚‹æ•°
+    public int ShotBullet = 40;
+    public float _forcePower;       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î‚ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float ShotDamage = 33;        //ï¿½_ï¿½ï¿½ï¿½[ï¿½W
 
 
-    private float ShotInterval;     //˜AË‘¬“x
+    private float ShotInterval;     //ï¿½Aï¿½Ë‘ï¿½ï¿½x
 
     //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
 
@@ -24,12 +35,16 @@ public class SHOYOUGUN : MonoBehaviour
     float rndy;
     float rndz;
 
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     private Vector3 RandomBullet()
     {
         float rndx = Random.Range(-5.0f, 5.0f);
         float rndy = Random.Range(-5.0f, 5.0f);
         float rndz = Random.Range(100.0f,101.0f);
-
         return randomVec = new Vector3(rndx, rndy, rndz);
     }
 
@@ -41,14 +56,15 @@ public class SHOYOUGUN : MonoBehaviour
     }
 
 
-    private void ShotPrefab()//’e‚Ì”­Ë
+    private void ShotPrefab()//ï¿½eï¿½Ì”ï¿½ï¿½ï¿½
     {
 
 
         ShotInterval += 1;
-
+        
         if (ShotInterval % Interval == 0 && ShotCountNow > 0)
         {
+            Debug.Log("Shootiong!");
             ShotCountNow -= 1;
             Debug.Log(RandomBullet());
             GameObject bullet = (GameObject)Instantiate(BulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
@@ -56,7 +72,7 @@ public class SHOYOUGUN : MonoBehaviour
             //Vector3 force = new Vector3(rndx, rndy, zzz);
             bulletRb.AddForce(RandomBullet() * ShotSpeed);
 
-            //3•bŒã‚Éo‚µ‚½’e‚ğÁ‚·
+            //3ï¿½bï¿½ï¿½Éoï¿½ï¿½ï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             Destroy(bullet, 3.0f);
         }
@@ -65,17 +81,17 @@ public class SHOYOUGUN : MonoBehaviour
     private void OnTriggerEnter(Collider _collider)
     {
 
-        //‚Ô‚Â‚©‚Á‚½‘Šè‚©‚çRigitBody‚ğæ‚èo‚·
+        //ï¿½Ô‚Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è‚©ï¿½ï¿½RigitBodyï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
         Rigidbody otherRigitbody = _collider.GetComponent<Rigidbody>();
         if (!otherRigitbody)
         {
             return;
         }
 
-        //‚«”ò‚Î‚·•ûŒü‚ğ‹‚ß‚é(ƒvƒŒƒCƒ„[‚©‚çG‚ê‚½‚à‚Ì‚Ì•ûŒü)
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½(ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Gï¿½ê‚½ï¿½ï¿½ï¿½Ì‚Ì•ï¿½ï¿½ï¿½)
         Vector3 toVec = GetAngleVec(BulletPrefab, _collider.gameObject);
 
-        //‚«”ò‚Ô
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         otherRigitbody.AddForce(toVec * _forcePower, ForceMode.Impulse);
 
         
@@ -87,19 +103,19 @@ public class SHOYOUGUN : MonoBehaviour
        
     }
 
-    private void ShotNothing()//ƒŠƒ[ƒh
+    private void ShotNothing()//ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½h
     {
 
         int reload = ShotMax - ShotCountNow; 
 
-        //’e‚ªc‚Á‚Ä‚é‚Æ‚«
+        //ï¿½eï¿½ï¿½ï¿½cï¿½ï¿½ï¿½Ä‚ï¿½Æ‚ï¿½
         if (ShotBullet >= reload)
         {
             ShotCountNow += reload; 
             ShotBullet -= reload; 
 
         }
-        //‚È‚¢‚Æ‚«
+        //ï¿½È‚ï¿½ï¿½Æ‚ï¿½
         else
         {
             ShotCountNow += ShotBullet; 
@@ -113,6 +129,7 @@ public class SHOYOUGUN : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            Debug.Log("MousuIn!");
             ShotPrefab();
             //RandomBullet();
             
@@ -130,7 +147,7 @@ public class SHOYOUGUN : MonoBehaviour
 
     private Vector3 GetAngleVec(GameObject _from, GameObject _to)
     {
-        //”­ËŠp“x
+        //ï¿½ï¿½ï¿½ËŠpï¿½x
         Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
         Vector3 toVec = new Vector3(rndx,rndy,rndz);
 
