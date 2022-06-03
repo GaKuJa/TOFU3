@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
-    public        float     sensX;
-    public        float     sensY;
-    public        Transform orientation;
-    float                   xRotation;
-    float                   yRotation;
+    public float sensX;
+    public float sensY;
+    float xRotation;
+    float yRotation;
+    public Rigidbody rb;
+    Transform transformCamera;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible   = false;
+        Cursor.visible = false;
+
+        transformCamera = Camera.main.transform;
+        //カメラのX回転角を取得
+        xRotation = transformCamera.localEulerAngles.x;
     }
 
     private void Update()
@@ -26,8 +31,8 @@ public class PlayerCam : MonoBehaviour
 
         xRotation = Mathf.Clamp(xRotation, -90.0f, 90.0f);
 
-        // rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        rb.MoveRotation(Quaternion.Euler(0.0f, rb.rotation.eulerAngles.y + mouseX * Time.deltaTime * 100.0f, 0.0f));
+        xRotation = Mathf.Clamp(xRotation - mouseY * Time.deltaTime * 100.0f, -90, 60);
+        transformCamera.localEulerAngles = new Vector3(xRotation, 0, 0);
     }
 }
