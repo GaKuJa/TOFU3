@@ -17,11 +17,17 @@ public class KATSUO : MonoBehaviour
 
     private float ShotInterval;     //連射速度
 
+    //Physics.Raycast(Vector3 origin(rayの開始地点), Vector3 direction(rayの向き),RaycastHit hitInfo(当たったオブジェクトの情報を格納), float distance(rayの発射距離), int layerMask(レイヤマスクの設定));
+
     //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
 
     float rndx;
     float rndy;
     float rndz;
+
+    //Vector3 origin = new Vector3(0, 0, 0); // 原点
+    //Vector3 direction = new Vector3(1, 0, 0); // X軸方向を表すベクトル
+    //Ray ray = new Ray(origin, direction); // Rayを生成
 
     private Vector3 RandomBullet()
     {

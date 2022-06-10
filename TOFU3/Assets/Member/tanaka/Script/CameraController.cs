@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace FPS
 {
-
     public class CameraController : MonoBehaviour
     {
 
@@ -27,6 +26,8 @@ namespace FPS
         private float yRotVelocity;
         private float xRotVelocity;
 
+        
+
         void Update()
         {
 
@@ -43,7 +44,7 @@ namespace FPS
 
             transform.rotation = Quaternion.Euler(currentXRot, currentYRot, 0);
 
-
         }
+
     }
 }

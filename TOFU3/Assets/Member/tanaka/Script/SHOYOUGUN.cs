@@ -7,16 +7,21 @@ using UnityEngine;
 public class SHOYOUGUN : MonoBehaviour
 {
     public GameObject BulletPrefab;
+    [SerializeField]
+    private GameObject Player;
+    private GameObject Shooting;
     public float ShotSpeed;         //弾速
     public float Interval;          //連射速度（を変えられるようにしただけ）
     public int ShotCountNow = 20;   //現在の弾薬数
     public int ShotMax = 20;        //１マガジンの弾数
     public int ShotBullet = 40;     //銃の全弾数
     public float _forcePower;       //吹き飛ばす強さ
-    public float ShotDamage = 33;        //ダメージ
+    public float ShotDamage = 33;   //ダメージ
 
 
     private float ShotInterval;     //連射速度
+
+    private Vector3 randomVec;
 
     //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
 
@@ -24,26 +29,35 @@ public class SHOYOUGUN : MonoBehaviour
     float rndy;
     float rndz;
 
+    private List<int> shotgun = new List<int>();
+
+
     private Vector3 RandomBullet()
     {
+        // transformを取得
+        //Transform myTransform = this.transform;
+
+        //Vector3 localPos = myTransform.localPosition;
         float rndx = Random.Range(-5.0f, 5.0f);
         float rndy = Random.Range(-5.0f, 5.0f);
-        float rndz = Random.Range(100.0f,101.0f);
+        float rndz = Random.Range(10.0f,11.0f);
 
-        return randomVec = new Vector3(rndx, rndy, rndz);
+        //myTransform.localPosition = localPos; // ローカル座標での座標を設定
+
+        randomVec = new Vector3(rndx, rndy, rndz * ShotSpeed);
+
+
+        //Vector3 localrandomVec = Player.transform.InverseTransformPoint(randomVec);
+        //return localrandomVec;
+
+        return randomVec;
+
     }
 
-    private Vector3 randomVec;
-
-    private void Start()
-    {
-        randomVec = new Vector3(rndx,rndy,rndz * ShotSpeed);
-    }
 
 
     private void ShotPrefab()//弾の発射
     {
-
 
         ShotInterval += 1;
 
@@ -51,14 +65,15 @@ public class SHOYOUGUN : MonoBehaviour
         {
             ShotCountNow -= 1;
             Debug.Log(RandomBullet());
-            GameObject bullet = (GameObject)Instantiate(BulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
+            GameObject bullet = (GameObject)Instantiate(BulletPrefab, transform.position,transform.rotation);// Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0)
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            //Vector3 force = new Vector3(rndx, rndy, zzz);
-            bulletRb.AddForce(RandomBullet() * ShotSpeed);
+            bulletRb.AddForce(RandomBullet());
 
+            
             //3秒後に出した弾を消す
-
             Destroy(bullet, 3.0f);
+
+
         }
     }
 

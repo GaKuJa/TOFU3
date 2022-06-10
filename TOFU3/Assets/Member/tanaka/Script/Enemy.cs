@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
-    private int HP;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        HP = 1000;
-    }
+    public int hitPoint = 100;  //HP
 
     // Update is called once per frame
     void Update()
     {
-       
+
+        //HPが0になったときに敵を破壊する
+        if (hitPoint <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+    //ダメージを受け取ってHPを減らす関数
+    public void Damage(int damage)
+    {
+        //受け取ったダメージ分HPを減らす
+        hitPoint -= damage;
     }
 }
