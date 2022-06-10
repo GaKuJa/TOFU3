@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //
-//?A?T???g???C?t??
+//shotgun
 public class SESAMIGUN : MonoBehaviour
 {
     public GameObject BulletPrefab;
@@ -31,6 +31,8 @@ public class SESAMIGUN : MonoBehaviour
     }
 
     private Vector3 randomVec;
+
+    //private List<å^ñº> ïœêîñº = new List<å^ñº>();
 
     private void Start()
     {

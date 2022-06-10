@@ -22,6 +22,11 @@ public class B_F_T : MonoBehaviour
     float rndy;
     float rndz;
 
+
+    //Vector3 origin = new Vector3(0, 0, 0); // 原点
+    //Vector3 direction = new Vector3(1, 0, 0); // X軸方向を表すベクトル
+    //Ray ray = new Ray(origin, direction); // Rayを生成
+
     private Vector3 RandomBullet()
     {
         float rndx = Random.Range(-10.0f, 10.0f);
