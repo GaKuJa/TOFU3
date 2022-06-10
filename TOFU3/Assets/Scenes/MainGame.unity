@@ -847,8 +847,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamage: 0
-  bulletShotSpeed: 200
-  shootIntervalTime: 5
+  bulletShotSpeed: 2500
+  shootIntervalTime: 0.1
   reticleSize: 5
   magazinNum: 180
   bulletNum: 20
@@ -991,7 +991,7 @@ MonoBehaviour:
   climbJumpUpForce: 1
   climbJumpBackForce: 1
   jumpKey: 32
-  climbJumps: 50
+  climbJumps: 30
   detectionLength: 1
   sphereCastRadius: 0.25
   maxWallLookAngle: 30
@@ -1016,10 +1016,10 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  wallRunForce: 100
-  wallJumpUpForce: 5
-  wallJumpSideForce: 5
-  wallClimbSpeed: 5
+  wallRunForce: 150
+  wallJumpUpForce: 1
+  wallJumpSideForce: 1
+  wallClimbSpeed: 1
   maxWallRunTime: 5
   jumpKey: 32
   upwardsRunKey: 304
@@ -1063,13 +1063,13 @@ MonoBehaviour:
   walkSpeed: 15
   sprintSpeed: 20
   slideSpeed: 25
-  wallrunSpeed: 20
+  wallrunSpeed: 15
   climbSpeed: 10
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
   groundDrag: 4
-  jumpForce: 40
-  jumpCooldown: 1.5
+  jumpForce: 30
+  jumpCooldown: 1
   airMultiplier: 0.4
   crouchSpeed: 3.5
   crouchYScale: 0.5
@@ -2526,8 +2526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac8cae4a023b493192e74c271d788bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 120
-  sensY: 120
+  sensX: 800
+  sensY: 800
   rb: {fileID: 481917521}
 --- !u!1 &1517680898 stripped
 GameObject:
