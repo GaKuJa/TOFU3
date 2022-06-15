@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: c4616dbf6d625ae439a623f28c85e1ef
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _pfYUBA_SHIELD: {fileID: 199262067011562858, guid: eedad774f62946a4bb8b8075442f3137, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -125,8 +125,8 @@ public class RandomSpawnGun : MonoBehaviour
         {
             j = Random.Range(0, 17);
             Debug.Log(fieldTOFU[j]);
-            float x = Random.Range(0.0f, 5.0f);
-            float z = Random.Range(0.0f, 5.0f);
+            float x = Random.Range(-10.0f, 10.0f);
+            float z = Random.Range(-10.0f, 10.0f);
 
             pos = new Vector3(x, 2.0f, z);
 
