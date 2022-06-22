@@ -1,84 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class RandomSpawnGun : MonoBehaviour
+
+/// <summary>
+/// 銃をランダムな位置に生成するスクリプト
+/// </summary>
+
+
+public class RandomSpawnGun : SpawnManager
 {
-    //アイテムの情報を格納
-    [SerializeField]
-    private GameObject[] gunPrefabs;
-    //生成された乱数を格納
-    private List<int> randNum = new List<int>();
-    //足場のTOFUを格納
-    [SerializeField]
-    private GameObject[] fieldTOFU;
+    //スポーンする銃の総数
+    int _gun = 0;
 
-    //制限時間
+    //Inspectorから「Generator」スクリプトを設定
     [SerializeField]
-    float totalTime = 0.0f;
-    //経過時間
-    float timeCountDown = 0.0f;
-    //アイテムがスポーンする間隔
+    SHOYOU_GUNGenerator _cs_SHOYOU_GUN;
     [SerializeField]
-    float interval = 0.0f;
+    KOYADOFU_GUNGenerator _cs_KOYADOFU_GUN;
     [SerializeField]
-    float ifInterval = 0.0f;
-    //intervalをカウントダウン
+    Long_NEGI_RifleGenerator _cs_Long_NEGI_Rifle;
     [SerializeField]
-    float intervalCount = 0;
-    //スポーンするアイテム数
-    int gun = 0;
-    //ステージにある総アイテム数
-    int totalGun = 0;
-    //時間経過のフラグ
-    bool timerFlag = false;
-    //アイテムのフラグ
-    bool gunFlag = false;
-
+    SESAMI_ShooterGenerator _cs_SESAMI_Shooter;
+    [SerializeField]
+    KATSUO_BUSHIGenerator _cs_KATSUO_BUSHI;
+    [SerializeField]
+    B_F_TGenerator _cs_B_F_T;
 
     // Start is called before the first frame update
     void Start()
     {
-        totalGun = gun;
-        intervalCount = interval;
+        _gun = 2;
+        _setInterval = _interval;
     }
 
     // Update is called once per frame
     void Update()
     {
         //ゲーム開始からの経過時間
-        totalTime -= Time.deltaTime;
-        timeCountDown = (totalTime);
-        //Debug.Log (timeCountDown = (totalTime));
+        _time -= Time.deltaTime;
 
         //制限時間が少なくなったら
-        //intervalを短くし、gun,totalgunを増やす
-        if (timeCountDown <= 180.0f)
-            timerFlag = true;
-        if (timeCountDown <= 300.0f)
-            gunFlag = true;
+        //_intervalを短くし、_gunを増やす
+        if (_time <= 360.0f)
+            _timerFlagFirst = true;
+        if (_time <= 180.0f)
+            _timerFlagSecond = true;
 
-        if (timerFlag == true)
+        if (_timerFlagFirst && !_timerFlagSecond)
         {
-            interval = ifInterval;
-            gun = 3;
-            //totalgun = gun;
+            _gun = 3;
         }
-        intervalCount = (intervalCount -= Time.deltaTime);
-        //Debug.Log (intervalCount = (intervalCount -= Time.deltaTime));
+        else if (_timerFlagFirst && _timerFlagSecond)
+        {
+            _setInterval = _afterThreeMinutesInterval;
+            _gun = 5;
+        }
+
+        _interval -= Time.deltaTime;
 
         SpawnGun();
 
-        if (intervalCount <= 0.0f)
-            intervalCount = interval;
+        //_intervalをリセット
+        if (_interval <= 0.0f)
+            _interval = _setInterval;
 
     }
 
-    //アイテムを一定間隔毎にフィールドにスポーンする
+    /// <summary> 銃を一定間隔毎にフィールドにスポーンする関数 </summary>
     void SpawnGun()
     {
-        //intervalの経過時間
-        float Spawn = intervalCount;
+        //_intervalの経過時間
+        float Spawn = _interval;
 
         if (Spawn <= 0.0f)
         {
@@ -88,210 +83,212 @@ public class RandomSpawnGun : MonoBehaviour
 
     }
 
-    //乱数を生成し、randNumに格納
+    /// <summary> 乱数を生成し、_randNumに格納する関数 </summary>
     void RandomNum()
     {
-        //カウンタ
-        int i;
-
-        //試行回数上限
-        int maxTri = 2;
-        if (timerFlag == true)
-            maxTri = 3;
-
-        gun = maxTri;
-
-        for (i = 0; i < gun; i++)
+        for (int i = 0; i < _gun; i++)
         {
-            //randNumに要素を追加 & その要素に乱数で取得した値を代入
-            randNum.Add(i);
-            randNum[i] = Random.Range(0, 100);
+            //_randNumに要素を追加
+            //その要素に乱数で取得した値を代入
+            _randNum.Add(i);
+            _randNum[i] = Random.Range(0, 100);
         }
 
     }
 
-    //RandNumの値をもとにアイテムを生成
+    /// <summary> _randNumの値を参照して銃を生成する関数 </summary>
     void SetGun()
     {
-        //カウンタ
-        int i;
         //乱数を格納
         int j;
-        //アイテムをスポーンさせる座標
-        Vector3 pos;
+        // 地面の数だけランダムを取得するList
+        List<int> _fieldRandomTOFU = new List<int>();
 
-        //randNumの値を参照してgunPrefabのアイテムを生成する
-        for (i = 0; i < gun; i++)
+        //_fieldTOFUの要素を_fieldRandomTOFUに代入
+        for (int i = 0; i < _fieldTOFU.Count; i++)
         {
-            j = Random.Range(0, 17);
-            Debug.Log(fieldTOFU[j]);
-            float x = Random.Range(-10.0f, 10.0f);
-            float z = Random.Range(-10.0f, 10.0f);
+            _fieldRandomTOFU.Add(i);
+        }
 
-            pos = new Vector3(x, 2.0f, z);
+        //_randNumの値を参照して_itemPrefabの各要素を生成する              
+        for (int i = 0; i < _gun; i++)
+        {
+            if (GameObject.FindGameObjectsWithTag("Gun").Length == _gun)
+                break;
 
-            if (timerFlag == true)
+            //プレハブを生成する座標を取得
+            j = Random.Range(0, _fieldRandomTOFU.Count);
+
+            if (_timerFlagFirst && _timerFlagSecond)
             {
                 //SHOYOU-GUNをスポーンする確率
-                if (randNum[i] < 25)
+                if (_randNum[i] < 25)
                 {
-                    gunInstant0();
+                    SpawnSHOYOU_GUN();
                 }
                 //KOYADOFU-GUNをスポーンする確率
-                else if (randNum[i] >= 25 && randNum[i] < 35)
+                else if (_randNum[i] >= 25 && _randNum[i] < 35)
                 {
-                    gunInstant1();
+                    SpawnKOYADOFU_GUN();
                 }
-                //Long NEGI-Rifleをスポーンする確率
-                else if (randNum[i] >= 35 && randNum[i] < 55)
+                //OKAKA-CHAFをスポーンする確率
+                else if (_randNum[i] >= 35 && _randNum[i] < 55)
                 {
-                    gunInstant2();
+                    SpawnLong_NEGI_Rifle();
                 }
-                //SESAMI-Shoooterをスポーンする確率
-                else if (randNum[i] >= 55 && randNum[i] < 80)
+                //SESAMI-Shooterをスポーンする確率
+                else if (_randNum[i] >= 55 && _randNum[i] < 80)
                 {
-                    gunInstant3();
+                    SpawnSESAMI_Shooter();
                 }
-                //KATUO-武士をスポーンする確率
-                else if (randNum[i] >= 80 && randNum[i] < 90)
+                //KATSUO武士をスポーンする確率
+                else if (_randNum[i] >= 80 && _randNum[i] < 90)
                 {
-                    gunInstant4();
+                    SpawnKATSUO_BUSHI();
                 }
-                //B.F.Tをスポーンする確率
-                else if (randNum[i] >= 90 && randNum[i] < 100)
+                //B・F・Tをスポーンする確率
+                else if (_randNum[i] >= 90 && _randNum[i] < 100)
                 {
-                    gunInstant5();
+                    SpawnB_F_T();
                 }
 
             }
 
-            else if (timerFlag == false && gunFlag == true)
+            else if (_timerFlagFirst && !_timerFlagSecond)
             {
                 //SHOYOU-GUNをスポーンする確率
-                if (randNum[i] < 25)
+                if (_randNum[i] < 25)
                 {
-                    gunInstant0();
+                    SpawnSHOYOU_GUN();
                 }
                 //KOYADOFU-GUNをスポーンする確率
-                else if (randNum[i] >= 25 && randNum[i] < 50)
+                else if (_randNum[i] >= 25 && _randNum[i] < 50)
                 {
-                    gunInstant1();
+                    SpawnKOYADOFU_GUN();
                 }
-                //Long NEGI-Rifleをスポーンする確率
-                else if (randNum[i] >= 50 && randNum[i] < 65)
+                //OKAKA-CHAFをスポーンする確率
+                else if (_randNum[i] >= 50 && _randNum[i] < 65)
                 {
-                    gunInstant2();
+                    SpawnLong_NEGI_Rifle();
                 }
-                //SESAMI-Shoooterをスポーンする確率
-                else if (randNum[i] >= 65 && randNum[i] < 90)
+                //SESAMI-Shooterをスポーンする確率
+                else if (_randNum[i] >= 65 && _randNum[i] < 90)
                 {
-                    gunInstant3();
+                    SpawnSESAMI_Shooter();
                 }
-                //KATUO-武士をスポーンする確率
-                else if (randNum[i] >= 90 && randNum[i] < 95)
+                //KATSUO武士をスポーンする確率
+                else if (_randNum[i] >= 90 && _randNum[i] < 95)
                 {
-                    gunInstant4();
+                    SpawnKATSUO_BUSHI();
                 }
-                //B.F.Tをスポーンする確率
-                else if (randNum[i] >= 95 && randNum[i] < 100)
+                //B・F・Tをスポーンする確率
+                else if (_randNum[i] >= 95 && _randNum[i] < 100)
                 {
-                    gunInstant5();
+                    SpawnB_F_T();
                 }
 
             }
 
-            else if (timerFlag == false && gunFlag == false)
+            else if (!_timerFlagFirst && !_timerFlagSecond)
             {
                 //SHOYOU-GUNをスポーンする確率
-                if (randNum[i] < 25)
+                if (_randNum[i] < 25)
                 {
-                    gunInstant0();
+                    SpawnSHOYOU_GUN();
                 }
                 //KOYADOFU-GUNをスポーンする確率
-                else if (randNum[i] >= 25 && randNum[i] < 55)
+                else if (_randNum[i] >= 25 && _randNum[i] < 55)
                 {
-                    gunInstant1();
+                    SpawnKOYADOFU_GUN();
                 }
-                //Long NEGI-Rifleをスポーンする確率
-                else if (randNum[i] >= 55 && randNum[i] < 70)
+                //Long-NEGI-Rifleをスポーンする確率
+                else if (_randNum[i] >= 55 && _randNum[i] < 70)
                 {
-                    gunInstant2();
+                    SpawnLong_NEGI_Rifle();
                 }
-                //SESAMI-Shoooterをスポーンする確率
-                else if (randNum[i] >= 70 && randNum[i] < 90)
+                //SESAMI-Shooterをスポーンする確率
+                else if (_randNum[i] >= 70 && _randNum[i] < 90)
                 {
-                    gunInstant3();
+                    SpawnSESAMI_Shooter();
                 }
-                //KATUO-武士をスポーンする確率
-                else if (randNum[i] >= 90 && randNum[i] < 95)
+                //KATSUO武士をスポーンする確率
+                else if (_randNum[i] >= 90 && _randNum[i] < 95)
                 {
-                    gunInstant4();
+                    SpawnKATSUO_BUSHI();
                 }
-                //B.F.Tをスポーンする確率
-                else if (randNum[i] >= 95 && randNum[i] < 100)
+                //B・F・Tをスポーンする確率
+                else if (_randNum[i] >= 95 && _randNum[i] < 100)
                 {
-                    gunInstant5();
+                    SpawnB_F_T();
                 }
 
             }
 
         }
 
-        void gunInstant0()
+        //SHOYOU-GUNをスポーンする
+        void SpawnSHOYOU_GUN()
         {
-            var obj = Instantiate(gunPrefabs[0], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
-            obj.transform.SetParent(transform.root);
-            obj.transform.localPosition = pos;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            _cs_SHOYOU_GUN.GenerateSHOYOU_GUN(spawnPos);
+            transform.SetParent(transform.root);
+
         }
 
-        void gunInstant1()
+        //KOYADOFU-GUNをスポーンする
+        void SpawnKOYADOFU_GUN()
         {
-            var obj = Instantiate(gunPrefabs[1], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
-            obj.transform.SetParent(transform.root);
-            obj.transform.localPosition = pos;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            _cs_KOYADOFU_GUN.GenerateKOYADOFU_GUN(spawnPos);
+            transform.SetParent(transform.root);
+
         }
 
-        void gunInstant2()
+        //Long-NEGI-Rifleをスポーンする
+        void SpawnLong_NEGI_Rifle()
         {
-            var obj = Instantiate(gunPrefabs[2], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
-            obj.transform.SetParent(transform.root);
-            obj.transform.localPosition = pos;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            _cs_Long_NEGI_Rifle.GenerateLong_NEGI_Rifle(spawnPos);
+            transform.SetParent(transform.root);
+
         }
 
-        void gunInstant3()
+        //SESAMI-Shooterをスポーンする
+        void SpawnSESAMI_Shooter()
         {
-            var obj = Instantiate(gunPrefabs[3], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
-            obj.transform.SetParent(transform.root);
-            obj.transform.localPosition = pos;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            _cs_SESAMI_Shooter.GenerateSESAMI_Shoot(spawnPos);
+            transform.SetParent(transform.root);
+
         }
 
-        void gunInstant4()
+        //KATSUO武士をスポーンする
+        void SpawnKATSUO_BUSHI()
         {
-            var obj = Instantiate(gunPrefabs[4], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
-            obj.transform.SetParent(transform.root);
-            obj.transform.localPosition = pos;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            _cs_KATSUO_BUSHI.GenerateKATSUO_BUSHI(spawnPos);
+            transform.SetParent(transform.root);
+
         }
 
-        void gunInstant5()
+        //B・F・Tをスポーンする
+        void SpawnB_F_T()
         {
-            var obj = Instantiate(gunPrefabs[5], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
-            obj.transform.SetParent(transform.root);
-            obj.transform.localPosition = pos;
-            obj.transform.localScale = new Vector3(1, 1, 1);
+            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            _cs_B_F_T.GenerateB_F_T(spawnPos);
+            transform.SetParent(transform.root);
+
         }
 
+        // 地面のランダムな座標を取得する　
+        Vector3 GetRandomPos(int randomList)
+        {
+            return _fieldTOFU[randomList].transform.localPosition
+                + new Vector3(Random.Range(-_fieldTOFU[randomList].transform.localScale.x / 2, _fieldTOFU[randomList].transform.localScale.x / 2),
+                              _fieldTOFU[randomList].transform.localScale.y / 2 + this.gameObject.transform.localScale.y / 2,
+                              Random.Range(-_fieldTOFU[randomList].transform.localScale.z / 2, _fieldTOFU[randomList].transform.localScale.z / 2));
 
+        }
     }
 
 }
