@@ -6,10 +6,10 @@ using UnityEditorInternal;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SHOYUGUNScript : BaseGunStatus
+public class SHOYUGUNScript : BaseGunStatus, IBaseBulletDamege
 {
     public static SHOYUGUNScript Instance { get => _instance; }
-    static        SHOYUGUNScript _instance;
+    static SHOYUGUNScript _instance;
     // ゲームオブジェクトプレハブ
     [SerializeField]
     private GameObject BulletPrefab;
@@ -17,8 +17,9 @@ public class SHOYUGUNScript : BaseGunStatus
     [SerializeField]
     private Transform Gun;
     private float plusShootInterval = 0;
-    private int   shootCount;
-    private bool  shootingFlag = false;
+    private int shootCount;
+    private bool shootingFlag = false;
+    private float _forcePower;
     void Awake()
     {
         _instance = this;
@@ -36,41 +37,69 @@ public class SHOYUGUNScript : BaseGunStatus
             ShotPrefab();
             shootingFlag = true;
         }
-        if(Input.GetKeyDown(KeyCode.R) && magazinNum != 0)
+        if (Input.GetKeyDown(KeyCode.R) && magazinNum != 0)
             ReloadBullet();
-        if(shootingFlag)
+        if (shootingFlag)
             IntervalControl();
     }
-    
+
     private void ReloadBullet()
     {
         magazinNum -= shootCount;
-        bulletNum  += shootCount;
-        shootCount    =  0;
+        bulletNum += shootCount;
+        shootCount = 0;
     }
-    
+
     private void ShotPrefab() //�e�̔���
     {
         if (plusShootInterval >= shootIntervalTime && bulletNum > 0)
         {
-            GameObject bullet          = Instantiate(BulletPrefab, this.transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
-            Rigidbody  bulletRigidbody = bullet.GetComponent<Rigidbody>();
+            GameObject bullet = Instantiate(BulletPrefab, this.transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
+            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
             bulletRigidbody.AddForce(RandomBullet());
-            Destroy(bullet,3.0f);
+            Destroy(bullet, 3.0f);
             plusShootInterval = 0;
             PullMagazin();
         }
     }
-    
+    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
+    {
+        //発射角度
+        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
+        Vector3 toVec = new Vector3(0, 0, 0);
+
+        return Vector3.Normalize(toVec);
+    }
+
+    private void OnTriggerEnter(Collider _collider)
+    {
+
+        //ぶつかった相手からRigitBodyを取り出す
+        Rigidbody otherRigitbody = _collider.GetComponent<Rigidbody>();
+        if (!otherRigitbody)
+        {
+            return;
+        }
+
+        //吹き飛ばす方向を求める(プレイヤーから触れたものの方向)
+        Vector3 toVec = GetAngleVec(BulletPrefab, _collider.gameObject);
+
+        //吹き飛ぶ
+        otherRigitbody.AddForce(toVec * _forcePower, ForceMode.Impulse);
+
+        //Player.SetHp(BulletDamege());
+    }
+
     private Vector3 RandomBullet()
     {
         float randomX = Random.Range(reticleSize, -reticleSize);
         float randomY = Random.Range(reticleSize, -reticleSize);
         return Gun.forward * bulletShotSpeed + new Vector3(randomX, randomY, 0);
     }
+
     private void PullMagazin()
     {
-        shootCount++; 
+        shootCount++;
         bulletNum -= 1;
     }
 
@@ -88,5 +117,11 @@ public class SHOYUGUNScript : BaseGunStatus
     {
         return bulletNum;
     }
-    
+
+    public int BulletDamege(int playerHp, int bulletDamege)
+    {
+
+        return playerHp -= bulletDamege;
+
+    }
 }

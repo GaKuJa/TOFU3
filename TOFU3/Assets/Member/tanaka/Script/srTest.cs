@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class KOYADOFUGUN : BaseGunStatus, IBaseBulletDamege
+public class srTest : BaseGunStatus, IBaseBulletDamege
 {
-    public static KOYADOFUGUN Instance { get => _instance; }
-    static KOYADOFUGUN _instance;
+    public static srTest Instance { get => _instance; }
+    static srTest _instance;
     // ゲームオブジェクトプレハブ
     [SerializeField]
     private GameObject BulletPrefab;

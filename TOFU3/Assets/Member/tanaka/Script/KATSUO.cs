@@ -25,9 +25,10 @@ public class KATSUO : MonoBehaviour
     float rndy;
     float rndz;
 
-    //Vector3 origin = new Vector3(0, 0, 0); // 原点
-    //Vector3 direction = new Vector3(1, 0, 0); // X軸方向を表すベクトル
-    //Ray ray = new Ray(origin, direction); // Rayを生成
+    Vector3 origin = new Vector3(0, 0, 0);      // 原点
+    Vector3 direction = new Vector3(0, 0, 30);   // 方向を表すベクトル
+    //Ray ray = new Ray(origin, direction);       // Rayを生成
+    //Debug.DrawRay(ray.origin, ray.direction, 5.0f); // ５秒間可視化
 
     private Vector3 RandomBullet()
     {
@@ -67,6 +68,15 @@ public class KATSUO : MonoBehaviour
         }
     }
 
+    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
+    {
+        //発射角度
+        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
+        Vector3 toVec = new Vector3(0, 0, 0);
+
+        return Vector3.Normalize(toVec);
+    }
+
     private void OnTriggerEnter(Collider _collider)
     {
 
@@ -85,6 +95,7 @@ public class KATSUO : MonoBehaviour
 
 
     }
+    
 
 
     private void ShotBulletDamage()
@@ -133,14 +144,7 @@ public class KATSUO : MonoBehaviour
 
     }
 
-    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
-    {
-        //発射角度
-        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
-        Vector3 toVec = new Vector3(rndx, rndy, rndz);
-
-        return Vector3.Normalize(toVec);
-    }
+    
 
 
     public int GetShotCountNow()

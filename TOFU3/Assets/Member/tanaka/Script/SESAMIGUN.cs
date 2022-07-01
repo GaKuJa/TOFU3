@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 //
 //shotgun
 public class SESAMIGUN : MonoBehaviour
@@ -13,36 +14,34 @@ public class SESAMIGUN : MonoBehaviour
     public int ShotMax = 2;        //ÇPÉ}ÉKÉWÉìÇÃíeêî
     public int ShotBullet = 6;     //èeÇÃëSíeêî
     public float _forcePower;       //êÅÇ´îÚÇŒÇ∑ã≠Ç≥
-    public float ShotDamage;        //É_ÉÅÅ[ÉW
-
+    public float ShotDamage = 5;        //É_ÉÅÅ[ÉW
     private float ShotInterval;     //òAéÀë¨ìx
+    private float time = 5.0f;
 
-    float rndx;
-    float rndy;
-    float rndz;
-
-    private Vector3 RandomBullet()
-    {
-        float rndx = Random.Range(-20.0f, 20.0f);
-        float rndy = Random.Range(-20.0f, 20.0f);
-        float rndz = Random.Range(100.0f, 101.0f);
-
-        return randomVec = new Vector3(rndx, rndy, rndz);
-    }
 
     private Vector3 randomVec;
 
     //private List<å^ñº> ïœêîñº = new List<å^ñº>();
+    List<Vector3> Bullet = new List<Vector3>();
 
-    private void Start()
+    private void ListBullet()
     {
-        randomVec = new Vector3(rndx, rndy, rndz * ShotSpeed);
+
+        Bullet.Add(new Vector3(0.0f, 5.0f, 100.0f));
+        Bullet.Add(new Vector3(5.0f, 5.0f, 100.0f));
+        Bullet.Add(new Vector3(-5.0f, 5.0f, 100.0f));
+        Bullet.Add(new Vector3(5.0f, 0.0f, 100.0f));
+        Bullet.Add(new Vector3(-5.0f, 0.0f, 100.0f));
+        Bullet.Add(new Vector3(0.0f, -5.0f, 100.0f));
+        Bullet.Add(new Vector3(5.0f, -5.0f, 100.0f));
+        Bullet.Add(new Vector3(-5.0f, -5.0f, 100.0f));
+
     }
 
 
     private void ShotPrefab()//íeÇÃî≠éÀ
     {
-
+        
 
         ShotInterval += 1;
 
@@ -50,18 +49,27 @@ public class SESAMIGUN : MonoBehaviour
         {
             ShotCountNow -= 1;
             
+
             GameObject bullet = (GameObject)Instantiate(BulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            //Vector3 force = new Vector3(rndx, rndy, zzz);
-            bulletRb.AddForce(RandomBullet() * ShotSpeed);
+            bulletRb.AddForce(transform.forward * ShotSpeed);
 
-            Debug.Log(RandomBullet());
+            //Debug.Log(RandomBullet());
 
             //3ïbå„Ç…èoÇµÇΩíeÇè¡Ç∑
             Destroy(bullet, 3.0f);
         }
     }
 
+    /*private Vector3 GetAngleVec(GameObject _from, GameObject _to)
+    {
+        //î≠éÀäpìx
+        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
+        Vector3 toVec = new Vector3(0, 0, 0);
+
+        return Vector3.Normalize(toVec);
+
+    }
     private void OnTriggerEnter(Collider _collider)
     {
 
@@ -80,7 +88,7 @@ public class SESAMIGUN : MonoBehaviour
 
 
     }
-
+    */
 
     private void ShotBulletDamage()
     {
@@ -89,23 +97,25 @@ public class SESAMIGUN : MonoBehaviour
 
     private void ShotNothing()//ÉäÉçÅ[Éh
     {
-
-        int reload = ShotMax - ShotCountNow;
-
-        //íeÇ™écÇ¡ÇƒÇÈÇ∆Ç´
-        if (ShotBullet >= reload)
+        time -= Time.deltaTime;
+        if (time <= 0)
         {
-            ShotCountNow += reload;
-            ShotBullet -= reload;
+            int reload = ShotMax - ShotCountNow;
 
-        }
-        //Ç»Ç¢Ç∆Ç´
-        else
-        {
-            ShotCountNow += ShotBullet;
-            ShotBullet = 0;
-        }
+            //íeÇ™écÇ¡ÇƒÇÈÇ∆Ç´
+            if (ShotBullet >= reload)
+            {
+                ShotCountNow += reload;
+                ShotBullet -= reload;
 
+            }
+            //Ç»Ç¢Ç∆Ç´
+            else
+            {
+                ShotCountNow += ShotBullet;
+                ShotBullet = 0;
+            }
+        }
 
     }
 
@@ -128,14 +138,7 @@ public class SESAMIGUN : MonoBehaviour
 
     }
 
-    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
-    {
-        //î≠éÀäpìx
-        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
-        Vector3 toVec = new Vector3(rndx, rndy, rndz);
-
-        return Vector3.Normalize(toVec);
-    }
+    
 
 
     public int GetShotCountNow()
