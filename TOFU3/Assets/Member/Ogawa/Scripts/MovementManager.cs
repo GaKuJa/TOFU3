@@ -9,7 +9,7 @@ public class MovementManager : MonoBehaviour
     private float AdaptSpeed;               // ステータスの速度
     private float lastAdaptSpeed;           // ステータスの終速度
     private float startYScale;              // Objの初期高さ
-    private string GroundTag = "Ground";    // tag
+    private string GroundTag = "Ground";    // tag - Ground
     private Rigidbody rb;                   // 物理
     private Vector3 moveDirection;          // 方向
 
@@ -212,7 +212,7 @@ public class MovementManager : MonoBehaviour
             isGround = true;
 	}
 
-    // 設置やめた
+    // 接地やめた
     private void OnCollisionExit(Collision collision)
 	{
 		if (collision.gameObject.tag == GroundTag)
