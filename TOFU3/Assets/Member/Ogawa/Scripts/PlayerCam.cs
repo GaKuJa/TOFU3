@@ -33,11 +33,11 @@ public class PlayerCam : MonoBehaviour
         yRotation += mouseX;
         xRotation -= mouseY;
 
-        if(Input.GetKeyDown("x"))
+        if(Input.GetMouseButtonDown(0))
         {
             Camera.main.fieldOfView = 45.0f;
         }
-        if(Input.GetKeyUp("x"))
+        if(Input.GetMouseButtonUp(0))
         {
             Camera.main.fieldOfView = 60.0f;
         }
