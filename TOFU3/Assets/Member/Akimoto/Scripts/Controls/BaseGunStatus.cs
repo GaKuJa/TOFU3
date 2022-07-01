@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 [System.Serializable]
 public class BaseGunStatus : MonoBehaviour
 {
+    
     // 銃のダメージ数
     [SerializeField]
     protected int bulletDamage = 0;
