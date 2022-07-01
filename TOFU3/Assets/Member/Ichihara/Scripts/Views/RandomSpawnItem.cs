@@ -4,108 +4,110 @@ using UnityEngine;
 
 public class RandomSpawnItem : MonoBehaviour
 {
-    //アイテムの情報を格納
+    //アイテムのプレハブを格納
     [SerializeField]
-    private GameObject[] itemPrefabs;
-    //ステージの床のTOFUを格納
+    private GameObject[] _itemPrefabs;
+    //ステージの床のTOFUプレハブを格納
     [SerializeField]
-    private GameObject[] fieldTOFU;
+    private GameObject[] _fieldTOFU;
     //生成された乱数を格納
-    private List<int> randNum = new List<int>();
+    private List<int> _randNum = new List<int>();
+    //現在マップに配置されているアイテムプレハブの個数を格納
+    private List<int> _items = new List<int>();
 
     //時間管理
     [SerializeField]
-    float time = 0.0f;
+    float _time = 0.0f;
     //時間経過のチェック
-    bool timerFlagFirst = false;
-    bool timerFlagSecond = false;
+    bool _timerFlagFirst = false;
+    bool _timerFlagSecond = false;
     //アイテムがスポーンする間隔を格納
     [SerializeField]
-    float interval = 0.0f;
+    float _interval = 0.0f;
     [SerializeField]
-    float ifInterval = 0.0f;
-    //intervalの値を格納
-    //intervalを減算して時間を計る為、
-    //カウンタとは別にintervalの値を確保、代入してintervalをリセットする必要がある
+    float _ifinterval = 0.0f;
+    //_intervalの値を格納
+    //_intervalを減算して時間を計る為、
+    //カウンタとは別に_intervalの値を確保、代入して_intervalをリセットする必要がある
     [SerializeField]
-    float setInterval = 0.0f;
+    float _setinterval = 0.0f;
     //スポーンするアイテム数
-    int item = 0;
-    //interval,itemを切り替えるフラグ
-    bool switchFlag = false;
+    int _item = 0;
+    //_interval,_itemを切り替えるフラグ
+    bool _switchFlag = false;
     
 
     // Start is called before the first frame update
     void Start()
     {
-        item = 4;
-        setInterval = interval;
+        _item = 4;
+        _setinterval = _interval;
     }
 
     // Update is called once per frame
     void Update()
     {
         //ゲーム開始からの経過時間
-        time -= Time.deltaTime;
+        _time -= Time.deltaTime;
 
         //制限時間が少なくなったら
-        //intervalを短くし、itemを増やす
-        if (time <= 300.0f)
-            timerFlagFirst = true;
-        if (time <= 180.0f)
-            timerFlagSecond = true;
+        //_intervalを短くし、_itemを増やす
+        if (_time <= 300.0f)
+            _timerFlagFirst = true;
+        if (_time <= 180.0f)
+            _timerFlagSecond = true;
 
-        if (!switchFlag && timerFlagSecond)
+        if (!_switchFlag && _timerFlagSecond)
         {
-            switchFlag = true;
-            interval = ifInterval;
-            item = 5;
+            _switchFlag = true;
+            _interval = _ifinterval;
+            _item = 5;
         }
 
-        Debug.Log(item);
+        //Debug.Log(_item);
 
-        interval -= Time.deltaTime;
-        //Debug.Log (setInterval = (setInterval -= Time.deltatime));
+        _interval -= Time.deltaTime;
+        //Debug.Log (set_interval = (set_interval -= Time.deltatime));
 
-        SpawnItem();
+        Spawnitem();
 
-        //intervalを初期化
-        if (interval <= 0.0f)
-            interval = setInterval;
+        //_intervalを初期化
+        if (_interval <= 0.0f)
+            _interval = _setinterval;
 
     }
 
     //アイテムを一定間隔毎にフィールドにスポーンする
-    void SpawnItem()
+    void Spawnitem()
     {
-        //intervalの経過時間
-        float Spawn = interval;
+        //_intervalの経過時間
+        float Spawn = _interval;
 
         if(Spawn <= 0.0f)
         {
             RandomNum();
-            SetItem();
+            Setitem();
         }
 
     }
 
-    //乱数を生成し、randNumに格納
+    //乱数を生成し、_randNumに格納
     void RandomNum()
     {
         //カウンタ
         int i;
 
-        for(i = 0; i < item; i++ )
+        for(i = 0; i < _item; i++ )
         {
-            //randNumに要素を追加 & その要素に乱数で取得した値を代入
-            randNum.Add(i);
-            randNum[i] = Random.Range(0, 100);
+            //_randNumに要素を追加 & その要素に乱数で取得した値を代入
+            _randNum.Add(i);
+            _randNum[i] = Random.Range(0, 100);
         }
 
     }
     
-    //RandNumの値をもとにアイテムを生成
-    void SetItem()
+    //_randNumの値をもとにアイテムを生成
+    void Setitem()
     {
         //カウンタ
         int i;
@@ -114,208 +116,230 @@ public class RandomSpawnItem : MonoBehaviour
         //アイテムをスポーンさせる座標
         Vector3 pos;
 
-        //randNumの値を参照してitemPrefabの各要素を生成する              
-        for (i = 0; i < item; i++)
+        //_randNumの値を参照して_itemPrefabの各要素を生成する              
+        for (i = 0; i < _item; i++)
         {
-            //生成するプレハブ、プレハブを生成する座標を取得
+            //_randNumの要素数を取得し、アイテム生成の回数を制御する
+
+
+            //プレハブを生成する座標を取得
             j = Random.Range(0, 17);
-            //Debug.Log (fieldTOFU[j].transform.position);
+            //Debug.Log (_fieldTOFU[j].transform.position);
 
             float x = Random.Range(0.0f, 5.0f);
             float z = Random.Range(0.0f, 5.0f);
 
-            pos = new Vector3(x, 1.0f, z);
+            pos = new Vector3(x, 1.5f, z);
             //Debug.Log(pos);
 
-            if (timerFlagFirst && timerFlagSecond)
+            if (_timerFlagFirst && _timerFlagSecond)
             {
                 //YUBA-SHILDをスポーンする確率
-                if (randNum[i] < 15)
+                if (_randNum[i] < 15)
                 {
-                    ItemInstant0();
+                    _itemInstant0();
                 }
                 //DASHI-STIMをスポーンする確率
-                else if (randNum[i] >= 15 && randNum[i] < 35)
+                else if (_randNum[i] >= 15 && _randNum[i] < 35)
                 {
-                    ItemInstant1();
+                    _itemInstant1();
                 }
                 //OKAKA-CHAFをスポーンする確率
-                else if (randNum[i] >= 35 && randNum[i] < 50)
+                else if (_randNum[i] >= 35 && _randNum[i] < 50)
                 {
-                    ItemInstant2();
+                    _itemInstant2();
                 }
                 //YUZU-RADARをスポーンする確率
-                else if (randNum[i] >= 50 && randNum[i] < 55)
+                else if (_randNum[i] >= 50 && _randNum[i] < 55)
                 {
-                    ItemInstant3();
+                    _itemInstant3();
                 }
                 //AGE-TOFUMODEをスポーンする確率
-                else if (randNum[i] >= 55 && randNum[i] < 75)
+                else if (_randNum[i] >= 55 && _randNum[i] < 75)
                 {
-                    ItemInstant4();
+                    _itemInstant4();
                 }
                 //MOMIZI-REDをスポーンする確率
-                else if (randNum[i] >= 75 && randNum[i] < 95)
+                else if (_randNum[i] >= 75 && _randNum[i] < 95)
                 {
-                    ItemInstant5();
+                    _itemInstant5();
                 }
                 //名称未定をスポーンする確率
-                else if (randNum[i] >= 95 && randNum[i] < 100)
+                else if (_randNum[i] >= 95 && _randNum[i] < 100)
                 {
-                    ItemInstant6();
+                    _itemInstant6();
                 }
 
             }
 
-            else if (timerFlagFirst && !timerFlagSecond)
+            else if (_timerFlagFirst && !_timerFlagSecond)
             {
                 //YUBA-SHILDをスポーンする確率
-                if (randNum[i] < 15)
+                if (_randNum[i] < 15)
                 {
-                    ItemInstant0();
+                    _itemInstant0();
                 }
                 //DASHI-STIMをスポーンする確率
-                else if (randNum[i] >= 15 && randNum[i] < 35)
+                else if (_randNum[i] >= 15 && _randNum[i] < 35)
                 {
-                    ItemInstant1();
+                    _itemInstant1();
                 }
                 //OKAKA-CHAFをスポーンする確率
-                else if (randNum[i] >= 35 && randNum[i] < 50)
+                else if (_randNum[i] >= 35 && _randNum[i] < 50)
                 {
-                    ItemInstant2();
+                    _itemInstant2();
                 }
                 //YUZU-RADARをスポーンする確率
-                else if (randNum[i] >= 50 && randNum[i] < 65)
+                else if (_randNum[i] >= 50 && _randNum[i] < 65)
                 {
-                    ItemInstant3();
+                    _itemInstant3();
                 }
                 //AGE-TOFUMODEをスポーンする確率
-                else if (randNum[i] >= 65 && randNum[i] < 80)
+                else if (_randNum[i] >= 65 && _randNum[i] < 80)
                 {
-                    ItemInstant4();
+                    _itemInstant4();
                 }
                 //MOMIZI-REDをスポーンする確率
-                else if (randNum[i] >= 80 && randNum[i] < 95)
+                else if (_randNum[i] >= 80 && _randNum[i] < 95)
                 {
-                    ItemInstant5();
+                    _itemInstant5();
                 }
                 //名称未定をスポーンする確率
-                else if (randNum[i] >= 95 && randNum[i] < 100)
+                else if (_randNum[i] >= 95 && _randNum[i] < 100)
                 {
-                    ItemInstant6();
+                    _itemInstant6();
                 }
 
             }
 
-            else if (!timerFlagFirst && !timerFlagSecond)
+            else if (!_timerFlagFirst && !_timerFlagSecond)
             {
                 //YUBA-SHILDをスポーンする確率
-                if (randNum[i] < 20)
+                if (_randNum[i] < 20)
                 {
-                    ItemInstant0();
+                    _itemInstant0();
                 }
                 //DASHI-STIMをスポーンする確率
-                else if (randNum[i] >= 20 && randNum[i] < 40)
+                else if (_randNum[i] >= 20 && _randNum[i] < 40)
                 {
-                    ItemInstant1();
+                    _itemInstant1();
                 }
                 //OKAKA-CHAFをスポーンする確率
-                else if (randNum[i] >= 40 && randNum[i] < 55)
+                else if (_randNum[i] >= 40 && _randNum[i] < 55)
                 {
-                    ItemInstant2();
+                    _itemInstant2();
                 }
                 //YUZU-RADARをスポーンする確率
-                else if (randNum[i] >= 55 && randNum[i] < 75)
+                else if (_randNum[i] >= 55 && _randNum[i] < 75)
                 {
-                    ItemInstant3();
+                    _itemInstant3();
                 }
                 //AGE-TOFUMODEをスポーンする確率
-                else if (randNum[i] >= 75 && randNum[i] < 85)
+                else if (_randNum[i] >= 75 && _randNum[i] < 85)
                 {
-                    ItemInstant4();
+                    _itemInstant4();
                 }
                 //MOMIZI-REDをスポーンする確率
-                else if (randNum[i] >= 85 && randNum[i] < 95)
+                else if (_randNum[i] >= 85 && _randNum[i] < 95)
                 {
-                    ItemInstant5();
+                    _itemInstant5();
                 }
                 //名称未定をスポーンする確率
-                else if (randNum[i] >= 95 && randNum[i] < 100)
+                else if (_randNum[i] >= 95 && _randNum[i] < 100)
                 {
-                    ItemInstant6();
+                    _itemInstant6();
                 }
 
-                GameObject[] countItemTags = GameObject.FindGameObjectsWithTag("Item");
-                if (countItemTags.Length == item - 1)
-                {
-                    break;
-                }
+                ////返り値を格納
+                //var count_itemTags = _itemTags;
+                //count_itemTags = GameObject.FindGameObjectsWithTag("_item");
+
+                //Debug.Log(count_itemTags);
+
+                //if (count_itemTags.Length == _item - 1)
+                //{
+                //    break;
+                //}
 
             }
 
         }
 
-        void ItemInstant0()
+        void _itemInstant0()
         {
-            var obj = Instantiate(itemPrefabs[0], fieldTOFU[j].transform.position, Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
+            var obj = Instantiate(_itemPrefabs[0], _fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
+            obj.transform.SetParent(_fieldTOFU[j].transform);
             obj.transform.SetParent(transform.root);
             obj.transform.localPosition = pos;
             obj.transform.localScale = new Vector3(1, 1, 1);
+
+            //return _itemPrefabs[0];
         }
 
-        void ItemInstant1()
+        void _itemInstant1()
         {
-            var obj = Instantiate(itemPrefabs[1], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
+            var obj = Instantiate(_itemPrefabs[1], _fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
+            obj.transform.SetParent(_fieldTOFU[j].transform);
             obj.transform.SetParent(transform.root);
             obj.transform.localPosition = pos;
             obj.transform.localScale = new Vector3(1, 1, 1);
+
+            //return _itemPrefabs[1];
         }
 
-        void ItemInstant2()
+        void _itemInstant2()
         {
-            var obj = Instantiate(itemPrefabs[2], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
+            var obj = Instantiate(_itemPrefabs[2], _fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
+            obj.transform.SetParent(_fieldTOFU[j].transform);
             obj.transform.SetParent(transform.root);
             obj.transform.localPosition = pos;
             obj.transform.localScale = new Vector3(1, 1, 1);
+
+            //return _itemPrefabs[2];
         }
 
-        void ItemInstant3()
+        void _itemInstant3()
         {
-            var obj = Instantiate(itemPrefabs[3], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
+            var obj = Instantiate(_itemPrefabs[3], _fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
+            obj.transform.SetParent(_fieldTOFU[j].transform);
             obj.transform.SetParent(transform.root);
             obj.transform.localPosition = pos;
             obj.transform.localScale = new Vector3(1, 1, 1);
+
+            //return _itemPrefabs[3];
         }
 
-        void ItemInstant4()
+        void _itemInstant4()
         {
-            var obj = Instantiate(itemPrefabs[4], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
+            var obj = Instantiate(_itemPrefabs[4], _fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
+            obj.transform.SetParent(_fieldTOFU[j].transform);
             obj.transform.SetParent(transform.root);
             obj.transform.localPosition = pos;
             obj.transform.localScale = new Vector3(1, 1, 1);
+
+            //return _itemPrefabs[4];
         }
 
-        void ItemInstant5()
+        void _itemInstant5()
         {
-            var obj = Instantiate(itemPrefabs[5], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
+            var obj = Instantiate(_itemPrefabs[5], _fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
+            obj.transform.SetParent(_fieldTOFU[j].transform);
             obj.transform.SetParent(transform.root);
             obj.transform.localPosition = pos;
             obj.transform.localScale = new Vector3(1, 1, 1);
+
+            //return _itemPrefabs[5];
         }
 
-        void ItemInstant6()
+        void _itemInstant6()
         {
-            var obj = Instantiate(itemPrefabs[6], fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
-            obj.transform.SetParent(fieldTOFU[j].transform);
+            var obj = Instantiate(_itemPrefabs[6], _fieldTOFU[j].transform.TransformVector(pos), Quaternion.identity);
+            obj.transform.SetParent(_fieldTOFU[j].transform);
             obj.transform.SetParent(transform.root);
             obj.transform.localPosition = pos;
             obj.transform.localScale = new Vector3(1, 1, 1);
+
+            //return _itemPrefabs[6];
         }
 
     }
