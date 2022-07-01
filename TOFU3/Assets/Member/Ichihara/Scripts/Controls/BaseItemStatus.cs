@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary> アイテムの基礎ステータス </summary>
 
-public class ItemStatus : MonoBehaviour
+public class BaseItemStatus : MonoBehaviour
 {
     //効果時間
     [SerializeField]
@@ -16,4 +16,5 @@ public class ItemStatus : MonoBehaviour
     protected float _pressMagni = 0;
     //プレイヤー移動速度倍率
     protected float _movePlayerMagni = 0;
+
 }

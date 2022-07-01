@@ -309,16 +309,46 @@ public class RandomSpawnItem : SpawnManager
 
         }
 
+
         // 地面のランダムな座標を取得する　
         Vector3 GetRandomPos(int randomList)
         {
-            return _fieldTOFU[randomList].transform.position
-                + new Vector3(Random.Range(-_fieldTOFU[randomList].transform.localScale.x / 2, _fieldTOFU[randomList].transform.localScale.x / 2),
-                              _fieldTOFU[randomList].transform.localScale.y / 2 + this.gameObject.transform.localScale.y / 2,
-                              Random.Range(-_fieldTOFU[randomList].transform.localScale.z / 2, _fieldTOFU[randomList].transform.localScale.z / 2));
+            //返り値の宣言
+            Vector3 setSpawnPos = Vector3.zero;
+
+            bool spawnFlag = false;
+
+            //オブジェクトの各座標系の半分の大きさ
+            Vector3 halfExtents = new Vector3(0.5f, 0.5f, 0.5f);
+
+            //ステージオブジェクト同士が重ならないように調整する
+            while (!spawnFlag)
+            {
+                Debug.Log("ItemCheck");
+
+                var posX = Random.Range(-_fieldTOFU[randomList].transform.localScale.x / 2, _fieldTOFU[randomList].transform.localScale.x / 2);
+                var posY = _fieldTOFU[randomList].transform.localScale.y / 2;
+                var posZ = Random.Range(-_fieldTOFU[randomList].transform.localScale.z / 2, _fieldTOFU[randomList].transform.localScale.z / 2);
+
+                var rotY = Random.Range(-_fieldTOFU[randomList].transform.rotation.y, _fieldTOFU[randomList].transform.rotation.y);
+
+                Vector3 prxSetSpawnPos = _fieldTOFU[randomList].transform.localPosition +
+                                        new Vector3(posX * rotY, posY, posZ * rotY);
+
+                if (!Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity))
+                {
+                    Debug.Log("ItemCheck");
+
+                    setSpawnPos = prxSetSpawnPos;
+                    spawnFlag = true;
+                    continue;
+                }
+
+            }
+
+            return setSpawnPos;
 
         }
     }
-
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary> YUBA-SHIELD(UŒ‚ˆê‰ñ–³Œø) </summary>
 
-public class YUBA_SHIELD : ItemStatus
+public class YUBA_SHIELD : BaseItemStatus
 {
 
 
@@ -13,7 +13,10 @@ public class YUBA_SHIELD : ItemStatus
     //ƒ_ƒ[ƒW‚ğˆê‰ñ‚¾‚¯‚O‚É‚·‚é
     //ˆ³—Í‚ğˆê‰ñ‚¾‚¯‚O‚É‚·‚é
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
 
 
     // Start is called before the first frame update
