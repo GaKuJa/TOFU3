@@ -254,8 +254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f11100b589c43c6948ab0cf782ae21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WallrunForce: 50
-  WallRunDistance: 1.5
+  WallrunForce: 10
+  WallRunDistance: 1
   PlayerObj: {fileID: 997324657}
   isWall:
     serializedVersion: 2
@@ -289,14 +289,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1890e3770f68240799aad14cde3ec474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 7
-  sprintSpeed: 10
-  slideSpeed: 12
+  walkSpeed: 10
+  sprintSpeed: 15
+  slideSpeed: 17
   wallrunSpeed: 10
   Drag: 2
   crouchSpeed: 0.5
   crouchYScale: 0.5
-  jumpForce: 40
+  jumpForce: 50
   PlayerObj: {fileID: 997324657}
   jumpKey: 32
   sprintKey: 304
@@ -310,9 +310,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54685749}
   serializedVersion: 2
-  m_Mass: 3
+  m_Mass: 3.5
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1

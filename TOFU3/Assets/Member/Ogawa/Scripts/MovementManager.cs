@@ -149,7 +149,7 @@ public class MovementManager : MonoBehaviour
         }
 
         // ジャンプ / 空中
-        else
+        else if (state != MovementState.wallrunning)
             state = MovementState.air;
 
         // 速度差を滑らかにする
@@ -199,6 +199,7 @@ public class MovementManager : MonoBehaviour
     {
         if (JumpCount <= 1)
         {
+            rb.velocity = Vector3.zero;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             JumpCount ++;
         }

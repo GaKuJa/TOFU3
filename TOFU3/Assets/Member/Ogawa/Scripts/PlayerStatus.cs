@@ -5,4 +5,5 @@ using UnityEngine;
 public class PlayerStatus
 {
     public float Hp { get; set; }   // HP
+    public int remain { get; set; } // 残機
 }

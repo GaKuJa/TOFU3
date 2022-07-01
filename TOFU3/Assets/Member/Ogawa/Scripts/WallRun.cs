@@ -75,6 +75,7 @@ public class WallRun : MonoBehaviour
         rb.useGravity = false;  // 重力をオフ
         pm.wallrunning = true;  // ステータスを壁走りにする
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // 移動
+        pm.JumpCount = 0;
 
         // カメラの角度を左右壁に応じて傾ける
     }
