@@ -8,7 +8,7 @@ public class ItemPickUp : MonoBehaviour
     private string YubaTag = "Yuba";
     private string StimTag = "Stim";
     private string OkakaTag = "Okaka";
-    private string YuzuTag = "Yuze";
+    private string YuzuTag = "Yuzu";
     private string AgeTofuTag = "AgeTofu";
     private string MomijiTag = "Momiji";
     private string OkuraTag = "Okura";
