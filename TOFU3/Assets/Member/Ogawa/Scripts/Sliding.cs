@@ -2,90 +2,82 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Sliding : MonoBehaviour
 {
-    [Header("References")]
-    public Transform orientation;
-    public Transform playerObj;
-    private Rigidbody rb;
-    private PlayerMovement pm;
+    private float startYScale;  // 初期の高さ
+    private float slideTimer;   // スライディング時間
+    private Rigidbody rb;       // 物理
+    private MovementManager pm; // MovementManagerを取得(元がPlayerMovveだったので変数はpm)
 
-    [Header("Sliding")]
-    public float maxSlideTime;
-    public float slideForce;
-    private float slideTimer;
+    [Header("Slideing")]
+    [SerializeField] private float maxSlideTime;                // スライディング最長時間
+    [SerializeField] private float slideForce;                  // スライディングの押し出す力
+    [SerializeField] private float slideYScale;                 // スライディング時のObj高さ
+    [SerializeField] private Transform playerObj;               // Obj取得
 
-    public float slideYScale;
-    private float startYScale;
-
-    [Header("Input")]
-    public KeyCode slideKey = KeyCode.LeftControl;
-    private float horizontalInput;
-    private float verticalInput;
-
-    private void Start()
+    [Header("Keybinding")]
+    [SerializeField] KeyCode slideKey = KeyCode.LeftControl;
+    
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
-        pm = GetComponent<PlayerMovement>();
+        pm = GetComponent<MovementManager>();   // MovementManagerを取得
 
-        startYScale = playerObj.localScale.y;
+        startYScale = playerObj.localScale.y;   // Objの初期高さを取得
     }
 
-    private void Update()
+    void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0) && pm.grounded)
+        //  キー入力した
+        if (Input.GetKeyDown(slideKey) && (pm.x != 0 || pm.z != 0) && pm.isGround)
             StartSlide();
 
-        if (Input.GetKeyUp(slideKey) && pm.sliding && !pm.grounded)
+        // キー入力やめた
+        if (Input.GetKeyUp(slideKey) && pm.sliding && pm.isGround)
             StopSlide();
     }
 
     private void FixedUpdate()
     {
+        // ステータスと一致したらスライディング処理
         if (pm.sliding)
             SlidingMovement();
     }
 
+    // スライディングを始める処理
     private void StartSlide()
     {
-        pm.sliding = true;
+        pm.sliding = true;  // ステータスをスライディングにする
 
-        playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
-        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);    // 高さをスライディングに変える
+        rb.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);                                                // スライディング : 押し出す
 
-        slideTimer = maxSlideTime;
+        slideTimer = maxSlideTime;  // 最長時間までスライディング
     }
 
+    // スライディングを止める処理
+    private void StopSlide()
+    {
+        pm.sliding = false;
+
+        playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);    // 初期の高さに戻す
+    }
+
+    // スライディング処理
     private void SlidingMovement()
     {
-        Vector3 inputDirection = orientation.forward;
+        Vector3 inputDirection = playerObj.forward; // Objの前方向
 
-        // sliding normal
-        if(!pm.OnSlope() || rb.velocity.y > -0.1f)
+        // スライディング条件
+        if(rb.velocity.y > -0.1f)
         {
             rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Impulse);
 
             slideTimer -= Time.deltaTime;
         }
 
-        // sliding down a slope
-        else
-        {
-            rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
-        }
-
+        // 時間が来たら止める
         if (slideTimer <= 0)
             StopSlide();
-    }
-
-    private void StopSlide()
-    {
-        pm.sliding = false;
-
-        playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
     }
 }
