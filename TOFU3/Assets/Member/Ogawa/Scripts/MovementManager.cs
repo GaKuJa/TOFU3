@@ -84,7 +84,7 @@ public class MovementManager : MonoBehaviour
         x = Input.GetAxis("Horizontal");
         z = Input.GetAxis("Vertical");
 
-        if(Input.GetKeyDown(jumpKey))
+        if(Input.GetKeyDown(jumpKey) && state != MovementState.wallrunning)
             Jump();
 
         if (Input.GetKeyDown(crouchKey) && isGround)
@@ -148,7 +148,7 @@ public class MovementManager : MonoBehaviour
             AdaptSpeed = walkSpeed;
         }
 
-        // ジャンプ / 空中
+        // ジャンプ - 空中
         else if (state != MovementState.wallrunning)
             state = MovementState.air;
 
