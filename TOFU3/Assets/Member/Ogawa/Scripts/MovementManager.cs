@@ -200,7 +200,7 @@ public class MovementManager : MonoBehaviour
         if (JumpCount <= 1)
         {
             rb.velocity = Vector3.zero;
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(moveDirection.normalized * MoveSpeed + Vector3.up * jumpForce, ForceMode.Impulse);
             JumpCount ++;
         }
     }

@@ -45,7 +45,7 @@ public class WallRun : MonoBehaviour
     //  条件に応じた処理をする処理
     private void StateMachine()
     {
-        if ((wallLeft || wallRight) && pm.z > 0 && transform.position.y >= 5.0f && !exitingWall)
+        if ((wallLeft || wallRight) && pm.z > 0 && transform.position.y >= 2.0f && transform.position.y <= 10.0f && !exitingWall)
         {
             if(!pm.wallrunning)
                 StartWallRun();
@@ -66,8 +66,7 @@ public class WallRun : MonoBehaviour
     {
         rb.useGravity = false;
         pm.wallrunning = true;
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        pm.JumpCount = 0;   
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);  
     }
 
     private void StopWallRun()
@@ -75,6 +74,7 @@ public class WallRun : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.useGravity = true;
         pm.wallrunning = false;
+        pm.JumpCount = 0;
     }
 
     private void WallRunningMovement()
