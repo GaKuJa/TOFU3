@@ -8,6 +8,13 @@ TagManager:
   - Item
   - shell
   - Ground
+  - Yuba
+  - Stim
+  - Okaka
+  - Yuzu
+  - AgeTofu
+  - Momiji
+  - Okura
   layers:
   - Default
   - TransparentFX
