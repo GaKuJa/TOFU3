@@ -257,6 +257,8 @@ MonoBehaviour:
   WallrunForce: 3
   WallRunDistance: 0.6
   PlayerObj: {fileID: 997324657}
+  MinHight: 3
+  MaxHight: 10
   isWall:
     serializedVersion: 2
     m_Bits: 128

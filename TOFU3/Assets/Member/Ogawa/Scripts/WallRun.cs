@@ -12,6 +12,8 @@ public class WallRun : MonoBehaviour
     [SerializeField] private float WallrunForce;
     [SerializeField] private float WallRunDistance;
     [SerializeField] private Transform PlayerObj;
+    [SerializeField] private float MinHight;
+    [SerializeField] private float MaxHight;
 
     public LayerMask isWall;
     [System.NonSerialized] public bool wallLeft;
@@ -45,7 +47,7 @@ public class WallRun : MonoBehaviour
     //  条件に応じた処理をする処理
     private void StateMachine()
     {
-        if ((wallLeft || wallRight) && pm.z > 0 && transform.position.y >= 2.0f && transform.position.y <= 10.0f && !exitingWall)
+        if ((wallLeft || wallRight) && pm.z > 0 && transform.position.y >= MinHight && transform.position.y <= MaxHight && !exitingWall)
         {
             if(!pm.wallrunning)
                 StartWallRun();
