@@ -9,6 +9,7 @@ public class WallRun : MonoBehaviour
     private RaycastHit LeftWallhit;
     private RaycastHit RightWallhit;
 
+    [SerializeField] private float Tilt;
     [SerializeField] private float WallrunForce;
     [SerializeField] private float WallRunDistance;
     [SerializeField] private Transform PlayerObj;
@@ -24,6 +25,7 @@ public class WallRun : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<MovementManager>();
+        Transform Cam =  transform.GetChild(0).gameObject.GetComponent<Transform>();
     }
 
     private void Update()
@@ -68,7 +70,12 @@ public class WallRun : MonoBehaviour
     {
         rb.useGravity = false;
         pm.wallrunning = true;
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);  
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); 
+
+        if(wallRight)
+            transform.localEulerAngles = new Vector3( 0f, 0f, Tilt); 
+        if(wallLeft)
+            transform.localEulerAngles = new Vector3( 0f, 0f, -Tilt); 
     }
 
     private void StopWallRun()
@@ -77,6 +84,11 @@ public class WallRun : MonoBehaviour
         rb.useGravity = true;
         pm.wallrunning = false;
         pm.JumpCount = 0;
+
+        if(!wallRight)
+            transform.localEulerAngles = Vector3.zero;
+        if(!wallRight)
+            transform.localEulerAngles = Vector3.zero;
     }
 
     private void WallRunningMovement()
