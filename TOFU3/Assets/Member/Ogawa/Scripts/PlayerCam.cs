@@ -11,7 +11,9 @@ public class PlayerCam : MonoBehaviour
     [SerializeField] private float sensX;   // x感度
     [SerializeField] private float sensY;   // y感度
 
+    [SerializeField] WallRun wallrun;
     [SerializeField] private Transform PlayerObj;
+    [SerializeField] private Transform CamHolder;
     
     private void Start()
     {
@@ -39,7 +41,7 @@ public class PlayerCam : MonoBehaviour
 
         xRotation = Mathf.Clamp(xRotation, -90.0f, 90.0f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        CamHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation, wallrun.tilt);
         PlayerObj.transform.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }

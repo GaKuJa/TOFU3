@@ -21,6 +21,11 @@ public class WallRun : MonoBehaviour
     [System.NonSerialized] public bool wallRight;
     [System.NonSerialized] public bool exitingWall;
 
+    [SerializeField] private float CamTilt;
+    private float initialCamTilt = 0;
+
+    public float tilt {get; set;}
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -72,10 +77,11 @@ public class WallRun : MonoBehaviour
         pm.wallrunning = true;
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); 
 
-        if(wallRight)
-            transform.localEulerAngles = new Vector3( 0f, 0f, Tilt); 
-        if(wallLeft)
-            transform.localEulerAngles = new Vector3( 0f, 0f, -Tilt); 
+        if (wallRight)
+            tilt = Mathf.LerpAngle(initialCamTilt, CamTilt, Time.time);
+        else if (wallLeft)
+            tilt = Mathf.LerpAngle(initialCamTilt, -CamTilt, Time.time);
+
     }
 
     private void StopWallRun()
@@ -85,10 +91,7 @@ public class WallRun : MonoBehaviour
         pm.wallrunning = false;
         pm.JumpCount = 0;
 
-        if(!wallRight)
-            transform.localEulerAngles = Vector3.zero;
-        if(!wallRight)
-            transform.localEulerAngles = Vector3.zero;
+       tilt = Mathf.LerpAngle(tilt, initialCamTilt, Time.time);
     }
 
     private void WallRunningMovement()
