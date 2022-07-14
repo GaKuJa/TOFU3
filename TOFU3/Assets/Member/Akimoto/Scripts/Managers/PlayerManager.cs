@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,18 +8,17 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
     private Player player = null;
-
-    [SerializeField]
-    private CameraControl _cameraControl;
-
+    
     [SerializeField]
     private GameObject playerGameObject;
+    [SerializeField]
+    private CameraControl cameraControl = null;
     public ReactiveProperty<PlayerStatus> _reactiveProperty = new ReactiveProperty<PlayerStatus>();
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-            player.SetPlayerStatus(Player.PlayerStatus.dead);
-        _reactiveProperty.Where(pSt => player.playerStatus == Player.PlayerStatus.dead).Subscribe(playerRes => player.PlayerReSpawn(playerGameObject));
+        _reactiveProperty.Where(pSt => player.playerStatus == Player.PlayerStatus.Dead).
+                          Subscribe(playerRes => cameraControl.CameraFadeOut(player.PlayerReSpawn,player.PlayerReset));
+        _reactiveProperty.Where(_ => player.playerStatus == BasePlayer.PlayerStatus.Alive).Subscribe(_ => cameraControl.ActionFadeIn());
     }
 
 }
