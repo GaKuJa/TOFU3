@@ -76,26 +76,26 @@ public class TestPlayer1Controler : MonoBehaviour
     // 基本操作の入力
     private void MoveInput()
     {
-        x = Input.GetAxis("Horizontal");
-        z = Input.GetAxis("Vertical");
+        x = Input.GetAxis("Horizontal1");
+        z = Input.GetAxis("Vertical1");
 
-        if(Input.GetKeyDown("joystick button0") && state != MovementState.wallrunning)
-            Jump();
+        if(Input.GetKeyDown("joystick 1 button 0") && state != MovementState.wallrunning)
+            Jump(); 
 
-        if (Input.GetKeyDown("joystick button1") && isGround)
+        if (Input.GetKeyDown("joystick 1 button 1") && isGround)
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
         }
 
-        if (Input.GetKeyUp("joystick button1"))
+        if (Input.GetKeyUp("joystick 1 button 1"))
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
     }
 
     // 移動処理 - ステータスによって速度変更
     private void Movement()
     {
-        moveDirection = PlayerObj.forward * z + PlayerObj.right * x;
+        moveDirection = -PlayerObj.forward * z + PlayerObj.right * x;
         rb.AddForce(moveDirection.normalized * MoveSpeed, ForceMode.Force);
 
         if(isGround)
@@ -123,14 +123,14 @@ public class TestPlayer1Controler : MonoBehaviour
         }
 
         // しゃがみ
-        else if(Input.GetKey("joystick button1"))
+        else if(Input.GetKey("joystick 1 button 1"))
         {
             state = MovementState.crouching;
             AdaptSpeed = crouchSpeed;
         }
 
         // 走り
-        else if(isGround && Input.GetKey("joystick button8"))
+        else if(isGround && Input.GetKey("joystick 1 button 8"))
         {
             state = MovementState.sprinting;
             AdaptSpeed = sprintSpeed;

@@ -6,10 +6,10 @@ using UnityEditorInternal;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SHOYUGUNScript : BaseGunStatus
+public class SHOYUGUNScript1 : BaseGunStatus
 {
-    public static SHOYUGUNScript Instance { get => _instance; }
-    static        SHOYUGUNScript _instance;
+    public static SHOYUGUNScript1 Instance { get => _instance; }
+    static        SHOYUGUNScript1 _instance;
     // ゲームオブジェクトプレハブ
     [SerializeField]
     private GameObject BulletPrefab;
@@ -31,12 +31,13 @@ public class SHOYUGUNScript : BaseGunStatus
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+
+        if (Input.GetAxis("L_R_Trigger1") < 0)
         {
             ShotPrefab();
             shootingFlag = true;
         }
-        if(Input.GetKeyDown(KeyCode.R) && magazinNum != 0)
+        if(Input.GetKeyDown("joystick 1 button 2") && magazinNum != 0)
             ReloadBullet();
         if(shootingFlag)
             IntervalControl();
