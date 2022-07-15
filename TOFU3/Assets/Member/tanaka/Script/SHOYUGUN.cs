@@ -6,6 +6,8 @@ using UnityEditorInternal;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+//main
 public class SHOYUGUN : BaseGunStatus, IBaseBulletDamege
 {
     public static SHOYUGUN Instance { get => _instance; }
@@ -19,17 +21,21 @@ public class SHOYUGUN : BaseGunStatus, IBaseBulletDamege
     private float plusShootInterval = 0;
     private int shootCount;
     private bool shootingFlag = false;
+    [SerializeField]
     private float _forcePower;
+    [SerializeField]
+    private float waittime;
+
     void Awake()
     {
         _instance = this;
     }
-
     void Start()
     {
-        plusShootInterval = shootIntervalTime;
-    }
 
+        plusShootInterval = shootIntervalTime;
+
+    }
     void Update()
     {
         if (Input.GetKey(KeyCode.Mouse0))
@@ -38,16 +44,19 @@ public class SHOYUGUN : BaseGunStatus, IBaseBulletDamege
             shootingFlag = true;
         }
         if (Input.GetKeyDown(KeyCode.R) && magazinNum != 0)
-            ReloadBullet();
+            StartCoroutine("ReloadBullet");
+        ReloadBullet();
         if (shootingFlag)
             IntervalControl();
     }
 
-    private void ReloadBullet()
+    IEnumerator ReloadBullet()
     {
+        yield return new WaitForSeconds(waittime);
         magazinNum -= shootCount;
         bulletNum += shootCount;
         shootCount = 0;
+
     }
 
     private void ShotPrefab() //�e�̔���
@@ -61,34 +70,6 @@ public class SHOYUGUN : BaseGunStatus, IBaseBulletDamege
             plusShootInterval = 0;
             PullMagazin();
         }
-    }
-
-    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
-    {
-        //発射角度
-        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
-        Vector3 toVec = new Vector3(0, 0, 0);
-
-        return Vector3.Normalize(toVec);
-    }
-
-    private void OnTriggerEnter(Collider _collider)
-    {
-
-        //ぶつかった相手からRigitBodyを取り出す
-        Rigidbody otherRigitbody = _collider.GetComponent<Rigidbody>();
-        if (!otherRigitbody)
-        {
-            return;
-        }
-
-        //吹き飛ばす方向を求める(プレイヤーから触れたものの方向)
-        Vector3 toVec = GetAngleVec(BulletPrefab, _collider.gameObject);
-
-        //吹き飛ぶ
-        otherRigitbody.AddForce(toVec * _forcePower, ForceMode.Impulse);
-
-        //Player.SetHp(BulletDamege());
     }
 
     private Vector3 RandomBullet()
