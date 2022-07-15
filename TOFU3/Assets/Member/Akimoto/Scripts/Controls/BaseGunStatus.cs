@@ -21,8 +21,8 @@ public class BaseGunStatus : MonoBehaviour
     protected int reticleSize = 0;
     // 最大弾薬数
     [SerializeField]
-    protected int magazinNum = 0;
+    public int magazinNum = 0;
     // 1マガジンに入っている弾薬数
     [SerializeField]
-    protected int bulletNum = 0;
+    public int bulletNum = 0;
 }

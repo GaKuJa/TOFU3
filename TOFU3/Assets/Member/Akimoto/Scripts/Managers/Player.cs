@@ -6,6 +6,7 @@ public class Player : BasePlayer
 {
     protected void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.tag == "bullet")
         GameManager.Instance.SetPlayerNum(playerNum);
     }
 }
