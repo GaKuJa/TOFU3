@@ -95,7 +95,7 @@ public class TestPlayer2Controler : MonoBehaviour
     // 移動処理 - ステータスによって速度変更
     private void Movement()
     {
-        moveDirection = PlayerObj.forward * z + PlayerObj.right * x;
+        moveDirection = -PlayerObj.forward * z + PlayerObj.right * x;
         rb.AddForce(moveDirection.normalized * MoveSpeed, ForceMode.Force);
 
         if (isGround)

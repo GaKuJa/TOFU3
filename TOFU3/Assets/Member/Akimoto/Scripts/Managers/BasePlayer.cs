@@ -16,15 +16,14 @@ public class BasePlayer : MonoBehaviour
     [SerializeField]
     protected int moveSpeed = 0;
     [SerializeField]
-    protected int playerNum = 0;
-    
+    public int playerNum = 0;
     [SerializeField]
     private GameObject respawnPoint;
     [SerializeField]
     public  PlayerStatus playerStatus  = PlayerStatus.Alive;
-    
     [SerializeField]
     private ReactiveProperty<int> hp = new ReactiveProperty<int>(100);
+    public int remainingLives = 3;
 
     private void Update()
     {
@@ -42,6 +41,7 @@ public class BasePlayer : MonoBehaviour
     public void PlayerReset()
     {
         hp.Value = 100;
+        remainingLives--;
     }
 
     public int GetHp()
