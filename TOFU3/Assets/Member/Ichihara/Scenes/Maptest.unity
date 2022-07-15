@@ -246,7 +246,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cd408f349627549a08889e5deb35c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfSHOYOU_GUN: {fileID: 3616819263394246073, guid: 465f1b9c928d1c84eb2091cf3ee78e74, type: 3}
+  PfSHOYOU_GUN: {fileID: 3616819263394246073, guid: 465f1b9c928d1c84eb2091cf3ee78e74, type: 3}
+  _cs_randomSpawnGun: {fileID: 248003339}
 --- !u!4 &9122858
 Transform:
   m_ObjectHideFlags: 0
@@ -381,6 +382,7 @@ MonoBehaviour:
   _interval: 5
   _afterThreeMinutesInterval: 3
   _setInterval: 0
+  Items: []
   _cs_YUBA_SHIELD: {fileID: 1179627795}
   _cs_DASHI_STIM: {fileID: 685019846}
   _cs_OKAKA_CHAF: {fileID: 1289449884}
@@ -432,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8271fbc570e77df4385b6920f1dc6a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfAGE_TOFUMODE: {fileID: 5282522958233614419, guid: d7438b086d37e504a8e32548d08dc8e1, type: 3}
+  PfAGE_TOFUMODE: {fileID: 3732294170471358279, guid: c17dd18dfa537fd458bac244a27b9ec7, type: 3}
 --- !u!1 &184535992
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +448,7 @@ GameObject:
   - component: {fileID: 184535994}
   - component: {fileID: 184535993}
   m_Layer: 0
-  m_Name: LowFloorTOFU_4
+  m_Name: LowFloorTOFU_d_3
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -581,6 +583,7 @@ MonoBehaviour:
   _interval: 5
   _afterThreeMinutesInterval: 3
   _setInterval: 0
+  Guns: []
   _cs_SHOYOU_GUN: {fileID: 9122857}
   _cs_KOYADOFU_GUN: {fileID: 255158233}
   _cs_Long_NEGI_Rifle: {fileID: 563291263}
@@ -637,7 +640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0519ebe7b3a3ad43b0fbbf8304c7d38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfKOYADOFU_GUN: {fileID: 7926366789767982748, guid: dff4a83c871515a428a023a286e513dd, type: 3}
+  PfKOYADOFU_GUN: {fileID: 7926366789767982748, guid: dff4a83c871515a428a023a286e513dd, type: 3}
+  _cs_randomSpawnGun: {fileID: 248003339}
 --- !u!4 &255158234
 Transform:
   m_ObjectHideFlags: 0
@@ -666,7 +670,7 @@ GameObject:
   - component: {fileID: 294072290}
   - component: {fileID: 294072289}
   m_Layer: 0
-  m_Name: LowFloorTOFU_2
+  m_Name: LowFloorTOFU_b_1
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -861,7 +865,7 @@ GameObject:
   - component: {fileID: 358514681}
   - component: {fileID: 358514680}
   m_Layer: 0
-  m_Name: HighFloorTOFU
+  m_Name: HighFloorTOFU_4
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -959,7 +963,7 @@ GameObject:
   - component: {fileID: 380762514}
   - component: {fileID: 380762513}
   m_Layer: 0
-  m_Name: LowFloorTOFU_4
+  m_Name: LowFloorTOFU_d_2
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1134,7 +1138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382796827}
   m_LocalRotation: {x: -0, y: 0.92387956, z: -0, w: 0.38268343}
-  m_LocalPosition: {x: 32.381313, y: -1.0295346, z: -30.04247}
+  m_LocalPosition: {x: 32.381313, y: -1, z: -30.04247}
   m_LocalScale: {x: 10, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1231,7 +1235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416961446}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.3813143, y: -1.0295346, z: 8.957529}
+  m_LocalPosition: {x: 3.3813143, y: -1, z: 8.957529}
   m_LocalScale: {x: 4, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1267,7 +1271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bbde8b389eb6a64e83e7c8b8c0694b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfLong_NEGI_Rifle: {fileID: 3850576293006329465, guid: 4ef22e64a6da66e41a36807dcc40f8cf, type: 3}
+  PfLong_NEGI_Rifle: {fileID: 3850576293006329465, guid: 4ef22e64a6da66e41a36807dcc40f8cf, type: 3}
+  _cs_randomSpawnGun: {fileID: 248003339}
 --- !u!4 &563291264
 Transform:
   m_ObjectHideFlags: 0
@@ -1296,7 +1301,7 @@ GameObject:
   - component: {fileID: 576582459}
   - component: {fileID: 576582458}
   m_Layer: 0
-  m_Name: LowFloorTOFU_4
+  m_Name: LowFloorTOFU_d_1
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1471,7 +1476,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615159763}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.6186857, y: -1.0295346, z: -0.042470455}
+  m_LocalPosition: {x: -3.6186857, y: -1, z: -0.042470455}
   m_LocalScale: {x: 3, y: 2, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1568,7 +1573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663284702}
   m_LocalRotation: {x: -0, y: 0.92387956, z: -0, w: 0.38268343}
-  m_LocalPosition: {x: -5.6186857, y: -1.0295346, z: -10.042471}
+  m_LocalPosition: {x: -5.6186857, y: -1, z: -10.042471}
   m_LocalScale: {x: 6, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1619,7 +1624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93143141d8f385e4394e9cccf14afd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfDASHI_STIM: {fileID: 1631860086076267939, guid: b2d786bb770f0544c8e545ceaadd5490, type: 3}
+  PfDASHI_STIM: {fileID: 3219421747871711967, guid: 1ae3636bf0624c34fb3e58fdbf076367, type: 3}
 --- !u!1 &779085792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,7 +1715,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779085792}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.3813143, y: -1.0295346, z: -22.04247}
+  m_LocalPosition: {x: 3.3813143, y: -1, z: -22.04247}
   m_LocalScale: {x: 6, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1761,7 +1766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf221109d0ddac4a8665362cc92d36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfOKURA_TORIMOCHI: {fileID: 2276771605038317973, guid: 733d39b5d7ccf7a4cbdcdca22e4aa963, type: 3}
+  PfOKURA_TORIMOCHI: {fileID: 63650226685427964, guid: 088fe60e8d3e85d448899cbfe524c17d, type: 3}
 --- !u!1 &821574041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,7 +1816,7 @@ GameObject:
   - component: {fileID: 839847057}
   - component: {fileID: 839847056}
   m_Layer: 0
-  m_Name: LowFloorTOFU_1
+  m_Name: LowFloorTOFU_a_1
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1909,7 +1914,7 @@ GameObject:
   - component: {fileID: 904215594}
   - component: {fileID: 904215593}
   m_Layer: 0
-  m_Name: HighFloorTOFU
+  m_Name: HighFloorTOFU_1
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2007,7 +2012,7 @@ GameObject:
   - component: {fileID: 925364812}
   - component: {fileID: 925364811}
   m_Layer: 0
-  m_Name: LowFloorTOFU_2
+  m_Name: LowFloorTOFU_b_2
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2105,7 +2110,7 @@ GameObject:
   - component: {fileID: 940700859}
   - component: {fileID: 940700858}
   m_Layer: 0
-  m_Name: LowFloorTOFU_4
+  m_Name: LowFloorTOFU_d_4
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2280,7 +2285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971493669}
   m_LocalRotation: {x: -0, y: 0.92387956, z: -0, w: 0.38268343}
-  m_LocalPosition: {x: 22.381313, y: -1.0295346, z: -0.042470455}
+  m_LocalPosition: {x: 22.381313, y: -1, z: -0.042470455}
   m_LocalScale: {x: 6, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2427,7 +2432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5740d9688f4aa945b458fa74e2a8632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfB_F_T: {fileID: 6008852686001076085, guid: a6093cec3512e0544835e8ef890bc033, type: 3}
+  PfB_F_T: {fileID: 6008852686001076085, guid: a6093cec3512e0544835e8ef890bc033, type: 3}
+  _cs_randomSpawnGun: {fileID: 248003339}
 --- !u!4 &1043470173
 Transform:
   m_ObjectHideFlags: 0
@@ -2630,7 +2636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135990866}
   m_LocalRotation: {x: -0, y: 0.38268343, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 32.381313, y: -1.0295346, z: 19.95753}
+  m_LocalPosition: {x: 32.381313, y: -1, z: 19.95753}
   m_LocalScale: {x: 10, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2727,7 +2733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140186423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.381314, y: -1.0295346, z: 11.957529}
+  m_LocalPosition: {x: 13.381314, y: -1, z: 11.957529}
   m_LocalScale: {x: 6, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2824,7 +2830,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142706837}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.381313, y: -1.0295346, z: -10.042471}
+  m_LocalPosition: {x: 20.381313, y: -1, z: -10.042471}
   m_LocalScale: {x: 3, y: 2, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2875,7 +2881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4616dbf6d625ae439a623f28c85e1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfYUBA_SHIELD: {fileID: 199262067011562858, guid: eedad774f62946a4bb8b8075442f3137, type: 3}
+  pfYUBA_SHIELD: {fileID: 1434513490413591633, guid: 5869d8e7120d312428e51096996bbf33, type: 3}
 --- !u!1 &1231401428
 GameObject:
   m_ObjectHideFlags: 0
@@ -2920,7 +2926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a1ce11016bfa641afb704a46175c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfMOMIZI_RED: {fileID: 8782245037217784613, guid: 43ac9dc273957814ca9d90514d9bb07c, type: 3}
+  PfMOMIZI_RED: {fileID: 1955777648776288862, guid: 6c905a29c938e53439ce25ce2a5937c8, type: 3}
 --- !u!1 &1248381301
 GameObject:
   m_ObjectHideFlags: 0
@@ -3108,7 +3114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268013878}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.381314, y: -1.0295346, z: 18.95753}
+  m_LocalPosition: {x: 8, y: -1, z: 19}
   m_LocalScale: {x: 4, y: 2, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3159,7 +3165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421063af5bf2e2441b8ddbff84d610af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfOKAKA_CHAF: {fileID: 3483429747092522900, guid: 9b990cedd62a07040a892663cdca9ca6, type: 3}
+  PfOKAKA_CHAF: {fileID: 3483429747092522900, guid: 9b990cedd62a07040a892663cdca9ca6, type: 3}
 --- !u!1 &1314537734
 GameObject:
   m_ObjectHideFlags: 0
@@ -3367,7 +3373,7 @@ GameObject:
   - component: {fileID: 1323886337}
   - component: {fileID: 1323886336}
   m_Layer: 0
-  m_Name: LowFloorTOFU_1
+  m_Name: LowFloorTOFU_a_2
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3562,7 +3568,7 @@ GameObject:
   - component: {fileID: 1394760870}
   - component: {fileID: 1394760869}
   m_Layer: 0
-  m_Name: LowFloorTOFU_3
+  m_Name: LowFloorTOFU_c_4
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3737,7 +3743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441130920}
   m_LocalRotation: {x: 0, y: 0.9238796, z: -0, w: -0.38268325}
-  m_LocalPosition: {x: -15.618686, y: -1.0295346, z: -30.04247}
+  m_LocalPosition: {x: -15.618686, y: -1, z: -30.04247}
   m_LocalScale: {x: 10, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3773,7 +3779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2a8d7ff148dcb4895edf9454c27ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfKATSUO_BUSHI: {fileID: 8314698889898289792, guid: 94b43fac94aa7364580dd990964f6d6b, type: 3}
+  PfKATSUO_BUSHI: {fileID: 8314698889898289792, guid: 94b43fac94aa7364580dd990964f6d6b, type: 3}
+  _cs_randomSpawnGun: {fileID: 248003339}
 --- !u!4 &1500171127
 Transform:
   m_ObjectHideFlags: 0
@@ -3802,7 +3809,7 @@ GameObject:
   - component: {fileID: 1636353265}
   - component: {fileID: 1636353264}
   m_Layer: 0
-  m_Name: HighFloorTOFU
+  m_Name: HighFloorTOFU_3
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3977,7 +3984,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647678063}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.381314, y: -1.0295346, z: -29.04247}
+  m_LocalPosition: {x: 8, y: -1, z: -29}
   m_LocalScale: {x: 4, y: 2, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4081,7 +4088,7 @@ GameObject:
   - component: {fileID: 1790521927}
   - component: {fileID: 1790521926}
   m_Layer: 0
-  m_Name: LowFloorTOFU_3
+  m_Name: LowFloorTOFU_c_2
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4195,7 +4202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb86b2f058b06f44868d4b7adcadde5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfSESAMI_Shoot: {fileID: 6192826938434396369, guid: 49c8fca1a957cf242a8fd9352033f881, type: 3}
+  PfSESAMI_Shoot: {fileID: 6192826938434396369, guid: 49c8fca1a957cf242a8fd9352033f881, type: 3}
+  _cs_randomSpawnGun: {fileID: 248003339}
 --- !u!4 &1850491608
 Transform:
   m_ObjectHideFlags: 0
@@ -4302,7 +4310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916fdafd07db8364e947a257a38c342c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pfYUZU_RADAR: {fileID: 1358772082917621907, guid: 4087dab8a38a5434f999b3a2f67520d0, type: 3}
+  pfYUZU_RADAR: {fileID: 3037011318930160159, guid: 29de8e50088df1a4594a7a24e0e4a34d, type: 3}
 --- !u!1 &1948927379
 GameObject:
   m_ObjectHideFlags: 0
@@ -4316,7 +4324,7 @@ GameObject:
   - component: {fileID: 1948927381}
   - component: {fileID: 1948927380}
   m_Layer: 0
-  m_Name: LowFloorTOFU_3
+  m_Name: LowFloorTOFU_c_3
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4491,7 +4499,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956621865}
   m_LocalRotation: {x: 0, y: 0.3826836, z: -0, w: -0.92387944}
-  m_LocalPosition: {x: -15.618686, y: -1.0295346, z: 19.95753}
+  m_LocalPosition: {x: -15.618686, y: -1, z: 19.95753}
   m_LocalScale: {x: 10, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4588,7 +4596,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974150209}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.381314, y: -1.0295346, z: -19.04247}
+  m_LocalPosition: {x: 13.381314, y: -1, z: -19.04247}
   m_LocalScale: {x: 4, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4608,7 +4616,7 @@ GameObject:
   - component: {fileID: 1990281032}
   - component: {fileID: 1990281031}
   m_Layer: 0
-  m_Name: LowFloorTOFU_3
+  m_Name: LowFloorTOFU_c_1
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4706,7 +4714,7 @@ GameObject:
   - component: {fileID: 2028788793}
   - component: {fileID: 2028788792}
   m_Layer: 0
-  m_Name: HighFloorTOFU
+  m_Name: HighFloorTOFU_2
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

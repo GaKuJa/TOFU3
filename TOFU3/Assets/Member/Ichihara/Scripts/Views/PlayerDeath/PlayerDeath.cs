@@ -8,12 +8,14 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    [SerializeField]
-    TestPlayerDeath testPlayerDeath;
-
     private void OnCollisionEnter(Collision collision)
     {
-        testPlayerDeath.playerstatus = TestPlayerDeath.Playerstatus.death;
-        Debug.Log(testPlayerDeath.playerstatus);
+        PlayerDeathStatus.instance.playerstatus = PlayerDeathStatus.Playerstatus.death;
+        Debug.Log(PlayerDeathStatus.instance.playerstatus);
+    }
+
+    public PlayerDeathStatus.Playerstatus SetPlayerDeath()
+    {
+        return PlayerDeathStatus.instance.playerstatus;
     }
 }

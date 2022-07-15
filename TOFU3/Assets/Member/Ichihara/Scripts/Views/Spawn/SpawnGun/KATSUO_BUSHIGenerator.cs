@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// KATSUO武士のオブジェクトプール生成
 /// </summary>
 
-
-
 public class KATSUO_BUSHIGenerator : MonoBehaviour
 {
     //KATSUO武士のプレハブを格納
-    public GameObject _pfKATSUO_BUSHI;
+    [SerializeField]
+    private GameObject PfKATSUO_BUSHI = null;
+
     //アイテムを備蓄しておくList 
-    List<PoolingObjectPrefabs> _list_KATSUO_BUSHI = new List<PoolingObjectPrefabs>();
+    private List<PoolingObjectPrefabs> _list_KATSUO_BUSHI = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
-    const int maxGuns = 5;
+    private const int maxGuns = 5;
 
 
     // Start is called before the first frame update
@@ -27,7 +26,7 @@ public class KATSUO_BUSHIGenerator : MonoBehaviour
             PoolingObjectPrefabs gun_KATSUO;
 
             //アイテムの生成
-            gun_KATSUO = (Instantiate(_pfKATSUO_BUSHI)).GetComponent<PoolingObjectPrefabs>();
+            gun_KATSUO = (Instantiate(PfKATSUO_BUSHI)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「KATSUO_BUSHIGenerator」オブジェクトの子にしておく
             gun_KATSUO.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -40,15 +39,15 @@ public class KATSUO_BUSHIGenerator : MonoBehaviour
     /// List「_list_KATSUO_BUSHI」の中身を最初から確認していき、
     /// 非アクティブのオブジェクトを探す関数
     /// </summary>
-    /// <param name="spwanPos"></param>
-    public void GenerateKATSUO_BUSHI(Vector3 spwanPos)
+    /// <param name="spawnPos"></param>
+    public void GenerateKATSUO_BUSHI(Vector3 spawnPos)
     {
         for (int i = 0; i < _list_KATSUO_BUSHI.Count; i++)
         {
-            if (_list_KATSUO_BUSHI[i].gameObject.activeSelf == false && GameObject.FindGameObjectsWithTag("Gun").Length < maxGuns)
+            if (_list_KATSUO_BUSHI[i].gameObject.activeSelf == false)
             {
                 //非アクティブのアイテムを生成する
-                _list_KATSUO_BUSHI[i].InitItem(spwanPos);
+                _list_KATSUO_BUSHI[i].InitItem(spawnPos);
                 break;
             }
         }

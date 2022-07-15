@@ -1,33 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
 
 /// <summary>
 /// 銃をランダムな位置に生成するスクリプト
 /// </summary>
 
-
-public class RandomSpawnGun : SpawnManager
+public class RandomSpawnGun : BaseSpawmStatus
 {
+    //フィールドに存在している銃の総数
+    public List<GameObject> Guns = new List<GameObject>();
+
     //スポーンする銃の総数
-    int _gun = 0;
+    private int _gun = 0;
 
     //Inspectorから「Generator」スクリプトを設定
     [SerializeField]
-    SHOYOU_GUNGenerator _cs_SHOYOU_GUN;
+    private SHOYOU_GUNGenerator _cs_SHOYOU_GUN = null;
     [SerializeField]
-    KOYADOFU_GUNGenerator _cs_KOYADOFU_GUN;
+    private KOYADOFU_GUNGenerator _cs_KOYADOFU_GUN = null;
     [SerializeField]
-    Long_NEGI_RifleGenerator _cs_Long_NEGI_Rifle;
+    private Long_NEGI_RifleGenerator _cs_Long_NEGI_Rifle = null;
     [SerializeField]
-    SESAMI_ShooterGenerator _cs_SESAMI_Shooter;
+    private SESAMI_ShooterGenerator _cs_SESAMI_Shooter = null;
     [SerializeField]
-    KATSUO_BUSHIGenerator _cs_KATSUO_BUSHI;
+    private KATSUO_BUSHIGenerator _cs_KATSUO_BUSHI = null;
     [SerializeField]
-    B_F_TGenerator _cs_B_F_T;
+    private B_F_TGenerator _cs_B_F_T = null;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +62,10 @@ public class RandomSpawnGun : SpawnManager
         _interval -= Time.deltaTime;
 
         SpawnGun();
+        if (Guns.Count > 1)
+        {
+            RemoveElements();
+        }
 
         //_intervalをリセット
         if (_interval <= 0.0f)
@@ -81,6 +85,19 @@ public class RandomSpawnGun : SpawnManager
             SetGun();
         }
 
+    }
+
+    /// <summary> Gunsに格納されているオブジェクトがfalseの場合、
+    /// そのオブジェクトが格納されている要素を除去する関数 </summary>
+    void RemoveElements()
+    {
+        foreach(GameObject gun in Guns)
+        {
+            if (gun.activeSelf == false)
+            {
+                Guns.Remove(gameObject);
+            }
+        }
     }
 
     /// <summary> 乱数を生成し、_randNumに格納する関数 </summary>
@@ -113,8 +130,15 @@ public class RandomSpawnGun : SpawnManager
         //_randNumの値を参照して_itemPrefabの各要素を生成する              
         for (int i = 0; i < _gun; i++)
         {
-            if (GameObject.FindGameObjectsWithTag("Gun").Length == _gun)
+            //Itemsにスポーンしたオブジェクトの情報を格納
+            if (Guns.Count < _gun)
+            {
+                Guns.Add(gameObject);
+            }
+            else if (Guns.Count >= _gun)
+            {
                 break;
+            }
 
             //プレハブを生成する座標を取得
             j = Random.Range(0, _fieldRandomTOFU.Count);
@@ -280,41 +304,44 @@ public class RandomSpawnGun : SpawnManager
 
         }
 
+        
         // 地面のランダムな座標を取得する　
         Vector3 GetRandomPos(int randomList)
         {
             //返り値の宣言
             Vector3 setSpawnPos = Vector3.zero;
 
-            bool spawnFlag = false;
+            bool checkFlag = false;
 
-            //オブジェクトの各座標系の半分の大きさ
-            Vector3 halfExtents = new Vector3(0.5f, 0.5f, 0.5f);
+            //オブジェクトのx座標系、z座標系の半分の大きさ
+            Vector3 halfExtents = new Vector3(0.5f, 0.0f, 0.5f);
+
+            Debug.Log("fieldTOFU :" + randomList + " Item");
 
             //ステージオブジェクト同士が重ならないように調整する
-            while (!spawnFlag)
+            do
             {
-                Debug.Log("GunCheck");
+                //スポーンする座標の最大値、最小値を設定
+                var spawnPosX = Mathf.Clamp(Random.Range(-_fieldTOFU[randomList].transform.localScale.x / 2 + halfExtents.x, _fieldTOFU[randomList].transform.localScale.x / 2 - halfExtents.x),
+                                            -_fieldTOFU[randomList].transform.localScale.x / 2,
+                                            _fieldTOFU[randomList].transform.localScale.x / 2);
 
-                var posX = Random.Range(-_fieldTOFU[randomList].transform.localScale.x / 2, _fieldTOFU[randomList].transform.localScale.x / 2);
-                var posY = _fieldTOFU[randomList].transform.localScale.y / 2;
-                var posZ = Random.Range(-_fieldTOFU[randomList].transform.localScale.z / 2, _fieldTOFU[randomList].transform.localScale.z / 2);
+                var spawnPosZ = Mathf.Clamp(Random.Range(-_fieldTOFU[randomList].transform.localScale.z / 2 + halfExtents.z, _fieldTOFU[randomList].transform.localScale.z / 2 - halfExtents.z),
+                                            -_fieldTOFU[randomList].transform.localScale.z / 2,
+                                            _fieldTOFU[randomList].transform.localScale.z / 2);
 
-                var rotY = Random.Range(-_fieldTOFU[randomList].transform.rotation.y, _fieldTOFU[randomList].transform.rotation.y);
-
-                Vector3 prxSetSpawnPos = _fieldTOFU[randomList].transform.localPosition +
-                                        new Vector3(posX * rotY, posY, posZ * rotY);
+                //オブジェクトがスポーンする座標
+                Vector3 prxSetSpawnPos = _fieldTOFU[randomList].transform.position +
+                    new Vector3(spawnPosX, _fieldTOFU[randomList].transform.localScale.y / 2, spawnPosZ);
 
                 if (!Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity))
                 {
-                    Debug.Log("GunCheck");
-
+                    Debug.Log(prxSetSpawnPos);
                     setSpawnPos = prxSetSpawnPos;
-                    spawnFlag = true;
-                    continue;
+                    checkFlag = true;
                 }
 
-            }
+            } while (!checkFlag);
 
             return setSpawnPos;
 

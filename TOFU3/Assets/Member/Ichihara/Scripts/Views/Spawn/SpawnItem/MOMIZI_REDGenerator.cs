@@ -2,21 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// MOMIZI-REDのオブジェクトプール生成
 /// </summary>
 
-
-
 public class MOMIZI_REDGenerator : MonoBehaviour
 {
     //MOMIZI-REDのプレハブを格納
-    public GameObject _pfMOMIZI_RED;
+    public GameObject PfMOMIZI_RED;
+
     //アイテムを備蓄しておくList 
-    List<PoolingObjectPrefabs> _list_MOMIZI_RED = new List<PoolingObjectPrefabs>();
+    private List<PoolingObjectPrefabs> _list_MOMIZI_RED = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
-    const int _maxItems = 5;
+    private const int _maxItems = 5;
 
 
     // Start is called before the first frame update
@@ -27,7 +25,7 @@ public class MOMIZI_REDGenerator : MonoBehaviour
             PoolingObjectPrefabs item_MOMIZI;
 
             //アイテムの生成
-            item_MOMIZI = (Instantiate(_pfMOMIZI_RED)).GetComponent<PoolingObjectPrefabs>();
+            item_MOMIZI = (Instantiate(PfMOMIZI_RED)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「YUBA_SHIELDGenerator」オブジェクトの子にしておく
             item_MOMIZI.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -40,15 +38,15 @@ public class MOMIZI_REDGenerator : MonoBehaviour
     /// List「_list_MOMIZI_RED」の中身を最初から確認していき、
     /// 非アクティブのオブジェクトを探す関数
     /// </summary>
-    /// <param name="spwanPos"></param>
-    public void GenerateMOMIZI_RED(Vector3 spwanPos)
+    /// <param name="spawnPos"></param>
+    public void GenerateMOMIZI_RED(Vector3 spawnPos)
     {
         for (int i = 0; i < _list_MOMIZI_RED.Count; i++)
         {
-            if (_list_MOMIZI_RED[i].gameObject.activeSelf == false && GameObject.FindGameObjectsWithTag("Item").Length < _maxItems)
+            if (_list_MOMIZI_RED[i].gameObject.activeSelf == false)
             {
                 //非アクティブのアイテムを生成する
-                _list_MOMIZI_RED[i].InitItem(spwanPos);
+                _list_MOMIZI_RED[i].InitItem(spawnPos);
                 break;
             }
         }

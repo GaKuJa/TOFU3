@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// Long-NEGI-Rifleのオブジェクトプール生成
 /// </summary>
 
-
-
 public class Long_NEGI_RifleGenerator : MonoBehaviour
 {
     //Long-NEGI-Rifleのプレハブを格納
-    public GameObject _pfLong_NEGI_Rifle;
+    [SerializeField]
+    private GameObject PfLong_NEGI_Rifle = null;
+
     //アイテムを備蓄しておくList 
-    List<PoolingObjectPrefabs> _list_Long_NEGI_Rifle = new List<PoolingObjectPrefabs>();
+    private List<PoolingObjectPrefabs> _list_Long_NEGI_Rifle = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
-    const int maxGuns = 5;
+    private const int maxGuns = 5;
 
 
     // Start is called before the first frame update
@@ -27,7 +26,7 @@ public class Long_NEGI_RifleGenerator : MonoBehaviour
             PoolingObjectPrefabs gun_NEGI;
 
             //アイテムの生成
-            gun_NEGI = (Instantiate(_pfLong_NEGI_Rifle)).GetComponent<PoolingObjectPrefabs>();
+            gun_NEGI = (Instantiate(PfLong_NEGI_Rifle)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「Long_NEGI_RifleGenerator」オブジェクトの子にしておく
             gun_NEGI.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -40,15 +39,15 @@ public class Long_NEGI_RifleGenerator : MonoBehaviour
     /// List「_list_Long_NEGI_Rifle」の中身を最初から確認していき、
     /// 非アクティブのオブジェクトを探す関数
     /// </summary>
-    /// <param name="spwanPos"></param>
-    public void GenerateLong_NEGI_Rifle(Vector3 spwanPos)
+    /// <param name="spawnPos"></param>
+    public void GenerateLong_NEGI_Rifle(Vector3 spawnPos)
     {
         for (int i = 0; i < _list_Long_NEGI_Rifle.Count; i++)
         {
-            if (_list_Long_NEGI_Rifle[i].gameObject.activeSelf == false && GameObject.FindGameObjectsWithTag("Gun").Length < maxGuns)
+            if (_list_Long_NEGI_Rifle[i].gameObject.activeSelf == false)
             {
                 //非アクティブのアイテムを生成する
-                _list_Long_NEGI_Rifle[i].InitItem(spwanPos);
+                _list_Long_NEGI_Rifle[i].InitItem(spawnPos);
                 break;
             }
         }

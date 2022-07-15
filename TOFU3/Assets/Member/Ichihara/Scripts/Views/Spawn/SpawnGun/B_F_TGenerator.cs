@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// B・F・Tのオブジェクトプール生成
 /// </summary>
 
-
 public class B_F_TGenerator : MonoBehaviour
 {
     //YUBA-SHILDのプレハブを格納
-    public GameObject _pfB_F_T;
+    [SerializeField]
+    private GameObject PfB_F_T = null;
+
     //アイテムを備蓄しておくList 
-    List<PoolingObjectPrefabs> _list_B_F_T = new List<PoolingObjectPrefabs>();
+    private List<PoolingObjectPrefabs> _list_B_F_T = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
-    const int maxGuns = 5;
+    private const int maxGuns = 5;
 
 
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class B_F_TGenerator : MonoBehaviour
             PoolingObjectPrefabs gun_BFT;
 
             //アイテムの生成
-            gun_BFT = (Instantiate(_pfB_F_T)).GetComponent<PoolingObjectPrefabs>();
+            gun_BFT = (Instantiate(PfB_F_T)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「B_F_TGenerator」オブジェクトの子にしておく
             gun_BFT.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -39,15 +39,15 @@ public class B_F_TGenerator : MonoBehaviour
     /// List「_list_B_F_T」の中身を最初から確認していき、
     /// 非アクティブのオブジェクトを探す関数
     /// </summary>
-    /// <param name="spwanPos"></param>
-    public void GenerateB_F_T(Vector3 spwanPos)
+    /// <param name="spawnPos"></param>
+    public void GenerateB_F_T(Vector3 spawnPos)
     {
         for (int i = 0; i < _list_B_F_T.Count; i++)
         {
-            if (_list_B_F_T[i].gameObject.activeSelf == false && GameObject.FindGameObjectsWithTag("Gun").Length < maxGuns)
+            if (_list_B_F_T[i].gameObject.activeSelf == false)
             {
                 //非アクティブのアイテムを生成する
-                _list_B_F_T[i].InitItem(spwanPos);
+                _list_B_F_T[i].InitItem(spawnPos);
                 break;
             }
         }

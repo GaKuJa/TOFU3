@@ -2,21 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// DASHI-STIMのオブジェクトプール生成
 /// </summary>
 
-
-
 public class DASHI_STIMGenerator : MonoBehaviour
 {
     //DASHI-STIMのプレハブを格納
-    public GameObject _pfDASHI_STIM;
+    public GameObject PfDASHI_STIM;
+
     //アイテムを備蓄しておくList 
-    List<PoolingObjectPrefabs> _list_DASHI_STIM = new List<PoolingObjectPrefabs>();
+    private List<PoolingObjectPrefabs> _list_DASHI_STIM = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
-    const int _maxItems = 5;
+    private const int _maxItems = 5;
 
 
     // Start is called before the first frame update
@@ -27,7 +25,7 @@ public class DASHI_STIMGenerator : MonoBehaviour
             PoolingObjectPrefabs item_DASHI;
 
             //アイテムの生成
-            item_DASHI = (Instantiate(_pfDASHI_STIM)).GetComponent<PoolingObjectPrefabs>();
+            item_DASHI = (Instantiate(PfDASHI_STIM)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「YUBA_SHIELDGenerator」オブジェクトの子にしておく
             item_DASHI.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -40,15 +38,15 @@ public class DASHI_STIMGenerator : MonoBehaviour
     /// List「_list_DASHI_STIM」の中身を最初から確認していき、
     /// 非アクティブのオブジェクトを探す関数
     /// </summary>
-    /// <param name="spwanPos"></param>
-    public void GenerateDASHI_STIM(Vector3 spwanPos)
+    /// <param name="spawnPos"></param>
+    public void GenerateDASHI_STIM(Vector3 spawnPos)
     {
         for (int i = 0; i < _list_DASHI_STIM.Count; i++)
         {
-            if (_list_DASHI_STIM[i].gameObject.activeSelf == false && GameObject.FindGameObjectsWithTag("Item").Length < _maxItems)
+            if (_list_DASHI_STIM[i].gameObject.activeSelf == false)
             {
                 //非アクティブのアイテムを生成する
-                _list_DASHI_STIM[i].InitItem(spwanPos);
+                _list_DASHI_STIM[i].InitItem(spawnPos);
                 break;
             }
         }
