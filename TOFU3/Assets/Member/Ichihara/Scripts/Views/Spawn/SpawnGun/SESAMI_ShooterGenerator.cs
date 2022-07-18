@@ -9,8 +9,7 @@ using UnityEngine;
 public class SESAMI_ShooterGenerator : MonoBehaviour
 {
     //SESAMI-Shooterのプレハブを格納
-    [SerializeField]
-    private GameObject PfSESAMI_Shoot = null;
+    public GameObject PfSESAMI_Shoot = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_SESAMI_Shoot = new List<PoolingObjectPrefabs>();

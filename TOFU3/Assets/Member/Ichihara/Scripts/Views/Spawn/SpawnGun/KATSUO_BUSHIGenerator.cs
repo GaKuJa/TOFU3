@@ -9,8 +9,7 @@ using UnityEngine;
 public class KATSUO_BUSHIGenerator : MonoBehaviour
 {
     //KATSUO武士のプレハブを格納
-    [SerializeField]
-    private GameObject PfKATSUO_BUSHI = null;
+    public GameObject PfKATSUO_BUSHI = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_KATSUO_BUSHI = new List<PoolingObjectPrefabs>();

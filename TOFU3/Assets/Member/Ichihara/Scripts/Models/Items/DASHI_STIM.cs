@@ -17,8 +17,7 @@ public class DASHI_STIM : BaseItemStatus
 
     private void GetDASHI_STIM()
     {
-        //効果時間(15秒)
-        _effectTime = 15.0f;
+        bool buffSpeedUpFlag = false;
 
         do
         {
@@ -27,6 +26,20 @@ public class DASHI_STIM : BaseItemStatus
             //移動速度を上げる
             //スプリント時の速度を上げる
             //スライディング時の速度を上げる
+
+            if(buffSpeedUpFlag == false)
+            {
+                _cs_playerStatus.buffSpeed *= _movePlayerMagni;
+
+            }
+
+
+
+            //効果時間(15秒)
+            if (_effectTime <= 15.0f)
+            {
+                _endFlag = true;
+            }
 
         } while (!_endFlag);
     }

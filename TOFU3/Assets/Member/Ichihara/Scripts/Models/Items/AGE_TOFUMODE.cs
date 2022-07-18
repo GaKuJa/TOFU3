@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class AGE_TOFUMODE : BaseItemStatus
 {
-    [SerializeField]
-    private PlayerStatus _cs_playerStatus = null;
-
     private bool _endFlag = false;
 
     private void OnCollisionEnter(Collision collision)
@@ -19,9 +16,21 @@ public class AGE_TOFUMODE : BaseItemStatus
     {
         do
         {
-            //効果時間(10秒)
-            //受けるダメージを0にする
             //金色のオーラ(エフェクト)
+
+            //効果時間(10秒)
+            _effectTime -= Time.deltaTime;
+
+            //受けるダメージを0にする
+            SHOYOUGUN.Instance.ShotDamage = 0;
+
+            if(_effectTime <= 0.0f)
+            {
+                _endFlag = true;
+            }
+
+
+
 
         } while (!_endFlag);
     }

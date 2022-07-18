@@ -9,8 +9,7 @@ using UnityEngine;
 public class KOYADOFU_GUNGenerator : MonoBehaviour
 {
     //KOYADOFU-GUNのプレハブを格納
-    [SerializeField]
-    private GameObject PfKOYADOFU_GUN = null;
+    public GameObject PfKOYADOFU_GUN = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_KOYADOFU_GUN = new List<PoolingObjectPrefabs>();
