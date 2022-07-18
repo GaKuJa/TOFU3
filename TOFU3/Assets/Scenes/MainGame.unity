@@ -429,7 +429,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapObj
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 318185209327220629, guid: 79a86e027cce2c14fb461e07e5fc4e79, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79a86e027cce2c14fb461e07e5fc4e79, type: 3}
 --- !u!1 &757059697 stripped
 GameObject:
@@ -518,6 +519,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63d5f666bc8734efa8fec8d67e66ff62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1074083146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 318185209327220626, guid: 79a86e027cce2c14fb461e07e5fc4e79, type: 3}
+  m_PrefabInstance: {fileID: 530369704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1074083148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074083146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77779f9960fb0cf4bac5e5b380678315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1076709123 stripped
@@ -697,6 +715,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1881890399}
     - target: {fileID: 6531912168655432159, guid: fb53819890bde744287fb3936f1049d0, type: 3}
+      propertyPath: testHotWaterScript
+      value: 
+      objectReference: {fileID: 1074083148}
+    - target: {fileID: 6531912168655432159, guid: fb53819890bde744287fb3936f1049d0, type: 3}
       propertyPath: managerList.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -745,6 +767,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1801202620365042954, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4291615353722163155, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2
@@ -755,7 +781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4291615354648639081, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.32
+      value: 10.72
       objectReference: {fileID: 0}
     - target: {fileID: 4291615354648639081, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
       propertyPath: m_LocalPosition.y
@@ -763,7 +789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4291615354648639081, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.07
+      value: -4.59
       objectReference: {fileID: 0}
     - target: {fileID: 4291615354648639081, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
       propertyPath: m_LocalRotation.w
@@ -796,6 +822,14 @@ PrefabInstance:
     - target: {fileID: 4291615354648639095, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
       propertyPath: m_Name
       value: 'TestTOFU3(Player1) '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4291615354648639095, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4291615354921994402, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5451197186544633141, guid: fa55245a6a55c46448af843007fc4b39, type: 3}
       propertyPath: fadeImage

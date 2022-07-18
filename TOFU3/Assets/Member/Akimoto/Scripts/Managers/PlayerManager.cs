@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
     {
         _reactiveProperty.Where(pSt => player.playerStatus == Player.PlayerStatus.Dead).
                           Subscribe(playerRes => cameraControl.CameraFadeOut(player.PlayerReSpawn,player.PlayerReset));
-        _reactiveProperty.Where(_ => player.playerStatus == BasePlayer.PlayerStatus.Alive).Subscribe(_ => cameraControl.ActionFadeIn());
+        _reactiveProperty.Where(_ => player.playerStatus == Player.PlayerStatus.Alive).Subscribe(_ => cameraControl.ActionFadeIn());
         _reactiveProperty.Where(_ => player.remainingLives <= 0 && playerGameStatus != PlayerGameStatus.GameOver)
                          .Subscribe(_ => PlayerGameOver());
     }

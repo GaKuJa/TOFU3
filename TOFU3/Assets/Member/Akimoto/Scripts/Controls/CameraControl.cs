@@ -36,9 +36,7 @@ public class CameraControl : MonoBehaviour
         {
             // フェードアウト開始
             fadeColorAlpha  += Time.deltaTime / fadeOutTime;
-            Debug.Log("A: " + fadeColorAlpha);
             fadeImage.color =  new Color(0.0f, 0.0f, 0.0f, fadeColorAlpha);
-            Debug.Log(fadeImage.color);
         }
         if (fadeImage.color.a >= 1.0f && playerReS != null)
             playerReS(playerReset);
