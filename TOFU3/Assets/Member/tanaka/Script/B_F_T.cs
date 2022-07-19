@@ -17,30 +17,19 @@ public class B_F_T : MonoBehaviour
 
     private float ShotInterval;     //連射速度
 
+    // 爆風の力
+    private float power = 10f;
 
-    float rndx;
-    float rndy;
-    float rndz;
-
+    // 爆風が及ぶ範囲（半径）
+    private float radius = 10f;
 
     //Vector3 origin = new Vector3(0, 0, 0); // 原点
     //Vector3 direction = new Vector3(1, 0, 0); // X軸方向を表すベクトル
     //Ray ray = new Ray(origin, direction); // Rayを生成
 
-    private Vector3 RandomBullet()
-    {
-        float rndx = Random.Range(-10.0f, 10.0f);
-        float rndy = Random.Range(-10.0f, 10.0f);
-        float rndz = Random.Range(100.0f, 101.0f);
-
-        return randomVec = new Vector3(rndx, rndy, rndz);
-    }
-
-    private Vector3 randomVec;
-
     private void Start()
     {
-        randomVec = new Vector3(rndx, rndy, rndz * ShotSpeed);
+       
     }
 
 
@@ -53,16 +42,24 @@ public class B_F_T : MonoBehaviour
         if (ShotInterval % Interval == 0 && ShotCountNow > 0)
         {
             ShotCountNow -= 1;
-            Debug.Log(RandomBullet());
             GameObject bullet = (GameObject)Instantiate(BulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
             Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
             //Vector3 force = new Vector3(rndx, rndy, zzz);
-            bulletRb.AddForce(RandomBullet() * ShotSpeed);
+            bulletRb.AddForce(transform.forward * ShotSpeed);
 
             //3秒後に出した弾を消す
 
             Destroy(bullet, 3.0f);
         }
+    }
+
+    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
+    {
+        //発射角度
+        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
+        Vector3 toVec = new Vector3(0,0,0);
+
+        return Vector3.Normalize(toVec);
     }
 
     private void OnTriggerEnter(Collider _collider)
@@ -81,9 +78,28 @@ public class B_F_T : MonoBehaviour
         //吹き飛ぶ
         otherRigitbody.AddForce(toVec * _forcePower, ForceMode.Impulse);
 
-
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 着弾点を爆心地にする
+        Vector3 explosionPos = collision.transform.position;
+
+        // 爆心地から『指定した半径内』にあるオブジェクトのcolliderを取得する。
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+            if (rb)
+            {
+                // 爆風の発生
+                rb.AddExplosionForce(power, collision.transform.position, radius, 1.0f, ForceMode.VelocityChange);
+            }
+        }
+
+    }
 
     private void ShotBulletDamage()
     {
@@ -128,18 +144,7 @@ public class B_F_T : MonoBehaviour
 
 
         }
-
     }
-
-    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
-    {
-        //発射角度
-        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
-        Vector3 toVec = new Vector3(rndx, rndy, rndz);
-
-        return Vector3.Normalize(toVec);
-    }
-
 
     public int GetShotCountNow()
     {

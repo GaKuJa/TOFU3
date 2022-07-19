@@ -8,10 +8,10 @@ using Random = UnityEngine.Random;
 
 
 //main
-public class TOFUGUN : BaseGunStatus, IBaseBulletDamege
+public class SHOYUGUN : BaseGunStatus, IBaseBulletDamege
 {
-    public static TOFUGUN Instance { get => _instance; }
-    static TOFUGUN _instance;
+    public static SHOYUGUN Instance { get => _instance; }
+    static SHOYUGUN _instance;
     // ゲームオブジェクトプレハブ
     [SerializeField]
     private GameObject BulletPrefab;
@@ -102,8 +102,8 @@ public class TOFUGUN : BaseGunStatus, IBaseBulletDamege
 
     public int BulletDamege(int playerHp, int bulletDamege)
     {
-        
+
         return playerHp -= bulletDamege;
-        
+
     }
 }

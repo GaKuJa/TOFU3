@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private GunSt gunst;
+
     public int hitPoint = 100;  //HP
 
     // Update is called once per frame
     void Update()
     {
-
         //HP‚ª0‚É‚È‚Á‚½‚Æ‚«‚É“G‚ð”j‰ó‚·‚é
         if (hitPoint <= 0)
         {
