@@ -68,7 +68,7 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
             RemoveElements();
         }
 
-        Debug.Log(Guns.Count);
+        //Debug.Log(Guns.Count);
 
         //_intervalをリセット
         if (_interval <= 0.0f)
@@ -94,8 +94,8 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
     /// そのオブジェクトが格納されている要素を除去する関数 </summary>
     void RemoveElements()
     {
-        Debug.Log(Guns[0].activeSelf);
-        Debug.Log(Guns[1].activeSelf);
+        //Debug.Log(Guns[0].activeSelf);
+        //Debug.Log(Guns[1].activeSelf);
 
         foreach (GameObject gun in Guns)
         {

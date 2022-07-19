@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     protected void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "bullet")
-            GameManager.Instance.SetPlayerNum(playerNum);
+            BattleSceneManager.Instance.SetPlayerNum(playerNum);
     }
     public void PlayerIsDead()
     {

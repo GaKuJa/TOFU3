@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
     private void PlayerGameOver()
     {
         playerGameStatus = PlayerGameStatus.GameOver;
-        GameManager.Instance.SetGameStatus(player.playerNum - 1, playerGameStatus);
+        BattleSceneManager.Instance.SetGameStatus(player.playerNum - 1, playerGameStatus);
     }
 
 }
