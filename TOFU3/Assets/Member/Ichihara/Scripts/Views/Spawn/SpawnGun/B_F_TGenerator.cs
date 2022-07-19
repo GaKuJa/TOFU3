@@ -9,8 +9,7 @@ using UnityEngine;
 public class B_F_TGenerator : MonoBehaviour
 {
     //YUBA-SHILDのプレハブを格納
-    [SerializeField]
-    private GameObject PfB_F_T = null;
+    public GameObject PfB_F_T = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_B_F_T = new List<PoolingObjectPrefabs>();

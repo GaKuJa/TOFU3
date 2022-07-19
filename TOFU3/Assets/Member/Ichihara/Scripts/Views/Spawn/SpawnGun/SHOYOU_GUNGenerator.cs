@@ -9,8 +9,7 @@ using UnityEngine;
 public class SHOYOU_GUNGenerator : MonoBehaviour
 {
     //SHOYOU-GUNのプレハブを格納
-    [SerializeField]
-    private GameObject PfSHOYOU_GUN = null;
+    public GameObject PfSHOYOU_GUN = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_SHOYOU_GUN = new List<PoolingObjectPrefabs>();

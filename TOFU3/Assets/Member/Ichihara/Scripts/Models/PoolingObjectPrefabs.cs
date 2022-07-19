@@ -16,7 +16,7 @@ public class PoolingObjectPrefabs : MonoBehaviour
         //アイテムの生成位置を指定
         _transfItem.position = spwanPos;
         //アイテムをアクティブにする
-        gameObject.SetActive(true);
+        this.gameObject.SetActive(true);
 
     }
 
@@ -26,10 +26,18 @@ public class PoolingObjectPrefabs : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        if(!(collision.gameObject.CompareTag("Ground")))
+        if(collision.gameObject.CompareTag("Player"))
         {
-            this.gameObject.SetActive(false);
+            StartCoroutine(ObjectActive(this.gameObject));
         }
+    }
+
+    private IEnumerator ObjectActive(GameObject obj)
+    {
+        obj.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        Siyuukai_RandomSpawnGun.instance.Guns.Remove(obj);
+
     }
 
 }

@@ -9,8 +9,7 @@ using UnityEngine;
 public class Long_NEGI_RifleGenerator : MonoBehaviour
 {
     //Long-NEGI-Rifleのプレハブを格納
-    [SerializeField]
-    private GameObject PfLong_NEGI_Rifle = null;
+    public GameObject PfLong_NEGI_Rifle = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_Long_NEGI_Rifle = new List<PoolingObjectPrefabs>();

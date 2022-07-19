@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
 {
+    public static Siyuukai_RandomSpawnGun instance;
+
     //フィールドに存在している銃の総数
-    private List<GameObject> Guns = new List<GameObject>();
+    public List<GameObject> Guns = new List<GameObject>();
 
     //スポーンする銃の総数
     private int _gun = 0;
@@ -15,6 +17,8 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
     private List<GameObject> _spawnArea = new List<GameObject>();
     //乱数を格納
     private int _randomArea = 0;
+
+    private bool _endCoroutineFlag = false;
 
     //Inspectorから「Generator」スクリプトを設定
     [SerializeField]
@@ -29,6 +33,18 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
     private KATSUO_BUSHIGenerator _cs_KATSUO_BUSHI = null;
     [SerializeField]
     private B_F_TGenerator _cs_B_F_T = null;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -63,12 +79,22 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
         _interval -= Time.deltaTime;
 
         SpawnGun();
-        if (Guns.Count > 0)
+        if (Guns.Count > 0 && _endCoroutineFlag == false)
         {
-            RemoveElements();
+            StartCoroutine(RemoveElements());
+            _endCoroutineFlag = true;
         }
-
+        else if (_endCoroutineFlag == true)
+        {
+            _endCoroutineFlag = false;
+        }
         //Debug.Log(Guns.Count);
+        //if(Guns.Count > 0)
+        //{
+        //    Debug.Log(Guns[0].OpposeActive());
+        //    Debug.Log(Guns[1].OpposeActive());
+        //    Debug.Log(Guns.CountGameObjectActive());
+        //}
 
         //_intervalをリセット
         if (_interval <= 0.0f)
@@ -92,18 +118,10 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
 
     /// <summary> Gunsに格納されているオブジェクトがfalseの場合、
     /// そのオブジェクトが格納されている要素を除去する関数 </summary>
-    void RemoveElements()
+    IEnumerator RemoveElements()
     {
-        //Debug.Log(Guns[0].activeSelf);
-        //Debug.Log(Guns[1].activeSelf);
-
-        foreach (GameObject gun in Guns)
-        {
-            if (gun.activeSelf == false)
-            {
-                Guns.Remove(gun);
-            }
-        }
+        yield return new WaitForSeconds(_setInterval / 2);
+        Guns.Clear();
     }
 
     /// <summary> 乱数を生成し、_randNumに格納する関数 </summary>
@@ -125,11 +143,8 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
         //_randNumの値を参照して_itemPrefabの各要素を生成する              
         for (int i = 0; i < _gun; i++)
         {
-            //プレハブを生成する座標を取得
-            _randomArea = Random.Range(0, _spawnArea.Count);
-
-            //Gunsにスポーンしたオブジェクトの情報を格納
-            if (Guns.Count < _gun)
+            //Gunsの要素が_gunより多い場合、処理を中断する
+            if(Guns.Count < _gun)
             {
                 Guns.Add(gameObject);
             }
@@ -137,6 +152,9 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
             {
                 break;
             }
+
+            //プレハブを生成する座標を取得
+            _randomArea = Random.Range(0, _spawnArea.Count);
 
             if (_timerFlagFirst && _timerFlagSecond)
             {
@@ -272,7 +290,7 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
         {
             var spawnPos = _spawnArea[_randomArea].transform.position;
 
-            //var spawnPos = SetPosition(_randomArea);
+            //var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
             _cs_Long_NEGI_Rifle.GenerateLong_NEGI_Rifle(spawnPos);
             transform.SetParent(transform.root);
 
@@ -283,7 +301,7 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
         {
             var spawnPos = _spawnArea[_randomArea].transform.position;
 
-            //var spawnPos = SetPosition(_randomArea);
+            //var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
             _cs_SESAMI_Shooter.GenerateSESAMI_Shoot(spawnPos);
             transform.SetParent(transform.root);
 
@@ -293,6 +311,8 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
         void SpawnKATSUO_BUSHI()
         {
             var spawnPos = _spawnArea[_randomArea].transform.position;
+
+            //var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
             _cs_KATSUO_BUSHI.GenerateKATSUO_BUSHI(spawnPos);
             transform.SetParent(transform.root);
 
@@ -302,6 +322,8 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
         void SpawnB_F_T()
         {
             var spawnPos = _spawnArea[_randomArea].transform.position;
+
+            //var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
             _cs_B_F_T.GenerateB_F_T(spawnPos);
             transform.SetParent(transform.root);
 
