@@ -22,6 +22,8 @@ public class SESAMIGUN : BaseGunStatus, IBaseBulletDamege
     private int shootCount;
     private bool shootingFlag = false;
     private float _forcePower;
+    [SerializeField]
+    private float waittime;
     void Awake()
     {
         _instance = this;
@@ -68,7 +70,7 @@ public class SESAMIGUN : BaseGunStatus, IBaseBulletDamege
 
     IEnumerator ReloadBullet()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(waittime);
         magazinNum -= shootCount;
         bulletNum += shootCount;
         shootCount = 0;
