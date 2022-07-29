@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerDeathStatus : MonoBehaviour
 {
-    public static PlayerDeathStatus instance;
+    public static PlayerDeathStatus Instance { get => _instance; }
+    static PlayerDeathStatus _instance;
 
     public enum Playerstatus
     {
@@ -16,13 +17,6 @@ public class PlayerDeathStatus : MonoBehaviour
 
     private void Awake()
     {
-        if(instance = null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        _instance = this;
     }
 }

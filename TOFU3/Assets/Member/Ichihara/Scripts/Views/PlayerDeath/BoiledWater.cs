@@ -6,16 +6,18 @@ using UnityEngine;
 /// プレイヤーのデス判定
 /// </summary>
 
-public class PlayerDeath : MonoBehaviour
+public class BoiledWater : MonoBehaviour
 {
+    private bool _flag = false;
+
     private void OnCollisionEnter(Collision collision)
     {
-        PlayerDeathStatus.instance.playerstatus = PlayerDeathStatus.Playerstatus.death;
-        Debug.Log(PlayerDeathStatus.instance.playerstatus);
+        PlayerDeathStatus.Instance.playerstatus = PlayerDeathStatus.Playerstatus.death;
+        Debug.Log(PlayerDeathStatus.Instance.playerstatus);
     }
 
     public PlayerDeathStatus.Playerstatus SetPlayerDeath()
     {
-        return PlayerDeathStatus.instance.playerstatus;
+        return PlayerDeathStatus.Instance.playerstatus;
     }
 }
