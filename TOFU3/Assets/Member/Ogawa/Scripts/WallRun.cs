@@ -9,7 +9,6 @@ public class WallRun : MonoBehaviour
     private RaycastHit LeftWallhit;
     private RaycastHit RightWallhit;
 
-    [SerializeField] private float Tilt;
     [SerializeField] private float WallrunForce;
     [SerializeField] private float WallRunDistance;
     [SerializeField] private Transform PlayerObj;
@@ -86,7 +85,6 @@ public class WallRun : MonoBehaviour
 
     private void StopWallRun()
     {
-        rb.velocity = Vector3.zero;
         rb.useGravity = true;
         pm.wallrunning = false;
         pm.JumpCount = 0;
