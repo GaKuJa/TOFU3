@@ -23,13 +23,20 @@ public class BattleSceneManager : MonoBehaviour
     private TestHotWaterScript testHotWaterScript = null;
     [SerializeField]
     private Util util = null;
-    public float GameStartWaitTime { get; private set; } = 4; 
+    public float GameStartWaitTime { get; private set; } = 4;
+    public float GameTimeMinutes { get; private set; } = 4;
+    public float GameTimeSeconds { get; private set; } = 60;
     // プレイヤーのステータスリスト
-    private List<Player> playersStatList = new List<Player>();
+    public List<Player> playersStatList { get; private set; } = new List<Player>();
     private List<PlayerManager.PlayerGameStatus> playerManagerList = new List<PlayerManager.PlayerGameStatus>();
     public SceneMode sceneMode = SceneMode.Standby;
     public Action ActionGameStart = new Action(() => { });
-    private int          playerNum       = 0;
+    // 当たった側のプレイヤー番号
+    private int          hitPlayerNum       = 0;
+    // 当てた側のプレイヤー番号
+    private int          shotPlayerNum      = 0;
+    // 銃のダメージ
+    private int gunDamage = 0;
     private void Awake()
     {
         _instance = this;
@@ -37,11 +44,9 @@ public class BattleSceneManager : MonoBehaviour
 
     private void Start()
     {
-        ActionGameStart = GameStart;
+        ActionGameStart = ChangeSceneModeStart;
         for (int i = 0; i < playersList.Count; i++)
-        {
             playersStatList.Add(playersList[i].GetComponent<Player>());
-        }
         for (int i = 0; i < managerList.Count; i++)
             playerManagerList.Add(managerList[i].playerGameStatus);
     }
@@ -50,10 +55,10 @@ public class BattleSceneManager : MonoBehaviour
         switch(sceneMode)
         {
             case SceneMode.Standby:
-                GameStartWaitTime -= Time.deltaTime;
+                WaitTimeStart();
                 break;
             case SceneMode.Start:
-                GamePlay();
+                GamePlaying();
                 break;
             case SceneMode.End:
                 ChangeResultScene();
@@ -62,31 +67,42 @@ public class BattleSceneManager : MonoBehaviour
                 break;
         }
     }
-    private void GamePlay()
+    private void WaitTimeStart()
     {
+        GameStartWaitTime -= Time.deltaTime;
+    }
+    private void GamePlaying()
+    {
+        GameTimeSeconds -= Time.deltaTime;
+        if (GameTimeSeconds <= 1)
+        {
+            GameTimeMinutes--;
+            GameTimeSeconds = 60;
+        }
         if (testHotWaterScript.PlayerFieldOutFlag)
         {
             playersStatList[testHotWaterScript.playerNum - 1].PlayerIsDead();
             testHotWaterScript.PlayerFieldOutFlag = false;
         }
+        // プレイヤーが亡くなったらリストから外す
         if (playerManagerList.Contains(PlayerManager.PlayerGameStatus.GameOver))
             playerManagerList.Remove(PlayerManager.PlayerGameStatus.GameOver);
-        if (playerManagerList.Count <= 1)
-            ChangeSceneMode();
+        // バトル終了条件
+        if (playerManagerList.Count <= 1 || GameTimeMinutes < 0)
+            ChangeSceneModeEnd();
     }
-    private void GameStart()
+    private void ChangeSceneModeStart()
     {
         sceneMode = SceneMode.Start;
     }
-    private void ChangeSceneMode()
+    private void ChangeSceneModeEnd()
     {
         sceneMode = SceneMode.End;
     }
-
     public void SetPlayerNum(int player)
     {
-        playerNum = player - 1;
-        playersStatList[playerNum].SetHp(util.OnDamage(playersStatList[playerNum].GetHp(), 30));
+        hitPlayerNum = player - 1;
+        playersStatList[hitPlayerNum].SetHp(util.OnDamage(playersStatList[hitPlayerNum].GetHp(), 30));
     }
     private void ChangeResultScene()
     {

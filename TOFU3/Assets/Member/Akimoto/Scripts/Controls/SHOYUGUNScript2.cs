@@ -28,7 +28,7 @@ public class SHOYUGUNScript2 : BaseGunStatus
     void Update()
     {
 
-        if (Input.GetAxis("L_R_Trigger2") < 0)
+        if (Input.GetAxis("L_R_Trigger2") > 0)
         {
             ShotPrefab();
             shootingFlag = true;

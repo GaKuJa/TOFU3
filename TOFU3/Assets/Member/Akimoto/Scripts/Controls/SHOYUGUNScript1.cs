@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,7 +30,7 @@ public class SHOYUGUNScript1 : BaseGunStatus
     void Update()
     {
 
-        if (Input.GetAxis("L_R_Trigger1") < 0)
+        if (Input.GetAxis("L_R_Trigger1") > 0)
         {
             ShotPrefab();
             shootingFlag = true;

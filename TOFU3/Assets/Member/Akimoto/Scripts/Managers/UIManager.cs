@@ -8,8 +8,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private List<Player> playerList = new List<Player>();
     [SerializeField]
-    private List<Text> textList = new List<Text>();
-    [SerializeField]
     private FadeControl fadeControl = null;
     [SerializeField]
     private BattleSceneManager battleSceneManager = null;
@@ -25,13 +23,14 @@ public class UIManager : MonoBehaviour
                 break;
             case BattleSceneManager.SceneMode.Start:
                 textControl.FadeTimeTextOut();
+                textControl.GameTimerDisplay((int)battleSceneManager.GameTimeMinutes, (int)battleSceneManager.GameTimeSeconds);
+                textControl.PlayerStockDisplay(battleSceneManager.playersStatList[0].remainingLives, battleSceneManager.playersStatList[1].remainingLives);
+                textControl.HpDisPlay(battleSceneManager.playersStatList[0].GetHp(), battleSceneManager.playersStatList[1].GetHp());
                 break;
             case BattleSceneManager.SceneMode.End:
                 break;
             default:
                 break;
         }
-        textList[0].text = playerList[0].GetHp().ToString();
-        textList[1].text = playerList[1].GetHp().ToString();
     }
 }
