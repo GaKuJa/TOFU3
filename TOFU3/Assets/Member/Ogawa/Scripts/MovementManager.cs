@@ -84,7 +84,7 @@ public class MovementManager : MonoBehaviour
         x = Input.GetAxis("Horizontal");
         z = Input.GetAxis("Vertical");
 
-        if(Input.GetKeyDown(jumpKey) && state != MovementState.wallrunning)
+        if(Input.GetKeyDown(jumpKey))
             Jump();
 
         if (Input.GetKeyDown(crouchKey) && isGround)
@@ -149,11 +149,11 @@ public class MovementManager : MonoBehaviour
         }
 
         // ジャンプ - 空中
-        else if (state != MovementState.wallrunning)
+        else
             state = MovementState.air;
 
         // 速度差を滑らかにする
-        if(Mathf.Abs(AdaptSpeed - lastAdaptSpeed) > 4.0f && MoveSpeed != 0)
+        if(Mathf.Abs(AdaptSpeed - lastAdaptSpeed) > 10.0f && MoveSpeed != 0)
         {
             StopAllCoroutines();
             StartCoroutine(SmoothlyLerpMoveSpeed());
@@ -202,6 +202,10 @@ public class MovementManager : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.AddForce(moveDirection.normalized * MoveSpeed + Vector3.up * jumpForce, ForceMode.Impulse);
             JumpCount ++;
+
+            // しゃがみ解除
+            crouching = false;
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
     }
 
