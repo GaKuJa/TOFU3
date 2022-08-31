@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KATSUO : BaseGunStatus, IBaseBulletDamege
+public class kinsetu : BaseGunStatus, IBaseBulletDamege
 {
     public static KATSUO Instance { get => _instance; }
     static KATSUO _instance;
@@ -42,5 +42,4 @@ public class KATSUO : BaseGunStatus, IBaseBulletDamege
         return playerHp -= bulletDamege;
 
     }
-
 }

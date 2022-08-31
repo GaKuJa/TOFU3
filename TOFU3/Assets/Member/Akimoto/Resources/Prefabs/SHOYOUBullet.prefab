@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8176109899848348216}
   - component: {fileID: 1481915176800674902}
   - component: {fileID: 2504154301729312587}
-  - component: {fileID: 4919239935584719645}
+  - component: {fileID: -1633089783989871152}
   m_Layer: 0
   m_Name: SHOYOUBullet
   m_TagString: bullet
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1390622489584103484}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &4919239935584719645
+--- !u!114 &-1633089783989871152
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,6 +124,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1390622489584103484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbb66d306829f054d9717b6a259d3327, type: 3}
+  m_Script: {fileID: 11500000, guid: 8653fc8f059ae4c1e9193c908b124e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 919132149155446097, guid: e4be530df9d9da04ca9c2bdeb9b13c55, type: 3}
+  knockBack: 100

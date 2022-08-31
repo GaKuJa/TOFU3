@@ -76,26 +76,31 @@ public class SESAMIGUN : BaseGunStatus, IBaseBulletDamege
         shootCount = 0;
     }
 
+    private Vector3 RandomBullet1()
+    {
+        return Gun.forward * bulletShotSpeed + new Vector3(0.0f, 5.0f, 100f);
+    }
+
+    private Vector3 RandomBullet2()
+    {
+        return Gun.forward * bulletShotSpeed + new Vector3(5.0f, 5.0f, 100f);
+    }
+
+
     private void ShotPrefab() //�e�̔���
     {
         if (plusShootInterval >= shootIntervalTime && bulletNum > 0)
         {
             GameObject bullet = Instantiate(BulletPrefab, this.transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-            bulletRigidbody.AddForce(RandomBullet());
+            bulletRigidbody.AddForce(RandomBullet1());
+            bulletRigidbody.AddForce(RandomBullet2());
             Destroy(bullet, 3.0f);
             plusShootInterval = 0;
             PullMagazin();
         }
     }
     
-
-    private Vector3 RandomBullet()
-    {
-        float randomX = Random.Range(reticleSize, -reticleSize);
-        float randomY = Random.Range(reticleSize, -reticleSize);
-        return Gun.forward * bulletShotSpeed + new Vector3(randomX, randomY, 0);
-    }
 
     private void PullMagazin()
     {
