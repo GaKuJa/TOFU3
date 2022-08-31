@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 10323421919067019}
   - component: {fileID: -6359550224800068501}
   - component: {fileID: -694403799015864415}
+  - component: {fileID: 3738528343769714268}
   m_Layer: 0
   m_Name: MOMIZIRED
-  m_TagString: Untagged
+  m_TagString: Momiji
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,3 +112,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 178670693856260271, guid: 04b7e0ea371789d418524490725bdeae, type: 3}
+--- !u!114 &3738528343769714268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955777648776288862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f9f177ec8dadc4ca54981e2873bc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

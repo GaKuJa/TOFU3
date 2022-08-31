@@ -16,8 +16,9 @@ public class RandomSpawnGun : BaseSpawmStatus
     private int _gun = 0;
 
     //Inspectorから「Generator」スクリプトを設定
+    [Header("GunGenerator")]
     [SerializeField]
-    private SHOYOU_GUNGenerator _cs_SHOYOU_GUN = null;
+    private SHOYU_GUNGenerator _cs_SHOYU_GUN = null;
     [SerializeField]
     private KOYADOFU_GUNGenerator _cs_KOYADOFU_GUN = null;
     [SerializeField]
@@ -74,7 +75,7 @@ public class RandomSpawnGun : BaseSpawmStatus
     }
 
     /// <summary> 銃を一定間隔毎にフィールドにスポーンする関数 </summary>
-    void SpawnGun()
+    private void SpawnGun()
     {
         //_intervalの経過時間
         float Spawn = _interval;
@@ -89,11 +90,11 @@ public class RandomSpawnGun : BaseSpawmStatus
 
     /// <summary> Gunsに格納されているオブジェクトがfalseの場合、
     /// そのオブジェクトが格納されている要素を除去する関数 </summary>
-    void RemoveElements()
+    private void RemoveElements()
     {
         foreach(GameObject gun in Guns)
         {
-            if (gun.activeSelf == false)
+            if (gun.activeSelf == true)
             {
                 Guns.Remove(gameObject);
             }
@@ -101,7 +102,7 @@ public class RandomSpawnGun : BaseSpawmStatus
     }
 
     /// <summary> 乱数を生成し、_randNumに格納する関数 </summary>
-    void RandomNum()
+    private void RandomNum()
     {
         for (int i = 0; i < _gun; i++)
         {
@@ -114,7 +115,7 @@ public class RandomSpawnGun : BaseSpawmStatus
     }
 
     /// <summary> _randNumの値を参照して銃を生成する関数 </summary>
-    void SetGun()
+    private void SetGun()
     {
         //乱数を格納
         int j;
@@ -148,7 +149,7 @@ public class RandomSpawnGun : BaseSpawmStatus
                 //SHOYOU-GUNをスポーンする確率
                 if (_randNum[i] < 25)
                 {
-                    SpawnSHOYOU_GUN();
+                    SpawnSHOYU_GUN();
                 }
                 //KOYADOFU-GUNをスポーンする確率
                 else if (_randNum[i] >= 25 && _randNum[i] < 35)
@@ -183,7 +184,7 @@ public class RandomSpawnGun : BaseSpawmStatus
                 //SHOYOU-GUNをスポーンする確率
                 if (_randNum[i] < 25)
                 {
-                    SpawnSHOYOU_GUN();
+                    SpawnSHOYU_GUN();
                 }
                 //KOYADOFU-GUNをスポーンする確率
                 else if (_randNum[i] >= 25 && _randNum[i] < 50)
@@ -218,7 +219,7 @@ public class RandomSpawnGun : BaseSpawmStatus
                 //SHOYOU-GUNをスポーンする確率
                 if (_randNum[i] < 25)
                 {
-                    SpawnSHOYOU_GUN();
+                    SpawnSHOYU_GUN();
                 }
                 //KOYADOFU-GUNをスポーンする確率
                 else if (_randNum[i] >= 25 && _randNum[i] < 55)
@@ -251,68 +252,83 @@ public class RandomSpawnGun : BaseSpawmStatus
         }
 
         //SHOYOU-GUNをスポーンする
-        void SpawnSHOYOU_GUN()
+        void SpawnSHOYU_GUN()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
-            _cs_SHOYOU_GUN.GenerateSHOYOU_GUN(spawnPos);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
+            _cs_SHOYU_GUN.GenerateSHOYU_GUN(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //KOYADOFU-GUNをスポーンする
         void SpawnKOYADOFU_GUN()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_KOYADOFU_GUN.GenerateKOYADOFU_GUN(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //Long-NEGI-Rifleをスポーンする
         void SpawnLong_NEGI_Rifle()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_Long_NEGI_Rifle.GenerateLong_NEGI_Rifle(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //SESAMI-Shooterをスポーンする
         void SpawnSESAMI_Shooter()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_SESAMI_Shooter.GenerateSESAMI_Shoot(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //KATSUO武士をスポーンする
         void SpawnKATSUO_BUSHI()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_KATSUO_BUSHI.GenerateKATSUO_BUSHI(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //B・F・Tをスポーンする
         void SpawnB_F_T()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_B_F_T.GenerateB_F_T(spawnPos);
             transform.SetParent(transform.root);
-
         }
-
         
-        // 地面のランダムな座標を取得する　
-        Vector3 GetRandomPos(int randomList)
+    }
+
+    /// <summary> 銃のランダムなスポーン座標を取得する関数 </summary>
+    /// <param name="tofuList"></param>
+    /// <returns></returns>
+    private Vector3 RandomPos(int tofuList)
+    {
+        //返り値の宣言
+        Vector3 setSpawnPos = Vector3.zero;
+
+        bool checkFlag = false;
+
+        //オブジェクトのx座標系、z座標系の半分の大きさ
+        Vector3 halfExtents = new Vector3(0.5f, 0.0f, 0.5f);
+
+        Debug.Log("fieldTOFU :" + tofuList + " Item");
+
+        //ステージオブジェクト同士が重ならないように調整する
+        do
         {
-            //返り値の宣言
-            Vector3 setSpawnPos = Vector3.zero;
+            //スポーンする座標の最大値、最小値を設定
+            var spawnPosX = Mathf.Clamp(Random.Range(-_fieldTOFU[tofuList].transform.localScale.x / 2 + halfExtents.x, _fieldTOFU[tofuList].transform.localScale.x / 2 - halfExtents.x),
+                                        -_fieldTOFU[tofuList].transform.localScale.x / 2,
+                                        _fieldTOFU[tofuList].transform.localScale.x / 2);
 
-            bool checkFlag = false;
+            var spawnPosZ = Mathf.Clamp(Random.Range(-_fieldTOFU[tofuList].transform.localScale.z / 2 + halfExtents.z, _fieldTOFU[tofuList].transform.localScale.z / 2 - halfExtents.z),
+                                        -_fieldTOFU[tofuList].transform.localScale.z / 2,
+                                        _fieldTOFU[tofuList].transform.localScale.z / 2);
 
+<<<<<<< HEAD
             //オブジェクトのx座標系、z座標系の半分の大きさ
             Vector3 halfExtents = new Vector3(this.gameObject.transform.localScale.x / 2,
                                               0.0f,
@@ -351,6 +367,23 @@ public class RandomSpawnGun : BaseSpawmStatus
             return setSpawnPos;
 
         }
+=======
+            //オブジェクトがスポーンする座標
+            Vector3 prxSetSpawnPos = _fieldTOFU[tofuList].transform.position +
+                new Vector3(spawnPosX, _fieldTOFU[tofuList].transform.localScale.y / 2, spawnPosZ);
+
+            if (!Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity))
+            {
+                Debug.Log(prxSetSpawnPos);
+                setSpawnPos = prxSetSpawnPos;
+                checkFlag = true;
+            }
+
+        } while (!checkFlag);
+
+        return setSpawnPos;
+
+>>>>>>> main
     }
 
 }

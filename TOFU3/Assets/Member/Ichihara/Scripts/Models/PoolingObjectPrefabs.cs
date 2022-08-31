@@ -19,25 +19,4 @@ public class PoolingObjectPrefabs : MonoBehaviour
         this.gameObject.SetActive(true);
 
     }
-
-    /// <summary>
-    /// Playerとの接触判定があったら、アイテムを非アクティブにする
-    /// </summary>
-    /// <param name="collision"></param>
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            StartCoroutine(ObjectActive(this.gameObject));
-        }
-    }
-
-    private IEnumerator ObjectActive(GameObject obj)
-    {
-        obj.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        Siyuukai_RandomSpawnGun.instance.Guns.Remove(obj);
-
-    }
-
 }

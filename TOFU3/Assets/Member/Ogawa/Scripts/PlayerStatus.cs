@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class PlayerStatus
 {
-    public float Hp { get; set; }           // HP
-    public float buffSpeed { get; set; }    // アイテム効果でスピードup
+    public float Hp { get; set; }   // HP
+    public int remain { get; set; } // 残機
+
+
+    public enum DeadorAlive
+    {
+        Alive,
+        Death
+    }
+
+    public DeadorAlive deedorAlive { get; set; }
 }

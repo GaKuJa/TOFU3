@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: -8279729900107072985}
   - component: {fileID: -718991296706961074}
   - component: {fileID: -4109880055055643096}
+  - component: {fileID: -4999078143982321919}
   m_Layer: 0
   m_Name: OKURA
-  m_TagString: Untagged
+  m_TagString: Okura
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +105,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &-4999078143982321919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63650226685427964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee268177993d26c4eaa1c9455a010939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &526097458067633430
 GameObject:
   m_ObjectHideFlags: 0

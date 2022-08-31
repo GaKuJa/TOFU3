@@ -8,31 +8,27 @@ public class PlayerCam : MonoBehaviour
     private float yRotation;    // y回転
     private float fieldOfView;  // FOV
 
-    [SerializeField] private float sensX;   // x感度
-    [SerializeField] private float sensY;   // y感度
-    
-    public Rigidbody rb;    // 物理
-    Transform FPSCamera;    // カメラ取得
+    [SerializeField] private float sens;   // 感度
+
+    [SerializeField] WallRun wallrun;
+    [SerializeField] private Transform PlayerObj;
+    [SerializeField] private Transform CamHolder;
     
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;   // カーソル固定
-        Cursor.visible = false;                     // カーソルを非表示
-
-        // カメラは未完成
-        FPSCamera = Camera.main.transform;
-        xRotation = FPSCamera.localEulerAngles.x;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    // addforce -> transform
     private void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sens;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sens;
 
         yRotation += mouseX;
         xRotation -= mouseY;
 
+        // ADS
         if(Input.GetMouseButtonDown(0))
         {
             Camera.main.fieldOfView = 45.0f;
@@ -42,10 +38,9 @@ public class PlayerCam : MonoBehaviour
             Camera.main.fieldOfView = 60.0f;
         }
 
-        xRotation = Mathf.Clamp(xRotation, -90.0f, 90.0f);
+        xRotation = Mathf.Clamp(xRotation, -90.0f, 50.0f);
 
-        rb.MoveRotation(Quaternion.Euler(0.0f, rb.rotation.eulerAngles.y + mouseX * Time.deltaTime * 100.0f, 0.0f));
-        xRotation = Mathf.Clamp(xRotation - mouseY * Time.deltaTime * 100.0f, -90, 60);
-        FPSCamera.localEulerAngles = new Vector3(xRotation, 0, 0);
+        CamHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation, wallrun.tilt);
+        PlayerObj.transform.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }

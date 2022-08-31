@@ -9,7 +9,7 @@ public class MovementManager : MonoBehaviour
     private float AdaptSpeed;               // ステータスの速度
     private float lastAdaptSpeed;           // ステータスの終速度
     private float startYScale;              // Objの初期高さ
-    private string GroundTag = "Ground";    // tag
+    private string GroundTag = "Ground";    // tag - Ground
     private Rigidbody rb;                   // 物理
     private Vector3 moveDirection;          // 方向
 
@@ -84,7 +84,7 @@ public class MovementManager : MonoBehaviour
         x = Input.GetAxis("Horizontal");
         z = Input.GetAxis("Vertical");
 
-        if(Input.GetKeyDown(jumpKey))
+        if(Input.GetKeyDown(jumpKey) && state != MovementState.wallrunning)
             Jump();
 
         if (Input.GetKeyDown(crouchKey) && isGround)
@@ -148,8 +148,8 @@ public class MovementManager : MonoBehaviour
             AdaptSpeed = walkSpeed;
         }
 
-        // ジャンプ / 空中
-        else
+        // ジャンプ - 空中
+        else if (state != MovementState.wallrunning)
             state = MovementState.air;
 
         // 速度差を滑らかにする
@@ -199,7 +199,8 @@ public class MovementManager : MonoBehaviour
     {
         if (JumpCount <= 1)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.velocity = Vector3.zero;
+            rb.AddForce(moveDirection.normalized * MoveSpeed + Vector3.up * jumpForce, ForceMode.Impulse);
             JumpCount ++;
         }
     }
@@ -212,7 +213,7 @@ public class MovementManager : MonoBehaviour
             isGround = true;
 	}
 
-    // 設置やめた
+    // 接地やめた
     private void OnCollisionExit(Collision collision)
 	{
 		if (collision.gameObject.tag == GroundTag)

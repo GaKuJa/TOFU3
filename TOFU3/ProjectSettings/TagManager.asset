@@ -8,6 +8,15 @@ TagManager:
   - Item
   - shell
   - Ground
+  - Yuba
+  - Stim
+  - Okaka
+  - Yuzu
+  - AgeTofu
+  - Momiji
+  - Okura
+  - bullet
+  - Gun
   layers:
   - Default
   - TransparentFX

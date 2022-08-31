@@ -1,154 +1,109 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-//????????
-public class TOFUGUN : MonoBehaviour
+
+//main
+public class TOFUGUN : BaseGunStatus, IBaseBulletDamege
 {
-    public GameObject BulletPrefab;
-    public float ShotSpeed;         //弾速
-    public float Interval;          //連射速度（を変えられるようにしただけ）
-    public int ShotCountNow = 30;   //現在の弾薬数
-    public int ShotMax = 30;        //１マガジンの弾数
-    public int ShotBullet = 999999999;     //銃の全弾数
-    public float _forcePower;       //吹き飛ばす強さ
-    public float ShotDamage = 0;        //ダメージ
+    public static TOFUGUN Instance { get => _instance; }
+    static TOFUGUN _instance;
+    // ゲームオブジェクトプレハブ
+    [SerializeField]
+    private GameObject BulletPrefab;
+    // 銃ゲームオブジェクト
+    [SerializeField]
+    private Transform Gun;
+    private float plusShootInterval = 0;
+    private int shootCount;
+    private bool shootingFlag = false;
+    [SerializeField]
+    private float _forcePower;
+    [SerializeField]
+    private float waittime;
 
-
-    private float ShotInterval;     //連射速度
-
-    //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
-
-    float rndx;
-    float rndy;
-    float rndz;
-
-    private Vector3 RandomBullet()
+    void Awake()
     {
-        float rndx = Random.Range(-10.0f, 10.0f);
-        float rndy = Random.Range(-10.0f, 10.0f);
-        float rndz = Random.Range(100.0f, 101.0f);
-
-        return randomVec = new Vector3(rndx, rndy, rndz);
+        _instance = this;
     }
-
-    private Vector3 randomVec;
-
-    private void Start()
-    {
-        randomVec = new Vector3(rndx, rndy, rndz * ShotSpeed);
-    }
-
-
-    private void ShotPrefab()//弾の発射
+    void Start()
     {
 
-
-        ShotInterval += 1;
-
-        if (ShotInterval % Interval == 0 && ShotCountNow > 0)
-        {
-            ShotCountNow -= 1;
-            Debug.Log(RandomBullet());
-            GameObject bullet = (GameObject)Instantiate(BulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
-            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            //Vector3 force = new Vector3(rndx, rndy, zzz);
-            bulletRb.AddForce(RandomBullet() * ShotSpeed);
-
-            //3秒後に出した弾を消す
-
-            Destroy(bullet, 3.0f);
-        }
-    }
-
-    private void OnTriggerEnter(Collider _collider)
-    {
-
-        //ぶつかった相手からRigitBodyを取り出す
-        Rigidbody otherRigitbody = _collider.GetComponent<Rigidbody>();
-        if (!otherRigitbody)
-        {
-            return;
-        }
-
-        //吹き飛ばす方向を求める(プレイヤーから触れたものの方向)
-        Vector3 toVec = GetAngleVec(BulletPrefab, _collider.gameObject);
-
-        //吹き飛ぶ
-        otherRigitbody.AddForce(toVec * _forcePower, ForceMode.Impulse);
-
+        plusShootInterval = shootIntervalTime;
 
     }
-
-
-    private void ShotBulletDamage()
-    {
-
-    }
-
-    private void ShotNothing()//リロード
-    {
-
-        int reload = ShotMax - ShotCountNow;
-
-        //弾が残ってるとき
-        if (ShotBullet >= reload)
-        {
-            ShotCountNow += reload;
-            ShotBullet -= reload;
-
-        }
-        //ないとき
-        else
-        {
-            ShotCountNow += ShotBullet;
-            ShotBullet = 0;
-        }
-
-
-    }
-
     void Update()
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
             ShotPrefab();
-            //RandomBullet();
-
-
+            shootingFlag = true;
         }
+        if (Input.GetKeyDown(KeyCode.R) && magazinNum != 0)
+            StartCoroutine("ReloadBullet");
+        ReloadBullet();
+        if (shootingFlag)
+            IntervalControl();
+    }
 
-        if (Input.GetKeyDown(KeyCode.R))
+    IEnumerator ReloadBullet()
+    {
+        yield return new WaitForSeconds(waittime);
+        magazinNum -= shootCount;
+        bulletNum += shootCount;
+        shootCount = 0;
+
+    }
+
+    private void ShotPrefab() //�e�̔���
+    {
+        if (plusShootInterval >= shootIntervalTime && bulletNum > 0)
         {
-            ShotNothing();
-
-
+            GameObject bullet = Instantiate(BulletPrefab, this.transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
+            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+            bulletRigidbody.AddForce(RandomBullet());
+            Destroy(bullet, 3.0f);
+            plusShootInterval = 0;
+            PullMagazin();
         }
-
     }
 
-    private Vector3 GetAngleVec(GameObject _from, GameObject _to)
+    private Vector3 RandomBullet()
     {
-        //発射角度
-        Vector3 fromVec = new Vector3(_from.transform.position.x, 0, _from.transform.position.z);
-        Vector3 toVec = new Vector3(rndx, rndy, rndz);
-
-        return Vector3.Normalize(toVec);
+        float randomX = Random.Range(reticleSize, -reticleSize);
+        float randomY = Random.Range(reticleSize, -reticleSize);
+        return Gun.forward * bulletShotSpeed + new Vector3(randomX, randomY, 0);
     }
 
-
-    public int GetShotCountNow()
+    private void PullMagazin()
     {
-        return ShotCountNow;
+        shootCount++;
+        bulletNum -= 1;
     }
 
-    public int GetShotMax()
+    private void IntervalControl()
     {
-        return ShotMax;
+        plusShootInterval += Time.deltaTime;
     }
 
-    public int GetShotBullet()
+    public int GetMaxMagazinNum()
     {
-        return ShotBullet;
+        return magazinNum;
+    }
+
+    public int GetMaxBulletNum()
+    {
+        return bulletNum;
+    }
+
+    public int BulletDamege(int playerHp, int bulletDamege)
+    {
+        
+        return playerHp -= bulletDamege;
+        
     }
 }

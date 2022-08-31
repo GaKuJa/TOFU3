@@ -7,16 +7,27 @@ public class PlayerDeathStatus : MonoBehaviour
     public static PlayerDeathStatus Instance { get => _instance; }
     static PlayerDeathStatus _instance;
 
-    public enum Playerstatus
+    public enum PlayerDeath
     {
         alive,
         death
     }
 
-    public Playerstatus playerstatus { set; get; }
+    public PlayerDeath playerstatus { set; get; }
 
     private void Awake()
     {
+<<<<<<< HEAD
         _instance = this;
+=======
+        if(_instance = null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+>>>>>>> main
     }
 }

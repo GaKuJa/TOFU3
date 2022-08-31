@@ -4,43 +4,41 @@ using UnityEngine;
 
 public class DASHI_STIM : BaseItemStatus
 {
-    [SerializeField]
-    private PlayerStatus _cs_playerStatus = null;
+    //ステータスの参照元
+    private MovementManager _cs_movementManager;
 
-    private bool _endFlag = false;
+    private bool _speedUpFlag = false; 
 
-    private void OnCollisionEnter(Collision collision)
+    private void Start()
     {
-        this.gameObject.SetActive(false);
-        GetDASHI_STIM();
+        _cs_movementManager = GetComponent<MovementManager>();
     }
 
-    private void GetDASHI_STIM()
+    void Update()
     {
-        bool buffSpeedUpFlag = false;
+        EndItemEffect();
 
-        do
+        //効果時間の加算
+        _elapsedTime += Time.deltaTime;
+
+        if (_elapsedTime >= _effectTime)
         {
-            _effectTime -= Time.deltaTime;
+            _endFlag = true;
+        }
 
-            //移動速度を上げる
-            //スプリント時の速度を上げる
-            //スライディング時の速度を上げる
-
-            if(buffSpeedUpFlag == false)
-            {
-                _cs_playerStatus.buffSpeed *= _movePlayerMagni;
-
-            }
-
-
-
-            //効果時間(15秒)
-            if (_effectTime <= 15.0f)
-            {
-                _endFlag = true;
-            }
-
-        } while (!_endFlag);
+        if(_speedUpFlag == false)
+        {
+            MoveSpeedUp();
+            _speedUpFlag = true;
+        }
     }
+
+    /// <summary>
+    /// スピードアップ処理
+    /// </summary>
+    private void MoveSpeedUp()
+    {
+        _cs_movementManager.x *= _moveSpeedMagni;
+    }
+
 }
