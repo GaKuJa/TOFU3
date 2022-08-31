@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// SHOYOU-GUNのオブジェクトプール生成
+/// SHOYU-GUNのオブジェクトプール生成
 /// </summary>
 
-public class SHOYOU_GUNGenerator : MonoBehaviour
+public class SHOYU_GUNGenerator : MonoBehaviour
 {
     //SHOYOU-GUNのプレハブを格納
-    public GameObject PfSHOYOU_GUN = null;
+    public GameObject PfSHOYU_GUN = null;
 
     //アイテムを備蓄しておくList 
-    private List<PoolingObjectPrefabs> _list_SHOYOU_GUN = new List<PoolingObjectPrefabs>();
+    private List<PoolingObjectPrefabs> _list_SHOYU_GUN = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int maxGuns = 5;
 
@@ -22,15 +22,15 @@ public class SHOYOU_GUNGenerator : MonoBehaviour
     {
         for (int i = 0; i < maxGuns; i++)
         {
-            PoolingObjectPrefabs gun_SHOYOU;
+            PoolingObjectPrefabs gun_SHOYU;
 
             //アイテムの生成
-            gun_SHOYOU = (Instantiate(PfSHOYOU_GUN)).GetComponent<PoolingObjectPrefabs>();
+            gun_SHOYU = (Instantiate(PfSHOYU_GUN)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「SHOYOU_GUNGenerator」オブジェクトの子にしておく
-            gun_SHOYOU.transform.parent = this.transform;
+            gun_SHOYU.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
-            gun_SHOYOU.gameObject.SetActive(false);
-            _list_SHOYOU_GUN.Add(gun_SHOYOU);
+            gun_SHOYU.gameObject.SetActive(false);
+            _list_SHOYU_GUN.Add(gun_SHOYU);
         }
     }
 
@@ -39,14 +39,14 @@ public class SHOYOU_GUNGenerator : MonoBehaviour
     /// 非アクティブのオブジェクトを探す関数
     /// </summary>
     /// <param name="spawnPos"></param>
-    public void GenerateSHOYOU_GUN(Vector3 spawnPos)
+    public void GenerateSHOYU_GUN(Vector3 spawnPos)
     {
-        for (int i = 0; i < _list_SHOYOU_GUN.Count; i++)
+        for (int i = 0; i < _list_SHOYU_GUN.Count; i++)
         {
-            if (_list_SHOYOU_GUN[i].gameObject.activeSelf == false)
+            if (_list_SHOYU_GUN[i].gameObject.activeSelf == false)
             {
                 //非アクティブのアイテムを生成する
-                _list_SHOYOU_GUN[i].InitItem(spawnPos);
+                _list_SHOYU_GUN[i].InitItem(spawnPos);
                 break;
             }
         }

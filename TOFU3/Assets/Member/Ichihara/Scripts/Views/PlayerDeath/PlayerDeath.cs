@@ -8,14 +8,42 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    //各プレイヤーの参照
+    private TestPlayer1Controler _player1;
+    private TestPlayer2Controler _player2;
+    //private GameObject _player3;
+    //private GameObject _player4;
+
+    private PlayerStatus _cs_palyerStatus = null;
+
+    private bool _fieldOut1 = false;
+    private bool _fieldOut2 = false;
+    private bool _fieldOut3 = false;
+    private bool _fieldOut4 = false;
+
+    public enum playerNumber
     {
-        PlayerDeathStatus.instance.playerstatus = PlayerDeathStatus.Playerstatus.death;
-        Debug.Log(PlayerDeathStatus.instance.playerstatus);
+        player1,
+        player2,
+        player3,
+        player4            
     }
 
-    public PlayerDeathStatus.Playerstatus SetPlayerDeath()
+    private void Start()
     {
-        return PlayerDeathStatus.instance.playerstatus;
+        _player1 = GetComponent<TestPlayer1Controler>();
+        _player2 = GetComponent<TestPlayer2Controler>();
+        _cs_palyerStatus = GetComponent<PlayerStatus>();
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        _cs_palyerStatus.deedorAlive = PlayerStatus.DeadorAlive.Death;
+        Debug.Log(_cs_palyerStatus.deedorAlive);
+    }
+
+    public PlayerStatus.DeadorAlive GetPlayerDeath()
+    {
+        return _cs_palyerStatus.deedorAlive;
     }
 }

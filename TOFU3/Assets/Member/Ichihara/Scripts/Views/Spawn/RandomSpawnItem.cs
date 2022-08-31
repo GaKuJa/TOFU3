@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class RandomSpawnItem : BaseSpawmStatus
     private int _item = 0;
 
     //Inspectorから「Generator」スクリプトを設定
+    [Header("ItemGenerator")]
     [SerializeField]
     private YUBA_SHIELDGenerator _cs_YUBA_SHIELD = null;
     [SerializeField]
@@ -78,7 +80,7 @@ public class RandomSpawnItem : BaseSpawmStatus
     }
 
     /// <summary> アイテムを一定間隔毎にフィールドにスポーンする関数 </summary>
-    void SpawnItem()
+    private void SpawnItem()
     {
         //_intervalの経過時間
         float Spawn = _interval;
@@ -93,11 +95,11 @@ public class RandomSpawnItem : BaseSpawmStatus
 
     /// <summary> Itemsに格納されているオブジェクトが非アクティブの場合、
     /// そのオブジェクトが格納されているindexを除去する </summary>
-    void RemoveElements()
+    private void RemoveElements()
     {
         foreach(GameObject item in Items)
         {
-            if (item.activeSelf == false)
+            if (item.activeSelf == true)
             {
                 Items.Remove(gameObject);
             }
@@ -105,7 +107,7 @@ public class RandomSpawnItem : BaseSpawmStatus
     }
 
     /// <summary> 乱数を生成し、_randNumに格納する関数 </summary>
-    void RandomNum()
+    private void RandomNum()
     {
         for(int i = 0; i < _item; i++ )
         {
@@ -118,7 +120,7 @@ public class RandomSpawnItem : BaseSpawmStatus
     }
 
     /// <summary> _randNumの値を参照してアイテムを生成する関数 </summary>
-    void SetItem()
+    private void SetItem()
     {
         //乱数を格納
         int j;
@@ -274,108 +276,106 @@ public class RandomSpawnItem : BaseSpawmStatus
         //YUBA-SHIELDをスポーンする
         void SpawnYUBA_SHIELD()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_YUBA_SHIELD.GenerateYUBA_SHIELD(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //DASHI-STIMDをスポーンする
         void SpawnDASHI_STIM()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_DASHI_STIM.GenerateDASHI_STIM(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //OKAKA-CHAFをスポーンする
         void SpawnOKAKA_CHAF()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_OKAKA_CHAF.GenerateOKAKA_CHAF(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //YUZA-RADARをスポーンする
         void SpawnYUZU_RADAR()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_YUZU_RADAR.GenerateYUZU_RADAR(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //AGE-TOFUMODOをスポーンする
         void SpawnAGE_TOFUMODE()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_AGETOFUMODE.GenerateAGE_TOFUMODE(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //MOMIZI-REDをスポーンする
         void SpawnMOMIZI_RED()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_MOMIZI_RED.GenerateMOMIZI_RED(spawnPos);
             transform.SetParent(transform.root);
-
         }
 
         //OKURA-TORIMOCHIをスポーンする
         void SpawnOKURA_TORIMOCHI()
         {
-            var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
+            var spawnPos = RandomPos(_fieldRandomTOFU[j]);
             _cs_OKURA_TORIMOCHI.GenerateOKURA_TORIMOCHI(spawnPos);
             transform.SetParent(transform.root);
+        }      
+        
+    }
 
-        }
+    /// <summary> アイテムのスポーン座標を取得する関数 </summary>
+    /// <param name="tofuList"></param>
+    /// <returns></returns>
+    private Vector3 RandomPos(int tofuList)
+    {
+        //返り値の宣言
+        Vector3 setSpawnPos = Vector3.zero;
 
+        bool checkFlag = false;
 
-        // 地面のランダムな座標を取得する　
-        Vector3 GetRandomPos(int randomList)
+        //オブジェクトのx座標系、z座標系の半分の大きさ
+        Vector3 halfExtents = new Vector3(0.5f, 0.0f, 0.5f);
+
+        Debug.Log("fieldTOFU :" + tofuList + " Gun");
+
+        //ステージオブジェクト同士が重ならないように調整する
+        do
         {
-            //返り値の宣言
-            Vector3 setSpawnPos = Vector3.zero;
+            //スポーンする座標の最大値、最小値を設定
+            var spawnPosX = Mathf.Clamp(Random.Range(-_fieldTOFU[tofuList].transform.localScale.x / 2 + halfExtents.x,
+                                                     _fieldTOFU[tofuList].transform.localScale.x / 2 - halfExtents.x),
+                                        -_fieldTOFU[tofuList].transform.localScale.x / 2,
+                                        _fieldTOFU[tofuList].transform.localScale.x / 2);
 
-            bool checkFlag = false;
+            var spawnPosZ = Mathf.Clamp(Random.Range(-_fieldTOFU[tofuList].transform.localScale.z / 2 + halfExtents.z, 
+                                                     _fieldTOFU[tofuList].transform.localScale.z / 2 - halfExtents.z),
+                                        -_fieldTOFU[tofuList].transform.localScale.z / 2,
+                                        _fieldTOFU[tofuList].transform.localScale.z / 2);
 
-            //オブジェクトのx座標系、z座標系の半分の大きさ
-            Vector3 halfExtents = new Vector3(0.5f, 0.0f, 0.5f);
+            //オブジェクトがスポーンする座標
+            Vector3 prxSetSpawnPos = _fieldTOFU[tofuList].transform.position +
+                new Vector3(spawnPosX, _fieldTOFU[tofuList].transform.localScale.y / 2, spawnPosZ);
 
-            Debug.Log("fieldTOFU :" + randomList + " Gun");
-
-            //ステージオブジェクト同士が重ならないように調整する
-            do
+            //オブジェクト同士の重なりの判定
+            if (!Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity))
             {
-                //スポーンする座標の最大値、最小値を設定
-                var spawnPosX = Mathf.Clamp(Random.Range(-_fieldTOFU[randomList].transform.localScale.x / 2 + halfExtents.x, _fieldTOFU[randomList].transform.localScale.x / 2 - halfExtents.x),
-                                            -_fieldTOFU[randomList].transform.localScale.x / 2,
-                                            _fieldTOFU[randomList].transform.localScale.x / 2);
+                Debug.Log(prxSetSpawnPos);
+                setSpawnPos = prxSetSpawnPos;
+                checkFlag = true;
+            }
 
-                var spawnPosZ = Mathf.Clamp(Random.Range(-_fieldTOFU[randomList].transform.localScale.z / 2 + halfExtents.z, _fieldTOFU[randomList].transform.localScale.z / 2 - halfExtents.z),
-                                            -_fieldTOFU[randomList].transform.localScale.z / 2,
-                                            _fieldTOFU[randomList].transform.localScale.z / 2);
+        } while (!checkFlag);
 
-                //オブジェクトがスポーンする座標
-                Vector3 prxSetSpawnPos = _fieldTOFU[randomList].transform.position +
-                    new Vector3(spawnPosX, _fieldTOFU[randomList].transform.localScale.y / 2, spawnPosZ);
+        return setSpawnPos;
 
-                if (!Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity))
-                {
-                    Debug.Log(prxSetSpawnPos);
-                    setSpawnPos = prxSetSpawnPos;
-                    checkFlag = true;
-                }
-
-            } while (!checkFlag);
-
-            return setSpawnPos;
-
-        }
     }
 }
 

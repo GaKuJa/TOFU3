@@ -32,7 +32,6 @@ public class BaseSpawmStatus : MonoBehaviour
     //_intervalの値を格納
     //_intervalを減算して時間を計る為、
     //カウンタとは別に_intervalの値を確保、代入して_intervalをリセットする必要がある
-    [SerializeField]
     protected float _setInterval = 0.0f;
 
 }

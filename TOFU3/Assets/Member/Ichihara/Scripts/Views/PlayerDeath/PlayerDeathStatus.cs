@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class PlayerDeathStatus : MonoBehaviour
 {
-    public static PlayerDeathStatus instance;
+    public static PlayerDeathStatus Instance { get => _instance; }
+    static PlayerDeathStatus _instance;
 
-    public enum Playerstatus
+    public enum PlayerDeath
     {
         alive,
         death
     }
 
-    public Playerstatus playerstatus { set; get; }
+    public PlayerDeath playerstatus { set; get; }
 
     private void Awake()
     {
-        if(instance = null)
+        if(_instance = null)
         {
-            instance = this;
+            _instance = this;
         }
         else
         {
