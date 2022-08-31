@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8176109899848348216}
   - component: {fileID: 1481915176800674902}
   - component: {fileID: 2504154301729312587}
+  - component: {fileID: -1633089783989871152}
   m_Layer: 0
   m_Name: SHOYOUBullet
   m_TagString: bullet
@@ -114,3 +115,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &-1633089783989871152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390622489584103484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8653fc8f059ae4c1e9193c908b124e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 919132149155446097, guid: e4be530df9d9da04ca9c2bdeb9b13c55, type: 3}
+  knockBack: 100
