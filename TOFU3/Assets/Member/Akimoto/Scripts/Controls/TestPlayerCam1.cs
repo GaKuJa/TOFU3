@@ -27,7 +27,6 @@ public class TestPlayerCam1 : MonoBehaviour
         xRotation -= mouseY;
 
         // ADS
-        /*
         if (Input.GetMouseButtonDown(0))
         {
             Camera.main.fieldOfView = 45.0f;
@@ -36,7 +35,6 @@ public class TestPlayerCam1 : MonoBehaviour
         {
             Camera.main.fieldOfView = 60.0f;
         }
-        */
         xRotation = Mathf.Clamp(xRotation, -90.0f, 90.0f);
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
