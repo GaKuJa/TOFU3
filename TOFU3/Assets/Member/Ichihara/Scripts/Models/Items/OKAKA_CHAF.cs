@@ -5,38 +5,46 @@ using UnityEngine;
 public class OKAKA_CHAF : BaseItemStatus
 {
     //Playerオブジェクト
-    [SerializeField]
-    private GameObject _tofu = null;
-
-    private MeshRenderer _tofuMesh = null;
+    public GameObject Player;
+    //Playerのメッシュを取得
+    private MeshRenderer _tofuMesh;
 
     //透明度
     [SerializeField, Range(0.0f, 1.0f)]
-    private float _alpha = default;
+    private float _changeAlpha = default;
 
-    // Start is called before the first frame update
-    void Start()
+    private void ItemEffect()
     {
-        _tofuMesh = _tofu.GetComponent<MeshRenderer>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        EndItemEffect();
-
-        _elapsedTime += Time.deltaTime;        
-        if(_elapsedTime >= _effectTime)
+        do
         {
-            _endFlag = true;
-        }
+            _elapsedTime += Time.deltaTime;
+            if (_elapsedTime >= _effectTime)
+            {
+                _endFlag = true;
+            }
 
-        _tofuMesh.material.color = new Color(0.0f, 0.0f, 0.0f, _alpha);
+            _tofuMesh.material.color = new Color(0.0f, 0.0f, 0.0f, _changeAlpha);
+
+        } while (_endFlag == false);
+
+        EndItemEffect();
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        _tofu = other.gameObject;
+        if (other.CompareTag("Player"))
+        {
+            Player = other.gameObject;
+            AssignPlayerComponent(Player);
+            ItemEffect();
+        }
+
+    }
+
+    //接触したオブジェクトの情報を渡す
+    private void AssignPlayerComponent(GameObject obj)
+    {
+        _tofuMesh = obj.GetComponent<MeshRenderer>();
     }
 }

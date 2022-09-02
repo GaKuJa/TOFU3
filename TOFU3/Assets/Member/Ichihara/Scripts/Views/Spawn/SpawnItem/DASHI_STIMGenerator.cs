@@ -54,4 +54,9 @@ public class DASHI_STIMGenerator : MonoBehaviour
         return;
     }
 
+    public GameObject GetDASHI_STIM()
+    {
+        return PfDASHI_STIM;
+    }
+
 }

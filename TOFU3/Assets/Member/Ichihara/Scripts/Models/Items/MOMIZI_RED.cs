@@ -4,39 +4,55 @@ using UnityEngine;
 
 public class MOMIZI_RED : BaseItemStatus
 {
-    //必要なステータスの参照元
-    GunSt _cs_gunSt = null;
-    Enemy _cs_enemy = null;
+    //必要なステータスの参照元 
+    public GameObject Player;
+    public GameObject GunSt;
+    public GameObject Enemy;
+    private  GunSt _cs_gunSt;
+    private  Enemy _cs_enemy;
 
-    // Start is called before the first frame update
-    void Start()
+    private void ItemEffect()
     {
-        _cs_gunSt = GetComponent<GunSt>();
-        _cs_enemy = GetComponent<Enemy>();    
+        do
+        {
+            //効果時間の加算
+            _elapsedTime += Time.deltaTime;
+
+            //武器のダメージ上昇
+            float Damage = _cs_gunSt.GetGunDamage() * (int)_damageMagni;
+            _cs_enemy.Damage((int)Damage);
+
+            //武器の圧力上昇
+
+            if (_elapsedTime >= _effectTime)
+            {
+                _endFlag = true;
+            }
+
+            //装備している武器に燃えるエフェクト
+
+        } while (_endFlag == false);
+
+            EndItemEffect();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        if(_endFlag == true)
+        if (other.CompareTag("Player"))
         {
-            Destroy(this);
+            Player = other.gameObject;
+            AssignPlayerComponent();
+            EndItemEffect();
         }
+    }
 
-        //効果時間の加算
-        _elapsedTime += Time.deltaTime;
+    //接触したオブジェクトの情報を渡す
+    private void AssignPlayerComponent()
+    {
+        GunSt = GameObject.Find("GunSt");
+        Enemy = GameObject.Find("Enemy");
+        _cs_gunSt = GetComponent<GunSt>();
+        _cs_enemy = GetComponent<Enemy>();
 
-        //武器のダメージ上昇
-        float Damage = _cs_gunSt.GetGunDamage() * (int)_damageMagni;
-        _cs_enemy.Damage((int)Damage);
-
-        //武器の圧力上昇
-
-        if(_elapsedTime >= _effectTime)
-        {
-            _endFlag = true;
-        }
-
-        //装備している武器に燃えるエフェクト
     }
 }

@@ -54,4 +54,8 @@ public class MOMIZI_REDGenerator : MonoBehaviour
         return;
     }
 
+    public GameObject GetMOMIZI_RED()
+    {
+        return PfMOMIZI_RED;
+    }
 }

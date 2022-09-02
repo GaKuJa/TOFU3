@@ -5,32 +5,33 @@ using UnityEngine;
 public class DASHI_STIM : BaseItemStatus
 {
     //ステータスの参照元
+    public GameObject Player;
+    public GameObject MovementManager;
     private MovementManager _cs_movementManager;
 
     private bool _speedUpFlag = false; 
 
-    private void Start()
+    private void ItemEffect()
     {
-        _cs_movementManager = GetComponent<MovementManager>();
-    }
-
-    void Update()
-    {
-        EndItemEffect();
-
-        //効果時間の加算
-        _elapsedTime += Time.deltaTime;
-
-        if (_elapsedTime >= _effectTime)
+        do
         {
-            _endFlag = true;
-        }
+            EndItemEffect();
 
-        if(_speedUpFlag == false)
-        {
-            MoveSpeedUp();
-            _speedUpFlag = true;
-        }
+            //効果時間の加算
+            _elapsedTime += Time.deltaTime;
+
+            if (_elapsedTime >= _effectTime)
+            {
+                _endFlag = true;
+            }
+
+            if (_speedUpFlag == false)
+            {
+                MoveSpeedUp();
+                _speedUpFlag = true;
+            }
+
+        } while (true);
     }
 
     /// <summary>
@@ -41,4 +42,20 @@ public class DASHI_STIM : BaseItemStatus
         _cs_movementManager.x *= _moveSpeedMagni;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player = other.gameObject;
+            AssignPlayerComponent(Player);
+            ItemEffect();
+        }
+    }
+
+    //接触したオブジェクトの情報を渡す
+    private void AssignPlayerComponent(GameObject obj)
+    {
+        MovementManager = GameObject.Find("MovementManager");
+        _cs_movementManager = obj.GetComponent<MovementManager>();
+    }
 }

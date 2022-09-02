@@ -614,6 +614,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479ddc4abcb5d8b4fa4c170f1efb1de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectTime: 5
+  _damageMagni: 5
+  _pressForceMagni: 5
+  _moveSpeedMagni: 5
 --- !u!114 &4812591438820105941
 MonoBehaviour:
   m_ObjectHideFlags: 0

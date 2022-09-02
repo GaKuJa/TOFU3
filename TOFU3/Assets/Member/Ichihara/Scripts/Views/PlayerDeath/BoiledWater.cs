@@ -6,7 +6,7 @@ using UnityEngine;
 /// プレイヤーのデス判定
 /// </summary>
 
-public class PlayerDeath : MonoBehaviour
+public class BoiledWater : MonoBehaviour
 {
     //各プレイヤーの参照
     private TestPlayer1Controler _player1;
@@ -14,7 +14,7 @@ public class PlayerDeath : MonoBehaviour
     //private GameObject _player3;
     //private GameObject _player4;
 
-    private PlayerStatus _cs_palyerStatus;
+    private PlayerStatus _cs_palyerStatus = null;
 
     private bool _fieldOut1 = false;
     private bool _fieldOut2 = false;
@@ -26,7 +26,7 @@ public class PlayerDeath : MonoBehaviour
         player1,
         player2,
         player3,
-        player4            
+        player4
     }
 
     private void Start()

@@ -7,14 +7,14 @@ using UnityEngine;
 public class YUBA_SHIELD : BaseItemStatus
 {
     //必要なステータスの参照元
-    private GunSt _cs_gunSt = null;
-    private Enemy _cs_enemy = null;
+    public GameObject Player;
+    public GameObject GunSt;
+    public GameObject Enemy;
+    private GunSt _cs_gunSt;
+    private Enemy _cs_enemy;
 
-    private void Start()
-    {
-        _cs_gunSt = GetComponent<GunSt>();
-        _cs_enemy = GetComponent<Enemy>();
-    }
+    [SerializeField]
+    private PlayerStatus _cs_playerStatus;
 
     private void Update()
     {
@@ -30,14 +30,33 @@ public class YUBA_SHIELD : BaseItemStatus
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        //ダメージ無効化
-        float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
-        _cs_enemy.Damage((int)Damage);
+        if (other.CompareTag("Player"))
+        {
+            Player = other.gameObject;
+            AssignPlayerComponent();
+            Update();
+        }
 
-        //圧力無効化
+        if (other.CompareTag("Shell"))
+        {
+            //ダメージ無効化
+            float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
+            _cs_enemy.Damage((int)Damage);
 
+            //圧力無効化
 
-        _endFlag = true;
+            _endFlag = true;
+        }
+
     }
 
+    //接触したオブジェクトの情報を渡す
+    private void AssignPlayerComponent()
+    {
+        GunSt = GameObject.Find("GunSt");
+        Enemy = GameObject.Find("Enemy");
+        _cs_gunSt = GetComponent<GunSt>();
+        _cs_enemy = GetComponent<Enemy>();
+
+    }
 }

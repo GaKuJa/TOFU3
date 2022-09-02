@@ -124,5 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9450007e4a11d3a47942d9dbd98828d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cs_gunSt: {fileID: 0}
-  _magniVariable: 0
+  _effectTime: 5
+  _damageMagni: 5
+  _pressForceMagni: 5
+  _moveSpeedMagni: 5
