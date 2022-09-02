@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class naifTest : MonoBehaviour
+public class KATSUO : BaseGunStatus, IBaseBulletDamege
 {
+    public static KATSUO Instance { get => _instance; }
+    static KATSUO _instance;
     [SerializeField]
     private GameObject Player;
 
@@ -34,5 +36,11 @@ public class naifTest : MonoBehaviour
         }
     }
 
+    public int BulletDamege(int playerHp, int bulletDamege)
+    {
+
+        return playerHp -= bulletDamege;
+
+    }
 
 }

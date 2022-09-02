@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    private GunSt gunst;
+    /*private GunSt gunst;
 
     public int damage;          //当たった部位毎のダメージ量
     private GameObject enemy;   //敵オブジェクト
@@ -27,5 +27,5 @@ public class Damage : MonoBehaviour
             //ぶつかってきたオブジェクトを破壊する.
             Destroy(other.gameObject);
         }
-    }
+    }*/
 }

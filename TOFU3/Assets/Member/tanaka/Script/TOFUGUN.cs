@@ -44,10 +44,10 @@ public class TOFUGUN : BaseGunStatus, IBaseBulletDamege
             shootingFlag = true;
         }
         if (Input.GetKeyDown(KeyCode.R) && magazinNum != 0)
-            StartCoroutine("ReloadBullet");
+        StartCoroutine("ReloadBullet");
         ReloadBullet();
         if (shootingFlag)
-            IntervalControl();
+        IntervalControl();
     }
 
     IEnumerator ReloadBullet()
