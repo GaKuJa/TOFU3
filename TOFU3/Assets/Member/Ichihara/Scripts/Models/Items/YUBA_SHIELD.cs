@@ -6,18 +6,51 @@ using UnityEngine;
 
 public class YUBA_SHIELD : BaseItemStatus
 {
-    //必要なステータスの参照元
-    public GameObject Player;
-    public GameObject GunSt;
-    public GameObject Enemy;
-    private GunSt _cs_gunSt;
-    private Enemy _cs_enemy;
-
+<<<<<<< HEAD
     [SerializeField]
     private PlayerStatus _cs_playerStatus;
 
+    private bool _endFlag = false;
+
+    private void Start()
+    {
+
+        //ダメージ倍率、圧力倍率を初期化
+        _damageMagni = 0.0f;
+        _pressForceMagni = 0.0f;
+=======
+    //必要なステータスの参照元
+    private GunSt _cs_gunSt = null;
+    private Enemy _cs_enemy = null;
+
+    private void Start()
+    {
+        _cs_gunSt = GetComponent<GunSt>();
+        _cs_enemy = GetComponent<Enemy>();
+>>>>>>> main
+    }
+
     private void Update()
     {
+<<<<<<< HEAD
+        //取得したプレイヤーの周りを青くハイライト
+
+        //if (/*弾がプレイヤーに当たったら*/)
+        //{
+        //    YUBA_SHIELDEffect();
+        //    _endFlag = true;
+        //}
+
+    }
+
+    private void YUBA_SHIELDEffect()
+    {
+
+        //ダメージを一回だけ０にする
+        SHOYOUGUN.Instance.ShotDamage *= _damageMagni;
+        //圧力を一回だけ０にする
+        SHOYOUGUN.Instance._forcePower *= _pressForceMagni;
+=======
         EndItemEffect();
 
         //取得したプレイヤーの周りを青くハイライト
@@ -30,33 +63,15 @@ public class YUBA_SHIELD : BaseItemStatus
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            Player = other.gameObject;
-            AssignPlayerComponent();
-            Update();
-        }
+        //ダメージ無効化
+        float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
+        _cs_enemy.Damage((int)Damage);
 
-        if (other.CompareTag("Shell"))
-        {
-            //ダメージ無効化
-            float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
-            _cs_enemy.Damage((int)Damage);
+        //圧力無効化
 
-            //圧力無効化
 
-            _endFlag = true;
-        }
-
+        _endFlag = true;
+>>>>>>> main
     }
 
-    //接触したオブジェクトの情報を渡す
-    private void AssignPlayerComponent()
-    {
-        GunSt = GameObject.Find("GunSt");
-        Enemy = GameObject.Find("Enemy");
-        _cs_gunSt = GetComponent<GunSt>();
-        _cs_enemy = GetComponent<Enemy>();
-
-    }
 }

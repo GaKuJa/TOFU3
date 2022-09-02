@@ -340,6 +340,46 @@ public class RandomSpawnGun : BaseSpawmStatus
                                         -_fieldTOFU[Index].transform.localScale.z / 2,
                                         _fieldTOFU[Index].transform.localScale.z / 2);
 
+<<<<<<< HEAD
+            //オブジェクトのx座標系、z座標系の半分の大きさ
+            Vector3 halfExtents = new Vector3(this.gameObject.transform.localScale.x / 2,
+                                              0.0f,
+                                              this.gameObject.transform.localScale.z / 2);
+
+            Debug.Log("fieldTOFU :" + randomList + " Item");
+
+            //ステージオブジェクト同士が重ならないようになるまで試行する
+            do
+            {
+                //スポーンする座標の最大値、最小値を設定
+                var spawnPosX = Mathf.Clamp(Random.Range(-_fieldTOFU[randomList].transform.localScale.x / 2
+                                                + halfExtents.x, _fieldTOFU[randomList].transform.localScale.x / 2 - halfExtents.x),
+                                            -_fieldTOFU[randomList].transform.localScale.x / 2,
+                                            _fieldTOFU[randomList].transform.localScale.x / 2);
+
+                var spawnPosZ = Mathf.Clamp(Random.Range(-_fieldTOFU[randomList].transform.localScale.z / 2
+                                                + halfExtents.z, _fieldTOFU[randomList].transform.localScale.z / 2 - halfExtents.z),
+                                            -_fieldTOFU[randomList].transform.localScale.z / 2,
+                                            _fieldTOFU[randomList].transform.localScale.z / 2);
+
+                //オブジェクトがスポーンする座標を取得
+                Vector3 prxSetSpawnPos = _fieldTOFU[randomList].transform.position +
+                    new Vector3(spawnPosX, _fieldTOFU[randomList].transform.localScale.y / 2, spawnPosZ);
+
+                //ループ終了
+                if (!Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity))
+                {
+                    Debug.Log(prxSetSpawnPos);
+                    setSpawnPos = prxSetSpawnPos;
+                    checkFlag = true;
+                }
+
+            } while (!checkFlag);
+
+            return setSpawnPos;
+
+        }
+=======
             //オブジェクトがスポーンする座標
             Vector3 prxSetSpawnPos = _fieldTOFU[Index].transform.position +
                 new Vector3(spawnPosX, _fieldTOFU[Index].transform.localScale.y / 2 + 0.1f, spawnPosZ);
@@ -357,6 +397,7 @@ public class RandomSpawnGun : BaseSpawmStatus
 
         return setSpawnPos;
 
+>>>>>>> main
     }
 
 }
