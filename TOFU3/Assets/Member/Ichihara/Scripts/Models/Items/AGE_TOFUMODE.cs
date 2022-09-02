@@ -4,34 +4,53 @@ using UnityEngine;
 
 public class AGE_TOFUMODE : BaseItemStatus
 {
-    private bool _endFlag = false;
+    //必要なステータスの参照元
+    public GameObject Player;
+    public GameObject GunSt;
+    public GameObject Enemy;
+    private GunSt _cs_gunSt;
+    private Enemy _cs_enemy;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        this.gameObject.SetActive(false);
-        GetAGE_TOFUMODE();
-    }
-
-    private void GetAGE_TOFUMODE()
+    private void ItemEffect()
     {
         do
         {
-            //金色のオーラ(エフェクト)
+            //効果時間の加算
+            _elapsedTime += Time.deltaTime;
 
-            //効果時間(10秒)
-            _effectTime -= Time.deltaTime;
+            //ダメージ無効化
+            float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
+            _cs_enemy.Damage((int)Damage);
 
-            //受けるダメージを0にする
-            SHOYOUGUN.Instance.ShotDamage = 0;
-
-            if(_effectTime <= 0.0f)
+            if (_elapsedTime >= _effectTime)
             {
                 _endFlag = true;
             }
 
+            //金色のオーラ(エフェクト)
 
+        } while (_endFlag == false);
 
+        EndItemEffect();
 
-        } while (!_endFlag);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player = other.gameObject;
+            AssignPlayerComponent();
+            ItemEffect();
+        }
+    }
+
+    //接触したオブジェクトの情報を渡す
+    private void AssignPlayerComponent()
+    {
+        GunSt = GameObject.Find("GunSt");
+        Enemy = GameObject.Find("Enemy");
+        _cs_gunSt = GetComponent<GunSt>();
+        _cs_enemy = GetComponent<Enemy>();
     }
 }

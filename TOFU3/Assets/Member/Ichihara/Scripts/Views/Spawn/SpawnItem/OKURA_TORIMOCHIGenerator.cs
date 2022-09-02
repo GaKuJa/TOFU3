@@ -54,4 +54,8 @@ public class OKURA_TORIMOCHIGenerator : MonoBehaviour
         return;
     }
 
+    public GameObject GetOKURA_TORIMOCHI()
+    {
+        return PfOKURA_TORIMOCHI;
+    }
 }

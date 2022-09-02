@@ -54,4 +54,8 @@ public class YUBA_SHIELDGenerator : MonoBehaviour
         return;
     }
 
+    public GameObject GetYUBA_SHIELD()
+    {
+        return pfYUBA_SHIELD;
+    }
 }

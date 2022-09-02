@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4011954609170948874}
   - component: {fileID: 1155859933864736146}
   - component: {fileID: 1093600073610042465}
+  - component: {fileID: 7630611005830474418}
   m_Layer: 0
   m_Name: DASHI_STIM_002
-  m_TagString: Untagged
+  m_TagString: Stim
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,3 +112,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -178119638143837320, guid: 971bd1e928cd1844ebfe61c3cb1b88d3, type: 3}
+--- !u!114 &7630611005830474418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3219421747871711967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188119072312d934687f7ea46f25f0eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectTime: 5
+  _damageMagni: 5
+  _pressForceMagni: 5
+  _moveSpeedMagni: 5

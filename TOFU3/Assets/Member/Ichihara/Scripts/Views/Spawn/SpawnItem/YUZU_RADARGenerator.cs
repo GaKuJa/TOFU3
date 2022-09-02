@@ -55,4 +55,8 @@ public class YUZU_RADARGenerator : MonoBehaviour
         return;
     }
 
+    public GameObject GetYUZU_RADAR()
+    {
+        return pfYUZU_RADAR;
+    }
 }

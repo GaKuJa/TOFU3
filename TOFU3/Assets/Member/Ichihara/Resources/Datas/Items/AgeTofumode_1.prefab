@@ -507,13 +507,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4071277610813130237}
-  - component: {fileID: 4812591438820105941}
   - component: {fileID: 1066827381768378068}
   - component: {fileID: -5190810513290604570}
   - component: {fileID: -1439038828847919385}
+  - component: {fileID: 4812591438820105941}
   m_Layer: 0
   m_Name: AgeTofumode_1
-  m_TagString: Untagged
+  m_TagString: AgeTofu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -546,18 +546,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4812591438820105941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3732294170471358279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab45b6497607ee64c91d2cae9c522d59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &1066827381768378068
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -624,6 +612,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 479ddc4abcb5d8b4fa4c170f1efb1de0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectTime: 5
+  _damageMagni: 5
+  _pressForceMagni: 5
+  _moveSpeedMagni: 5
+--- !u!114 &4812591438820105941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3732294170471358279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab45b6497607ee64c91d2cae9c522d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3859195975627609431
