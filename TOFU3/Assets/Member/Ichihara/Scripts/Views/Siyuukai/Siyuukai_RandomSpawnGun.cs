@@ -22,7 +22,7 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
 
     //Inspectorから「Generator」スクリプトを設定
     [SerializeField]
-    private SHOYOU_GUNGenerator _cs_SHOYOU_GUN = null;
+    private SHOYU_GUNGenerator _cs_SHOYOU_GUN = null;
     [SerializeField]
     private KOYADOFU_GUNGenerator _cs_KOYADOFU_GUN = null;
     [SerializeField]
@@ -269,7 +269,7 @@ public class Siyuukai_RandomSpawnGun : BaseSpawmStatus
             var spawnPos = _spawnArea[_randomArea].transform.position;
 
             //var spawnPos = GetRandomPos(_fieldRandomTOFU[j]);
-            _cs_SHOYOU_GUN.GenerateSHOYOU_GUN(spawnPos);
+            _cs_SHOYOU_GUN.GenerateSHOYU_GUN(spawnPos);
             transform.SetParent(transform.root);
 
         }

@@ -1410,8 +1410,7 @@ MonoBehaviour:
   _afterThreeMinutesInterval: 0
   _setInterval: 0
   Guns: []
-  _spawnArea: 
-  _cs_returnPosition: {fileID: 0}
+  _spawnArea: []
   _cs_SHOYOU_GUN: {fileID: 0}
   _cs_KOYADOFU_GUN: {fileID: 0}
   _cs_Long_NEGI_Rifle: {fileID: 0}
@@ -3660,7 +3659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cd408f349627549a08889e5deb35c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PfSHOYOU_GUN: {fileID: 3616819263394246073, guid: 465f1b9c928d1c84eb2091cf3ee78e74, type: 3}
+  PfSHYOU_GUN: {fileID: 0}
 --- !u!1 &1942921015
 GameObject:
   m_ObjectHideFlags: 0

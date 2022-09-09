@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 3541339778878512074}
   - component: {fileID: 6380526077664423530}
   - component: {fileID: 4313688735579732212}
+  - component: {fileID: 7704316315721081878}
   m_Layer: 0
   m_Name: YUZU_RADER
-  m_TagString: Untagged
+  m_TagString: Yuzu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,3 +112,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3947826071884645894, guid: d253f42783f4ca743ab13341715e6c3d, type: 3}
+--- !u!114 &7704316315721081878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037011318930160159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbbbd6d82e58f14d856efcc204c6f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

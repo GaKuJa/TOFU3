@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 641927991675600260}
   - component: {fileID: -5099157120255553079}
   - component: {fileID: -7738839607175081535}
+  - component: {fileID: -2359443956935699276}
   m_Layer: 0
   m_Name: yuba_001
-  m_TagString: Untagged
+  m_TagString: Yuba
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,3 +112,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4732937762076777578, guid: e1f06514fdc595647a03a367541972cd, type: 3}
+--- !u!114 &-2359443956935699276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434513490413591633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9450007e4a11d3a47942d9dbd98828d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectTime: 5
+  _damageMagni: 5
+  _pressForceMagni: 5
+  _moveSpeedMagni: 5

@@ -54,4 +54,9 @@ public class AGE_TOFUMODEGenerator : MonoBehaviour
         return;
     }
 
+    public GameObject GetAGE_TOFUMODE()
+    {
+        return PfAGE_TOFUMODE;
+    }
+
 }

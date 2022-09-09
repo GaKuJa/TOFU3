@@ -54,4 +54,8 @@ public class OKAKA_CHAFGenerator : MonoBehaviour
         return;
     }
 
+    public GameObject GetOKAKA_CHAF()
+    {
+        return PfOKAKA_CHAF;
+    }
 }
