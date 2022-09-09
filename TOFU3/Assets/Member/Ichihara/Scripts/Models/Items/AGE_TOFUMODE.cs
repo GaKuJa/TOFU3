@@ -22,7 +22,7 @@ public class AGE_TOFUMODE : BaseItemStatus
             _effectTime -= Time.deltaTime;
 
             //éÛÇØÇÈÉ_ÉÅÅ[ÉWÇ0Ç…Ç∑ÇÈ
-            SHOYOUGUN.Instance.ShotDamage = 0;
+            //SHOYOUGUN.Instance.ShotDamage = 0;
 
             if(_effectTime <= 0.0f)
             {

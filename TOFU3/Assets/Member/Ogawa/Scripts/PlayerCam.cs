@@ -28,6 +28,7 @@ public class PlayerCam : MonoBehaviour
         yRotation += mouseX;
         xRotation -= mouseY;
 
+        /*
         // ADS
         if(Input.GetMouseButtonDown(0))
         {
@@ -37,7 +38,7 @@ public class PlayerCam : MonoBehaviour
         {
             Camera.main.fieldOfView = 60.0f;
         }
-
+        */
         xRotation = Mathf.Clamp(xRotation, -90.0f, 50.0f);
 
         CamHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation, wallrun.tilt);

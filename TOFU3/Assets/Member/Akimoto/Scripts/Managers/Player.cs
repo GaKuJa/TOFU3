@@ -12,15 +12,19 @@ public class Player : MonoBehaviour
     }
     [SerializeField]
     protected int moveSpeed = 0;
+    // プレイヤーの番号
     [SerializeField]
     public int playerNum = 0;
+    // リスポーン座標
     [SerializeField]
     private GameObject respawnPoint;
     [SerializeField]
     public PlayerStatus playerStatus;
+    // PlaeyrHp
     [SerializeField]
     private ReactiveProperty<int> hp = new ReactiveProperty<int>(100);
-    public int remainingLives = 3;
+    // Plaeyrの残機
+    public int remainingLives { get; set; } = 3;
     private void Update()
     {
         hp.Where(_ => hp.Value <= 0).Subscribe(_ => playerStatus = PlayerStatus.Dead);

@@ -29,7 +29,7 @@ public class DASHI_STIM : BaseItemStatus
 
             if(buffSpeedUpFlag == false)
             {
-                _cs_playerStatus.buffSpeed *= _movePlayerMagni;
+                //_cs_playerStatus.buffSpeed *= _movePlayerMagni;
 
             }
 

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -34,7 +31,6 @@ public class KOYADOFUGUN : BaseGunStatus, IBaseBulletDamege
     {
 
         plusShootInterval = shootIntervalTime;
-
     }
     void Update()
     {

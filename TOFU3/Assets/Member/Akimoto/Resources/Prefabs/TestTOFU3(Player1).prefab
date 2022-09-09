@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d5f666bc8734efa8fec8d67e66ff62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2114682915257101325}
+  player: {fileID: 0}
   playerGameObject: {fileID: 7886004642477601108}
   cameraControl: {fileID: 2114682915006583734}
   playerGameStatus: 0
@@ -270,7 +270,6 @@ MonoBehaviour:
   playerStatus: 0
   hp:
     value: 100
-  remainingLives: 3
 --- !u!114 &3795712727070237546
 MonoBehaviour:
   m_ObjectHideFlags: 0

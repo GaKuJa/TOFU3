@@ -183,7 +183,7 @@ public class DynamicBone : MonoBehaviour
     void CheckDistance()
     {
         Transform rt = m_ReferenceObject;
-        if (rt == null && Camera.main != null)
+        if (rt == null && TamakiCamera.main != null)
             rt = Camera.main.transform;
         if (rt != null)
         {
