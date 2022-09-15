@@ -9,17 +9,18 @@ using UnityEngine;
 public class YUBA_SHIELDGenerator : MonoBehaviour
 {
     //YUBA-SHILDのプレハブを格納
-    public GameObject pfYUBA_SHIELD;
+    private GameObject pfYUBA_SHIELD = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_YUBA_Shield = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int _maxItems = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfYUBA_SHIELD = ItemList.Instance.Item[0];
+
         for(int i = 0; i < _maxItems; i++)
         {
             PoolingObjectPrefabs item_YUBA;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -368,33 +367,35 @@ public class RandomSpawnItem : BaseSpawmStatus
 
         //オブジェクトのx座標系、z座標系の半分の大きさ
         Vector3 halfExtents = new Vector3(0.5f, 0.0f, 0.5f);
+        //オブジェクトをスポーンする高さ
+        float spawnHight = 1.0f;
 
         //ステージオブジェクト同士が重ならないように調整する
         do
         {
             //スポーンする座標の最大値、最小値を設定
-            var spawnPosX = Mathf.Clamp(Random.Range(-_fieldTOFU[Index].transform.localScale.x / 2 + halfExtents.x,
-                                                     _fieldTOFU[Index].transform.localScale.x / 2 - halfExtents.x),
-                                        -_fieldTOFU[Index].transform.localScale.x / 2,
-                                        _fieldTOFU[Index].transform.localScale.x / 2);
+            var spawnPosX = Mathf.Clamp(Random.Range(-_fieldTOFU[Index].transform.localScale.x - halfExtents.x,
+                                                     _fieldTOFU[Index].transform.localScale.x - halfExtents.x),
+                                        -_fieldTOFU[Index].transform.localPosition.x / 2,
+                                        _fieldTOFU[Index].transform.localPosition.x / 2);
 
-            var spawnPosZ = Mathf.Clamp(Random.Range(-_fieldTOFU[Index].transform.localScale.z / 2 + halfExtents.z, 
-                                                     _fieldTOFU[Index].transform.localScale.z / 2 - halfExtents.z),
-                                        -_fieldTOFU[Index].transform.localScale.z / 2,
-                                        _fieldTOFU[Index].transform.localScale.z / 2);
+            var spawnPosZ = Mathf.Clamp(Random.Range(-_fieldTOFU[Index].transform.localScale.z - halfExtents.z, 
+                                                     _fieldTOFU[Index].transform.localScale.z - halfExtents.z),
+                                        -_fieldTOFU[Index].transform.localPosition.z / 2,
+                                        _fieldTOFU[Index].transform.localPosition.z / 2);
 
             //オブジェクトがスポーンする座標
             Vector3 prxSetSpawnPos = _fieldTOFU[Index].transform.position +
-                new Vector3(spawnPosX, _fieldTOFU[Index].transform.localScale.y / 2 + 0.1f, spawnPosZ);
+                new Vector3(spawnPosX, _fieldTOFU[Index].transform.localScale.y / 2 + spawnHight, spawnPosZ);
 
             //オブジェクト同士の重なりの判定
-            //if (Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity) == false)
-            //{
-            //    Debug.Log(prxSetSpawnPos);
-            //}
+            if (Physics.CheckBox(prxSetSpawnPos, halfExtents, Quaternion.identity) == false)
+            {
+                Debug.Log(prxSetSpawnPos);
+                setSpawnPos = prxSetSpawnPos;
+                checkFlag = true;
+            }
 
-            setSpawnPos = prxSetSpawnPos;
-            checkFlag = true;
 
         } while (!checkFlag);
 

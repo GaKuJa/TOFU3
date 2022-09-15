@@ -9,23 +9,24 @@ using UnityEngine;
 public class OKAKA_CHAFGenerator : MonoBehaviour
 {
     //PKAKA-CHAFのプレハブを格納
-    public GameObject PfOKAKA_CHAF;
+    private GameObject pfOKAKA_CHAF;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_OKAKA_CHAF = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int _maxItems = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfOKAKA_CHAF = ItemList.Instance.Item[2];
+
         for (int i = 0; i < _maxItems; i++)
         {
             PoolingObjectPrefabs item_OKAKA;
 
             //アイテムの生成
-            item_OKAKA = (Instantiate(PfOKAKA_CHAF)).GetComponent<PoolingObjectPrefabs>();
+            item_OKAKA = (Instantiate(pfOKAKA_CHAF)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「YUBA_SHIELDGenerator」オブジェクトの子にしておく
             item_OKAKA.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -56,6 +57,6 @@ public class OKAKA_CHAFGenerator : MonoBehaviour
 
     public GameObject GetOKAKA_CHAF()
     {
-        return PfOKAKA_CHAF;
+        return pfOKAKA_CHAF;
     }
 }

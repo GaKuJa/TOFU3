@@ -20,10 +20,7 @@ public class DASHI_STIM : BaseItemStatus
             //Œø‰ÊŽžŠÔ‚Ì‰ÁŽZ
             _elapsedTime += Time.deltaTime;
 
-            if (_elapsedTime >= _effectTime)
-            {
-                _endFlag = true;
-            }
+            if (_elapsedTime >= _effectTime) { _endFlag = true; }
 
             if (_speedUpFlag == false)
             {

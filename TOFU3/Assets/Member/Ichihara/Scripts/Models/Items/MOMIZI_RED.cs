@@ -24,10 +24,7 @@ public class MOMIZI_RED : BaseItemStatus
 
             //武器の圧力上昇
 
-            if (_elapsedTime >= _effectTime)
-            {
-                _endFlag = true;
-            }
+            if (_elapsedTime >= _effectTime) { _endFlag = true; }
 
             //装備している武器に燃えるエフェクト
 

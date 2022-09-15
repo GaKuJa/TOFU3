@@ -9,17 +9,18 @@ using UnityEngine;
 public class YUZU_RADARGenerator : MonoBehaviour
 {
     //YUZU-RADARのプレハブを格納
-    public GameObject pfYUZU_RADAR;
+    private GameObject pfYUZU_RADAR = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_YUZU_RADAR = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int _maxItems = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfYUZU_RADAR = ItemList.Instance.Item[3];
+
         for (int i = 0; i < _maxItems; i++)
         {
             PoolingObjectPrefabs item_YUZU;

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary> アイテムの基礎ステータス </summary>
 
 public class BaseItemStatus : MonoBehaviour
-{    
+{
     [Header("ItemStatus")]
     //効果時間
     [SerializeField]
@@ -27,11 +27,7 @@ public class BaseItemStatus : MonoBehaviour
     /// <summary> アイテムの効果の終了処理 </summary>
     protected void EndItemEffect()
     {
-        if(_endFlag == true)
-        {
-            Destroy(this);
-        }
-
+        if (_endFlag == true) { Destroy(this); }
     }
 
 }

@@ -17,10 +17,7 @@ public class PlayerDeathStatus : MonoBehaviour
 
     private void Awake()
     {
-<<<<<<< HEAD
-        _instance = this;
-=======
-        if(_instance = null)
+        if (_instance = null)
         {
             _instance = this;
         }
@@ -28,6 +25,5 @@ public class PlayerDeathStatus : MonoBehaviour
         {
             Destroy(this);
         }
->>>>>>> main
     }
 }

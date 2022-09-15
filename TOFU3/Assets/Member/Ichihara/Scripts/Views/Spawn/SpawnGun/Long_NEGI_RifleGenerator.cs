@@ -9,23 +9,24 @@ using UnityEngine;
 public class Long_NEGI_RifleGenerator : MonoBehaviour
 {
     //Long-NEGI-Rifleのプレハブを格納
-    public GameObject PfLong_NEGI_Rifle = null;
+    private GameObject pfLong_NEGI_Rifle = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_Long_NEGI_Rifle = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int maxGuns = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfLong_NEGI_Rifle = GunList.Instance.Gun[2];
+
         for (int i = 0; i < maxGuns; i++)
         {
             PoolingObjectPrefabs gun_NEGI;
 
             //アイテムの生成
-            gun_NEGI = (Instantiate(PfLong_NEGI_Rifle)).GetComponent<PoolingObjectPrefabs>();
+            gun_NEGI = (Instantiate(pfLong_NEGI_Rifle)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「Long_NEGI_RifleGenerator」オブジェクトの子にしておく
             gun_NEGI.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく

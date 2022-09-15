@@ -22,12 +22,7 @@ public class AGE_TOFUMODE : BaseItemStatus
             float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
             _cs_enemy.Damage((int)Damage);
 
-            if (_elapsedTime >= _effectTime)
-            {
-                _endFlag = true;
-            }
-
-            //金色のオーラ(エフェクト)
+            if (_elapsedTime >= _effectTime) { _endFlag = true; }
 
         } while (_endFlag == false);
 

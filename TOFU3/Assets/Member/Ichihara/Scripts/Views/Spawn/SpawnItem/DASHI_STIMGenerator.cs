@@ -9,23 +9,24 @@ using UnityEngine;
 public class DASHI_STIMGenerator : MonoBehaviour
 {
     //DASHI-STIMのプレハブを格納
-    public GameObject PfDASHI_STIM;
+    private GameObject pfDASHI_STIM = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_DASHI_STIM = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int _maxItems = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfDASHI_STIM = ItemList.Instance.Item[1];
+
         for (int i = 0; i < _maxItems; i++)
         {
             PoolingObjectPrefabs item_DASHI;
 
             //アイテムの生成
-            item_DASHI = (Instantiate(PfDASHI_STIM)).GetComponent<PoolingObjectPrefabs>();
+            item_DASHI = (Instantiate(pfDASHI_STIM)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「YUBA_SHIELDGenerator」オブジェクトの子にしておく
             item_DASHI.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -56,7 +57,7 @@ public class DASHI_STIMGenerator : MonoBehaviour
 
     public GameObject GetDASHI_STIM()
     {
-        return PfDASHI_STIM;
+        return pfDASHI_STIM;
     }
 
 }

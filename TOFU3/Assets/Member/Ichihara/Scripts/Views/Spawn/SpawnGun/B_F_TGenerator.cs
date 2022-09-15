@@ -9,7 +9,7 @@ using UnityEngine;
 public class B_F_TGenerator : MonoBehaviour
 {
     //YUBA-SHILDのプレハブを格納
-    public GameObject PfB_F_T = null;
+    private GameObject pfB_F_T = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_B_F_T = new List<PoolingObjectPrefabs>();
@@ -20,12 +20,14 @@ public class B_F_TGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pfB_F_T = GunList.Instance.Gun[5];
+
         for (int i = 0; i < maxGuns; i++)
         {
             PoolingObjectPrefabs gun_BFT;
 
             //アイテムの生成
-            gun_BFT = (Instantiate(PfB_F_T)).GetComponent<PoolingObjectPrefabs>();
+            gun_BFT = (Instantiate(pfB_F_T)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「B_F_TGenerator」オブジェクトの子にしておく
             gun_BFT.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく

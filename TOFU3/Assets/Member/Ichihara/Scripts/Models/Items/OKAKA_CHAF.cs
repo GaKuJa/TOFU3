@@ -18,10 +18,8 @@ public class OKAKA_CHAF : BaseItemStatus
         do
         {
             _elapsedTime += Time.deltaTime;
-            if (_elapsedTime >= _effectTime)
-            {
-                _endFlag = true;
-            }
+
+            if (_elapsedTime >= _effectTime) { _endFlag = true; }
 
             _tofuMesh.material.color = new Color(0.0f, 0.0f, 0.0f, _changeAlpha);
 

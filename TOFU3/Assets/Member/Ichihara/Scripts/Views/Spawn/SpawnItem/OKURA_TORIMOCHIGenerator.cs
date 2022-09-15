@@ -9,23 +9,24 @@ using UnityEngine;
 public class OKURA_TORIMOCHIGenerator : MonoBehaviour
 {
     //OKURA-TORIMOCHIのプレハブを格納
-    public GameObject PfOKURA_TORIMOCHI;
+    private GameObject pfOKURA_TORIMOCHI = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_OKURA_TORIMOCHI = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int _maxItems = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfOKURA_TORIMOCHI = ItemList.Instance.Item[6];
+
         for (int i = 0; i < _maxItems; i++)
         {
             PoolingObjectPrefabs item_OKURA;
 
             //アイテムの生成
-            item_OKURA = (Instantiate(PfOKURA_TORIMOCHI)).GetComponent<PoolingObjectPrefabs>();
+            item_OKURA = (Instantiate(pfOKURA_TORIMOCHI)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「YUBA_SHIELDGenerator」オブジェクトの子にしておく
             item_OKURA.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -56,6 +57,6 @@ public class OKURA_TORIMOCHIGenerator : MonoBehaviour
 
     public GameObject GetOKURA_TORIMOCHI()
     {
-        return PfOKURA_TORIMOCHI;
+        return pfOKURA_TORIMOCHI;
     }
 }

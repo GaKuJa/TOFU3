@@ -18,10 +18,7 @@ public class OKURA_TORIMOCHI : BaseItemStatus
         {
             EndItemEffect();
 
-            if (_elapsedTime >= _effectTime)
-            {
-                _endFlag = true;
-            }
+            if (_elapsedTime >= _effectTime) { _endFlag = true; }
 
             if (_isSpeedUp == false)
             {

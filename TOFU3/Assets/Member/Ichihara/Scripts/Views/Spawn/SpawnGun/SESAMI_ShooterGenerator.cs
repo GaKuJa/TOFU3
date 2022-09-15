@@ -9,23 +9,24 @@ using UnityEngine;
 public class SESAMI_ShooterGenerator : MonoBehaviour
 {
     //SESAMI-Shooterのプレハブを格納
-    public GameObject PfSESAMI_Shoot = null;
+    private GameObject pfSESAMI_Shoot = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_SESAMI_Shoot = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int _maxGuns = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfSESAMI_Shoot = GunList.Instance.Gun[3];
+
         for (int i = 0; i < _maxGuns; i++)
         {
             PoolingObjectPrefabs gun_SESAMI;
 
             //アイテムの生成
-            gun_SESAMI = (Instantiate(PfSESAMI_Shoot)).GetComponent<PoolingObjectPrefabs>();
+            gun_SESAMI = (Instantiate(pfSESAMI_Shoot)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「SESAMI_ShootGenerator」オブジェクトの子にしておく
             gun_SESAMI.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく

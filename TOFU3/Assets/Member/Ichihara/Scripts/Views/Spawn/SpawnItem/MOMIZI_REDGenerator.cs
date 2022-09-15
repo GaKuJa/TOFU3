@@ -9,7 +9,7 @@ using UnityEngine;
 public class MOMIZI_REDGenerator : MonoBehaviour
 {
     //MOMIZI-REDのプレハブを格納
-    public GameObject PfMOMIZI_RED;
+    private GameObject pfMOMIZI_RED = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_MOMIZI_RED = new List<PoolingObjectPrefabs>();
@@ -20,12 +20,14 @@ public class MOMIZI_REDGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pfMOMIZI_RED = ItemList.Instance.Item[5];
+
         for (int i = 0; i < _maxItems; i++)
         {
             PoolingObjectPrefabs item_MOMIZI;
 
             //アイテムの生成
-            item_MOMIZI = (Instantiate(PfMOMIZI_RED)).GetComponent<PoolingObjectPrefabs>();
+            item_MOMIZI = (Instantiate(pfMOMIZI_RED)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「YUBA_SHIELDGenerator」オブジェクトの子にしておく
             item_MOMIZI.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
@@ -56,6 +58,6 @@ public class MOMIZI_REDGenerator : MonoBehaviour
 
     public GameObject GetMOMIZI_RED()
     {
-        return PfMOMIZI_RED;
+        return pfMOMIZI_RED;
     }
 }

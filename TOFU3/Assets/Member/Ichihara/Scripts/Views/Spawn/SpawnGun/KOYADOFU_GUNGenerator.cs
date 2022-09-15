@@ -9,23 +9,24 @@ using UnityEngine;
 public class KOYADOFU_GUNGenerator : MonoBehaviour
 {
     //KOYADOFU-GUNのプレハブを格納
-    public GameObject PfKOYADOFU_GUN = null;
+    private GameObject pfKOYADOFU_GUN = null;
 
     //アイテムを備蓄しておくList 
     private List<PoolingObjectPrefabs> _list_KOYADOFU_GUN = new List<PoolingObjectPrefabs>();
     //備蓄しておくアイテムの数
     private const int maxGuns = 5;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        pfKOYADOFU_GUN = GunList.Instance.Gun[1];
+
         for (int i = 0; i < maxGuns; i++)
         {
             PoolingObjectPrefabs gun_KOYADOFU;
 
             //アイテムの生成
-            gun_KOYADOFU = (Instantiate(PfKOYADOFU_GUN)).GetComponent<PoolingObjectPrefabs>();
+            gun_KOYADOFU = (Instantiate(pfKOYADOFU_GUN)).GetComponent<PoolingObjectPrefabs>();
             //アイテムをこの「KOYADOFU_GUNGenerator」オブジェクトの子にしておく
             gun_KOYADOFU.transform.parent = this.transform;
             //フィールドにスポーンする前は非アクティブにしておく
