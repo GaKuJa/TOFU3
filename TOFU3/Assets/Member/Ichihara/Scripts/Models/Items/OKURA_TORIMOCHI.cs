@@ -5,36 +5,51 @@ using UnityEngine;
 public class OKURA_TORIMOCHI : BaseItemStatus
 {
     //変更するステータスの参照元
-    public GameObject _player;
-    public GameObject MovementManager;
-    private MovementManager _cs_movementManager;
+    public GameObject _player = null;
+    public Player _cs_player = null;
+    private TestPlayer1Controler _movement1 = null;
+    private TestPlayer2Controler _movement2 = null;
+    private ItemPickUp _pickUp = null;
 
     //最初の一度だけ実行するためのフラグ
     private bool _isSpeedUp = false;
 
+    private void Update()
+    {
+        if (_elapsedTime > _effectTime || _pickUp.OkuraTorimoti == false) { return; }
+
+        EndItemEffect();
+
+        if (_elapsedTime >= _effectTime) { _endFlag = true; }
+        if (_isSpeedUp == false)
+        {
+            ItemEffect();
+            _isSpeedUp = true;
+        }
+    }
+
     private void ItemEffect()
     {
-        do
-        {
-            EndItemEffect();
-
-            if (_elapsedTime >= _effectTime) { _endFlag = true; }
-
-            if (_isSpeedUp == false)
-            {
-                _isSpeedUp = true;
-                DelayPlayerMovement();
-
-            }
-
-        } while (true);
+        DelayPlayerMovement();
     }
 
     /// <summary> 移動など、プレイヤーの動きが遅くなる </summary>
     private void DelayPlayerMovement()
     {
-        _cs_movementManager.x *= _moveSpeedMagni;
-        _cs_movementManager.z *= _moveSpeedMagni;
+        //プレイヤーが増えたら追記
+        switch (_cs_player.playerNum)
+        {
+            case 1:
+                _movement1.x *= _moveSpeedMagni;
+                break;
+            case 2:
+                _movement2.x *= _moveSpeedMagni;
+                Debug.Log(_movement2.x);
+                break;
+            default:
+                break;
+        }
+
     }
 
     /// <summary> リロードなど、銃の挙動が遅くなる </summary>
@@ -47,17 +62,36 @@ public class OKURA_TORIMOCHI : BaseItemStatus
     {
         if (other.CompareTag("Player"))
         {
+            InitializeElapsedTime();
             _player = other.gameObject;
+            _cs_player = _player.GetComponentInParent<Player>();
+            _pickUp = _player.GetComponentInParent<ItemPickUp>();
             AssignPlayerComponent(_player);
-            ItemEffect();
         }
     }
 
-    //接触したオブジェクトの情報を渡す
+    /// <summary>
+    /// 接触したオブジェクトの情報を渡す
+    /// </summary>
+    /// <param name="obj"></param>
     private void AssignPlayerComponent(GameObject obj)
     {
-        MovementManager = GameObject.Find("MovementManager");
-        _cs_movementManager = obj.GetComponent<MovementManager>();
+        //プレイヤーの数が増えたら追記
+        switch (_cs_player.playerNum)
+        {
+            case 1:
+                _movement1 = obj.GetComponentInParent<TestPlayer1Controler>();
+                break;
+            case 2:
+                _movement2 = obj.GetComponentInParent<TestPlayer2Controler>();
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
 
     }
 }

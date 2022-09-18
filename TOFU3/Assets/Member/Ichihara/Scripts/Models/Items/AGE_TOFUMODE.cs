@@ -5,47 +5,63 @@ using UnityEngine;
 public class AGE_TOFUMODE : BaseItemStatus
 {
     //必要なステータスの参照元
-    public GameObject Player;
-    public GameObject GunSt;
-    public GameObject Enemy;
-    private GunSt _cs_gunSt;
-    private Enemy _cs_enemy;
+    [SerializeField]
+    private GameObject _gunSt = null;
+    [SerializeField]
+    private GameObject _enemy = null;
 
+    private GameObject _player = null;
+    private GunSt _cs_gunSt = null;
+    private Enemy _cs_enemy = null;
+    private ItemPickUp _pickUp = null;
+
+    private void Update()
+    {
+        if (_elapsedTime > _effectTime || _pickUp.AgeTofu == false) { return; }
+
+        //効果時間の加算
+        _elapsedTime += Time.deltaTime;
+
+        if (_elapsedTime >= _effectTime) { _endFlag = true; }
+        EndItemEffect();
+    }
+
+    /// <summary>
+    /// ダメージと圧力を無効化
+    /// </summary>
     private void ItemEffect()
     {
-        do
-        {
-            //効果時間の加算
-            _elapsedTime += Time.deltaTime;
-
-            //ダメージ無効化
-            float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
-            _cs_enemy.Damage((int)Damage);
-
-            if (_elapsedTime >= _effectTime) { _endFlag = true; }
-
-        } while (_endFlag == false);
-
-        EndItemEffect();
-
+        //ダメージを無効化
+        float Damage = _cs_gunSt.GetGunDamage() * _damageMagni;
+        _cs_enemy.Damage((int)Damage);
+        //圧力を無効化
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Player = other.gameObject;
+            this.InitializeElapsedTime();
+            _player = other.gameObject;
+            _pickUp = _player.GetComponentInParent<ItemPickUp>();
             AssignPlayerComponent();
-            ItemEffect();
         }
+
+        if (other.CompareTag("Shell") && _endFlag == false) { ItemEffect(); }
     }
 
-    //接触したオブジェクトの情報を渡す
+    private void ReducedDamage()
+    {
+        //ダメージ無効化
+
+    }
+
+    /// <summary>
+    /// 接触したオブジェクトの情報を渡す
+    /// </summary>
     private void AssignPlayerComponent()
     {
-        GunSt = GameObject.Find("GunSt");
-        Enemy = GameObject.Find("Enemy");
-        _cs_gunSt = GetComponent<GunSt>();
-        _cs_enemy = GetComponent<Enemy>();
+        _cs_gunSt = _gunSt.GetComponent<GunSt>();
+        _cs_enemy = _gunSt.GetComponent<Enemy>();
     }
 }

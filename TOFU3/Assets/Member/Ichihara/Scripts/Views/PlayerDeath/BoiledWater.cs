@@ -8,43 +8,71 @@ using UnityEngine;
 
 public class BoiledWater : MonoBehaviour
 {
-    //各プレイヤーの参照
-    private TestPlayer1Controler _player1;
-    private TestPlayer2Controler _player2;
-    //private GameObject _player3;
-    //private GameObject _player4;
+    //必要な機能の参照元
+    private Player _cs_player;
+    //取得したプレイヤーの番号を格納
+    private int _playerNum = default(int);
 
-    private PlayerStatus _cs_palyerStatus;
+    [System.NonSerialized] public bool _fleldOutPlayer1 = false;
+    [System.NonSerialized] public bool _fleldOutPlayer2 = false;
+    [System.NonSerialized] public bool _fleldOutPlayer3 = false;
+    [System.NonSerialized] public bool _fleldOutPlayer4 = false;
 
-    private bool _fieldOut1 = false;
-    private bool _fieldOut2 = false;
-    private bool _fieldOut3 = false;
-    private bool _fieldOut4 = false;
-
-    public enum playerNumber
+    public enum PlayerNumber : int
     {
-        player1,
+        player1 = 1,
         player2,
         player3,
         player4
     }
 
-    private void Start()
-    {
-
-        _player1 = GetComponent<TestPlayer1Controler>();
-        _player2 = GetComponent<TestPlayer2Controler>();
-        //_cs_palyerStatus = GetComponent<PlayerStatus>();
-    }
-
+    /// <summary>
+    /// 当たったオブジェクトを取得し、Player の番号を返す
+    /// </summary>
+    /// <param name="other"></param>
     private void OnCollisionEnter(Collision other)
     {
-        _cs_palyerStatus.deedorAlive = PlayerStatus.DeadorAlive.Death;
-        Debug.Log(_cs_palyerStatus.deedorAlive);
+        // Player タグを取得
+        if (other.gameObject.CompareTag("Player"))
+        {
+            _cs_player = other.gameObject.GetComponent<Player>();
+            _playerNum = other.gameObject.GetComponent<Player>().playerNum;
+
+            switch (_playerNum)
+            {
+                case (int)PlayerNumber.player1:
+                    _fleldOutPlayer1 = true;
+                    _cs_player.playerStatus = Player.PlayerStatus.Dead;
+                    GetPlayerDeath();
+                    break;
+                case (int)PlayerNumber.player2:
+                    _fleldOutPlayer2 = true;
+                    _cs_player.playerStatus = Player.PlayerStatus.Dead;
+                    GetPlayerDeath();
+                    break;
+                case (int)PlayerNumber.player3:
+                    _fleldOutPlayer3 = true;
+                    _cs_player.playerStatus = Player.PlayerStatus.Dead;
+                    GetPlayerDeath();
+                    break;
+                case (int)PlayerNumber.player4:
+                    _fleldOutPlayer4 = true;
+                    _cs_player.playerStatus = Player.PlayerStatus.Dead;
+                    GetPlayerDeath();
+                    break;
+                default:
+                    break;
+            }
+        }
+        else { return; }
+
+        //デバッグ用
+        //Debug.Log(_playerNum);
+        //Debug.Log(_cs_player.playerStatus);
     }
 
-    public PlayerStatus.DeadorAlive GetPlayerDeath()
+    public Player.PlayerStatus GetPlayerDeath()
     {
-        return _cs_palyerStatus.deedorAlive;
+        return _cs_player.playerStatus;
     }
 }

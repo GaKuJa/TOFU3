@@ -5,44 +5,53 @@ using UnityEngine;
 public class OKAKA_CHAF : BaseItemStatus
 {
     //Playerオブジェクト
-    public GameObject Player;
+    private GameObject _player = null;
+    private ItemPickUp _pickUp = null;
     //Playerのメッシュを取得
-    private MeshRenderer _tofuMesh;
+    private MeshRenderer _tofuMesh = null;
 
     //透明度
     [SerializeField, Range(0.0f, 1.0f)]
     private float _changeAlpha = default;
 
+    private void Update()
+    {
+        if (_elapsedTime > _effectTime || _pickUp.OkakaChaf == false) { return; }
+        _elapsedTime += Time.deltaTime;
+
+        ItemEffect();
+
+        if (_elapsedTime >= _effectTime)
+        {
+            _endFlag = true;
+            _pickUp.OkakaChaf = false;
+        }
+        EndItemEffect();
+    }
+
     private void ItemEffect()
     {
-        do
-        {
-            _elapsedTime += Time.deltaTime;
-
-            if (_elapsedTime >= _effectTime) { _endFlag = true; }
-
-            _tofuMesh.material.color = new Color(0.0f, 0.0f, 0.0f, _changeAlpha);
-
-        } while (_endFlag == false);
-
-        EndItemEffect();
-
+        _tofuMesh.material.color = new Color(0.0f, 0.0f, 0.0f, _changeAlpha);
+        Debug.Log(_tofuMesh.material.color);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Player = other.gameObject;
-            AssignPlayerComponent(Player);
-            ItemEffect();
+            this.InitializeElapsedTime();
+            _player = other.gameObject;
+            _pickUp = _player.GetComponentInParent<ItemPickUp>();
+            AssignPlayerComponent(_player);
         }
-
     }
 
-    //接触したオブジェクトの情報を渡す
+    /// <summary>
+    /// 接触したオブジェクトの情報を渡す
+    /// </summary>
+    /// <param name="obj"></param>
     private void AssignPlayerComponent(GameObject obj)
     {
-        _tofuMesh = obj.GetComponent<MeshRenderer>();
+        _tofuMesh = obj.GetComponentInParent<MeshRenderer>();
     }
 }

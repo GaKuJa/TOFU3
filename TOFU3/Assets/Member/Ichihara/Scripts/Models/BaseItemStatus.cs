@@ -24,6 +24,11 @@ public class BaseItemStatus : MonoBehaviour
     //終了フラグ
     protected bool _endFlag = false;
 
+    protected void InitializeElapsedTime()
+    {
+        _elapsedTime = 0.0f;
+    }
+
     /// <summary> アイテムの効果の終了処理 </summary>
     protected void EndItemEffect()
     {
