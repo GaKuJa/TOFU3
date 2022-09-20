@@ -18,14 +18,23 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private CameraControl cameraControl = null;
     public ReactiveProperty<PlayerStatus> _reactiveProperty = new ReactiveProperty<PlayerStatus>();
+    [SerializeField]
     public PlayerGameStatus playerGameStatus = PlayerGameStatus.GamePlay;
     private void Update()
     {
-        _reactiveProperty.Where(pSt => player.playerStatus == Player.PlayerStatus.Dead).
-                          Subscribe(playerRes => cameraControl.CameraFadeOut(player.PlayerReSpawn,player.PlayerReset));
-        _reactiveProperty.Where(_ => player.playerStatus == Player.PlayerStatus.Alive).Subscribe(_ => cameraControl.ActionFadeIn());
-        _reactiveProperty.Where(_ => player.remainingLives <= 0 && playerGameStatus != PlayerGameStatus.GameOver)
-                         .Subscribe(_ => PlayerGameOver());
+        if (GameManager.Instance.sceneList == GameManager.SceneList.BattuleScene)
+        {
+            // 死んだらリスポーン
+            _reactiveProperty.Where(pSt => player.playerStatus == Player.PlayerStatus.Dead).
+                              Subscribe(playerRes => cameraControl.CameraFadeOut(player.PlayerReSpawn, player.PlayerReset));
+            
+            // リスポーン後にカメラをフェードイン
+            _reactiveProperty.Where(_ => player.playerStatus == Player.PlayerStatus.Alive).Subscribe(_ => cameraControl.ActionFadeIn());
+            
+            // 残機が亡くなったらゲームから退出
+            _reactiveProperty.Where(_ => player.remainingLives <= 0 && playerGameStatus != PlayerGameStatus.GameOver)
+                             .Subscribe(_ => PlayerGameOver());
+        }
     }
     private void PlayerGameOver()
     {

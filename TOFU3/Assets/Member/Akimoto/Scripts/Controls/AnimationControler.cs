@@ -10,6 +10,7 @@ public class AnimationControler : MonoBehaviour
     public void WalkAnimation(bool animationFlag)
     {
         animator.SetBool("Walk", animationFlag);
+        Debug.Log("WalkAnimation!");
     }
 
     public void DathAnimation(bool animationFlag)

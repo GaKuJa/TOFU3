@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
@@ -23,12 +21,25 @@ public class Player : MonoBehaviour
     // PlaeyrHp
     [SerializeField]
     private ReactiveProperty<int> hp = new ReactiveProperty<int>(100);
+
+    public bool matchingFlag { get; private set; } = false;
+
     // Plaeyr‚ÌŽc‹@
     public int remainingLives { get; set; } = 3;
+
     private void Update()
     {
         hp.Where(_ => hp.Value <= 0).Subscribe(_ => playerStatus = PlayerStatus.Dead);
         hp.Where(_ => hp.Value >= 100).Subscribe(_ => playerStatus = PlayerStatus.Alive);
+
+        if (GameManager.Instance.sceneList == GameManager.SceneList.MatchingScene)
+        {
+            if (Input.GetKeyDown("joystick 1 button 2") || Input.GetKeyDown("joystick 2 button 2")
+                || Input.GetKeyDown("joystick 3 button 2") || Input.GetKeyDown("joystick 4 button 2"))
+            {
+                MatchingSceneManager.Instance.SetMatchingFlag(playerNum, true);
+            }
+        }
     }
     protected void OnTriggerEnter(Collider other)
     {

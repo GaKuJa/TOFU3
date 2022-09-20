@@ -6,7 +6,7 @@ public class StartMultiDisplay : MonoBehaviour
 {
     private void Start()
     {
-        int maxDisplayCount = 2;
+        int maxDisplayCount = GameManager.Instance.GetMatchingNum();
         for(int i = 0; i < maxDisplayCount && i < Display.displays.Length; i++)
         {
             Display.displays[i].Activate();

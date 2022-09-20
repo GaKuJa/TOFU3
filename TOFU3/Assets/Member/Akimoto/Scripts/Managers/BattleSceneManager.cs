@@ -28,15 +28,12 @@ public class BattleSceneManager : MonoBehaviour
     public float GameTimeSeconds { get; private set; } = 60;
     // プレイヤーのステータスリスト
     public List<Player> playersStatList { get; private set; } = new List<Player>();
+    [SerializeField]
     private List<PlayerManager.PlayerGameStatus> playerManagerList = new List<PlayerManager.PlayerGameStatus>();
     public SceneMode sceneMode = SceneMode.Standby;
     public Action ActionGameStart = new Action(() => { });
     // 当たった側のプレイヤー番号
     private int          hitPlayerNum       = 0;
-    // 当てた側のプレイヤー番号
-    private int          shotPlayerNum      = 0;
-    // 銃のダメージ
-    private int gunDamage = 0;
     private void Awake()
     {
         _instance = this;
@@ -44,6 +41,7 @@ public class BattleSceneManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.sceneList = GameManager.SceneList.BattuleScene;
         ActionGameStart = ChangeSceneModeStart;
         for (int i = 0; i < playersList.Count; i++)
             playersStatList.Add(playersList[i].GetComponent<Player>());
@@ -70,6 +68,10 @@ public class BattleSceneManager : MonoBehaviour
     private void WaitTimeStart()
     {
         GameStartWaitTime -= Time.deltaTime;
+        if(GameStartWaitTime < 1)
+        {
+            ChangeSceneModeStart();
+        }
     }
     private void GamePlaying()
     {
@@ -86,7 +88,9 @@ public class BattleSceneManager : MonoBehaviour
         }
         // プレイヤーが亡くなったらリストから外す
         if (playerManagerList.Contains(PlayerManager.PlayerGameStatus.GameOver))
+        {
             playerManagerList.Remove(PlayerManager.PlayerGameStatus.GameOver);
+        }
         // バトル終了条件
         if (playerManagerList.Count <= 1 || GameTimeMinutes < 0)
             ChangeSceneModeEnd();
@@ -106,7 +110,8 @@ public class BattleSceneManager : MonoBehaviour
     }
     private void ChangeResultScene()
     {
-        SceneManager.LoadScene("ResultScene");
+        
+        SceneManager.LoadScene(GameManager.SceneList.ResulutScene.ToString());
     }
     public void SetGameStatus(int listNum,PlayerManager.PlayerGameStatus pStat)
     {

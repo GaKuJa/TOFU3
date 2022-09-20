@@ -1,36 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private List<Player> playerList = new List<Player>();
+    private Player playerStatus = null;
+
     [SerializeField]
-    private FadeControl fadeControl = null;
+    private BaseGunStatus gunStatus = null;
+
     [SerializeField]
     private BattleSceneManager battleSceneManager = null;
+
     [SerializeField]
-    private TextControl textControl = null;
-    void Update()
+    private UIControl uIControl = null;
+
+    private void Update()
     {
-        switch(battleSceneManager.sceneMode)
-        {
-            case BattleSceneManager.SceneMode.Standby:
-                fadeControl.GameStartFadeIn(battleSceneManager.ActionGameStart,battleSceneManager.GameStartWaitTime);
-                textControl.FadeTimeToString((int)battleSceneManager.GameStartWaitTime);
-                break;
-            case BattleSceneManager.SceneMode.Start:
-                textControl.FadeTimeTextOut();
-                textControl.GameTimerDisplay((int)battleSceneManager.GameTimeMinutes, (int)battleSceneManager.GameTimeSeconds);
-                textControl.PlayerStockDisplay(battleSceneManager.playersStatList[0].remainingLives, battleSceneManager.playersStatList[1].remainingLives);
-                textControl.HpDisPlay(battleSceneManager.playersStatList[0].GetHp(), battleSceneManager.playersStatList[1].GetHp());
-                break;
-            case BattleSceneManager.SceneMode.End:
-                break;
-            default:
-                break;
-        }
+        uIControl.HPDisplay(playerStatus.GetHp());
+        uIControl.PlayerCountDisplay(battleSceneManager.playersStatList.Count);
+        uIControl.RemamingDisplay(playerStatus.remainingLives);
+        uIControl.ShotBulletDisplay(gunStatus.bulletNum);
+        uIControl.TimeDisplay(battleSceneManager.GameTimeMinutes);
     }
 }
